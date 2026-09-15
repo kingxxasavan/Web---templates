@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vertex — ship your changelog, automatically</title>
+<meta name="description" content="Vertex turns merged pull requests into a changelog your customers actually read. Free for small teams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <span class="logo__mark" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l6 12H1z" fill="#fff"/></svg>
+      </span>
+      Vertex
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.8"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="changelog.html">Changelog</a>
+      <a class="btn btn--accent btn--sm" href="#start">Start free</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero__inner">
+      <span class="pill"><b>New</b> Linear and Jira sync, out today</span>
+      <h1 style="margin-top:22px">Your changelog writes itself</h1>
+      <p class="lede">
+        Vertex reads your merged pull requests and drafts a changelog entry in the voice your
+        customers already know. You approve it. It ships. Nobody has to remember on a Friday.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--accent btn--lg" href="#start">Start free &mdash; no card</a>
+        <a class="btn btn--ghost btn--lg" href="#how">See how it works</a>
+      </div>
+      <p class="hero__note">Free under 20 merges a month · 2 minutes to connect · Cancel whenever</p>
+
+      <div class="mock" data-reveal>
+        <div class="mock__bar">
+          <span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__dot"></span>
+          <span class="mock__url">app.vertex.dev/changelog/draft</span>
+        </div>
+        <svg viewBox="0 0 1100 560" role="img" aria-label="Screenshot of the Vertex changelog editor">
+          <rect width="1100" height="560" fill="#fff"/>
+          <rect width="230" height="560" fill="#f6f9f8"/>
+          <rect x="20" y="24" width="120" height="11" rx="5.5" fill="#cfdcd8"/>
+          <g fill="#e3ebe8">
+            <rect x="20" y="64" width="190" height="34" rx="9"/>
+            <rect x="20" y="106" width="190" height="34" rx="9"/>
+            <rect x="20" y="148" width="190" height="34" rx="9"/>
+          </g>
+          <rect x="20" y="64" width="190" height="34" rx="9" fill="#2f9e7f" opacity=".16"/>
+          <rect x="32" y="76" width="96" height="10" rx="5" fill="#2f9e7f"/>
+          <g fill="#c6d4d0">
+            <rect x="32" y="118" width="120" height="10" rx="5"/>
+            <rect x="32" y="160" width="84" height="10" rx="5"/>
+          </g>
+
+          <rect x="266" y="30" width="230" height="16" rx="8" fill="#0f1a17"/>
+          <rect x="266" y="62" width="150" height="10" rx="5" fill="#cfdcd8"/>
+
+          <rect x="266" y="100" width="800" height="1" fill="#e4ebe9"/>
+
+          <rect x="266" y="126" width="64" height="22" rx="11" fill="#e6f5f0"/>
+          <rect x="278" y="133" width="40" height="8" rx="4" fill="#2f9e7f"/>
+          <rect x="266" y="164" width="560" height="13" rx="6" fill="#dbe4e1"/>
+          <rect x="266" y="188" width="700" height="13" rx="6" fill="#dbe4e1"/>
+          <rect x="266" y="212" width="420" height="13" rx="6" fill="#dbe4e1"/>
+
+          <rect x="266" y="256" width="72" height="22" rx="11" fill="#eef1f0"/>
+          <rect x="278" y="263" width="48" height="8" rx="4" fill="#8fa09b"/>
+          <rect x="266" y="294" width="640" height="13" rx="6" fill="#dbe4e1"/>
+          <rect x="266" y="318" width="520" height="13" rx="6" fill="#dbe4e1"/>
+
+          <rect x="266" y="370" width="800" height="120" rx="14" fill="#f6f9f8" stroke="#e4ebe9"/>
+          <rect x="290" y="396" width="180" height="11" rx="5.5" fill="#b9c8c4"/>
+          <rect x="290" y="420" width="420" height="9" rx="4.5" fill="#cfdcd8"/>
+          <rect x="290" y="440" width="340" height="9" rx="4.5" fill="#cfdcd8"/>
+          <rect x="906" y="406" width="136" height="38" rx="19" fill="#2f9e7f"/>
+          <rect x="938" y="420" width="72" height="10" rx="5" fill="#fff"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--alt" style="padding-block:44px">
+    <div class="container">
+      <p class="center small muted" style="margin-bottom:26px">Shipping their changelog with Vertex</p>
+      <div class="logos">
+        <span>Kestrel</span><span>Northwind</span><span>Foundry</span><span>Palladium</span><span>Tessera</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How it works</span>
+        <h2 style="margin-top:10px">Three steps, then never again</h2>
+        <p>Connect once. Vertex watches the repository and drafts entries as things merge.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature" data-reveal>
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 3v9a4 4 0 004 4h4M6 3a2 2 0 110 4 2 2 0 010-4zm8 10a2 2 0 110 4 2 2 0 010-4z" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Connect the repo</h3>
+          <p>GitHub, GitLab or Bitbucket. Read-only access to pull request titles, bodies and labels. Nothing else, ever.</p>
+        </div>
+        <div class="feature" data-reveal data-reveal-delay="70">
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h10M3 15h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Vertex drafts</h3>
+          <p>Merges get grouped, de-duplicated and rewritten in plain language. "Fix null deref in parser" becomes something a customer can act on.</p>
+        </div>
+        <div class="feature" data-reveal data-reveal-delay="140">
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>You approve</h3>
+          <p>Edit anything, then publish to a hosted page, your own site via API, email, or a Slack channel.</p>
+        </div>
+      </div>
+
+      <div class="showcase" style="margin-top:84px">
+        <div>
+          <span class="eyebrow">Grouping</span>
+          <h2 style="margin-top:10px;font-size:2rem">Forty merges, six things worth reading</h2>
+          <p class="muted" style="margin-top:16px">
+            Most releases are thirty commits of plumbing and four changes anyone outside the team
+            cares about. Vertex sorts one from the other and says so.
+          </p>
+          <ul>
+            <li>Related pull requests collapse into a single entry</li>
+            <li>Dependency bumps and refactors are hidden by default</li>
+            <li>Breaking changes are pulled to the top, always</li>
+            <li>Every entry links back to the pull requests behind it</li>
+          </ul>
+        </div>
+        <div class="showcase__art" data-reveal>
+          <svg viewBox="0 0 560 420" role="img" aria-label="Diagram showing pull requests grouped into entries">
+            <rect width="560" height="420" fill="#f6f9f8"/>
+            <g fill="#fff" stroke="#dee6e3">
+              <rect x="28" y="36" width="180" height="40" rx="10"/>
+              <rect x="28" y="88" width="180" height="40" rx="10"/>
+              <rect x="28" y="140" width="180" height="40" rx="10"/>
+              <rect x="28" y="192" width="180" height="40" rx="10"/>
+              <rect x="28" y="244" width="180" height="40" rx="10"/>
+              <rect x="28" y="296" width="180" height="40" rx="10"/>
+            </g>
+            <g fill="#cfdcd8">
+              <rect x="44" y="51" width="110" height="10" rx="5"/>
+              <rect x="44" y="103" width="90" height="10" rx="5"/>
+              <rect x="44" y="155" width="120" height="10" rx="5"/>
+              <rect x="44" y="207" width="78" height="10" rx="5"/>
+              <rect x="44" y="259" width="104" height="10" rx="5"/>
+              <rect x="44" y="311" width="88" height="10" rx="5"/>
+            </g>
+            <path d="M216 56c50 0 40 90 90 90M216 108c50 0 40 38 90 38M216 160c40 0 50-14 90-14M216 212c50 0 40 54 90 54M216 264c50 0 40 2 90 2M216 316c50 0 40-50 90-50" stroke="#2f9e7f" stroke-width="1.6" fill="none" opacity=".55"/>
+            <g fill="#fff" stroke="#2f9e7f">
+              <rect x="306" y="124" width="222" height="46" rx="12"/>
+              <rect x="306" y="242" width="222" height="46" rx="12"/>
+            </g>
+            <rect x="326" y="136" width="70" height="20" rx="10" fill="#e6f5f0"/>
+            <rect x="336" y="142" width="50" height="8" rx="4" fill="#2f9e7f"/>
+            <rect x="326" y="254" width="70" height="20" rx="10" fill="#e6f5f0"/>
+            <rect x="336" y="260" width="50" height="8" rx="4" fill="#2f9e7f"/>
+            <rect x="408" y="142" width="100" height="9" rx="4.5" fill="#cfdcd8"/>
+            <rect x="408" y="260" width="100" height="9" rx="4.5" fill="#cfdcd8"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="showcase showcase--flip" style="margin-top:84px">
+        <div>
+          <span class="eyebrow">Publishing</span>
+          <h2 style="margin-top:10px;font-size:2rem">Wherever your customers already are</h2>
+          <p class="muted" style="margin-top:16px">
+            A hosted page with your domain and CSS, an RSS feed, a JSON API for your own site, a
+            Slack post, or an email to everyone who opted in. Pick any combination.
+          </p>
+          <ul>
+            <li>Custom domain and stylesheet on every paid plan</li>
+            <li>JSON API and RSS on every plan, including free</li>
+            <li>Slack, Discord and Teams webhooks</li>
+            <li>In-app widget, three lines of script</li>
+          </ul>
+        </div>
+        <div class="showcase__art" data-reveal>
+          <svg viewBox="0 0 560 420" role="img" aria-label="Diagram of publishing destinations">
+            <rect width="560" height="420" fill="#f6f9f8"/>
+            <rect x="196" y="176" width="168" height="68" rx="16" fill="#2f9e7f"/>
+            <rect x="228" y="202" width="104" height="16" rx="8" fill="#fff" opacity=".9"/>
+            <g stroke="#2f9e7f" stroke-width="1.6" opacity=".5" fill="none">
+              <path d="M280 176V96M280 244v80M196 210H96M364 210h100"/>
+            </g>
+            <g fill="#fff" stroke="#dee6e3">
+              <rect x="206" y="44" width="148" height="52" rx="12"/>
+              <rect x="206" y="324" width="148" height="52" rx="12"/>
+              <rect x="20" y="184" width="118" height="52" rx="12"/>
+              <rect x="422" y="184" width="118" height="52" rx="12"/>
+            </g>
+            <g fill="#cfdcd8">
+              <rect x="230" y="64" width="100" height="10" rx="5"/>
+              <rect x="230" y="344" width="100" height="10" rx="5"/>
+              <rect x="40" y="204" width="78" height="10" rx="5"/>
+              <rect x="442" y="204" width="78" height="10" rx="5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="pricing">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Pricing</span>
+        <h2 style="margin-top:10px">Free until it's saving you time</h2>
+        <p>Every plan includes the API, RSS and unlimited team members. You pay for volume, not seats.</p>
+      </div>
+
+      <div class="center">
+        <div class="toggle" data-billing-toggle role="group" aria-label="Billing period">
+          <button type="button" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-billing="annual" aria-pressed="false">Annual<span class="save">−20%</span></button>
+        </div>
+      </div>
+
+      <div class="plans">
+        <div class="plan">
+          <h3>Solo</h3>
+          <p class="small muted" style="margin-top:6px">For a side project or an early repo.</p>
+          <div class="plan__price">
+            <b data-price data-price-annual="$0">$0</b>
+            <span class="small muted" data-period-label>/month</span>
+          </div>
+          <a class="btn btn--ghost btn--block" style="margin-top:20px" href="#start">Start free</a>
+          <ul>
+            <li>20 merges a month</li>
+            <li>Hosted changelog page</li>
+            <li>JSON API and RSS</li>
+            <li class="off">Custom domain</li>
+            <li class="off">Email digests</li>
+          </ul>
+        </div>
+
+        <div class="plan plan--featured">
+          <span class="plan__flag">Most teams pick this</span>
+          <h3>Team</h3>
+          <p class="small muted" style="margin-top:6px">For a product with customers who notice.</p>
+          <div class="plan__price">
+            <b data-price data-price-annual="$23">$29</b>
+            <span class="small muted" data-period-label>/month</span>
+          </div>
+          <a class="btn btn--accent btn--block" style="margin-top:20px" href="#start">Start 14-day trial</a>
+          <ul>
+            <li>Unlimited merges</li>
+            <li>Custom domain and CSS</li>
+            <li>Email digests to subscribers</li>
+            <li>Slack, Discord and Teams</li>
+            <li>Linear and Jira sync</li>
+          </ul>
+        </div>
+
+        <div class="plan">
+          <h3>Company</h3>
+          <p class="small muted" style="margin-top:6px">Several repos, one changelog.</p>
+          <div class="plan__price">
+            <b data-price data-price-annual="$79">$99</b>
+            <span class="small muted" data-period-label>/month</span>
+          </div>
+          <a class="btn btn--ghost btn--block" style="margin-top:20px" href="#start">Talk to us</a>
+          <ul>
+            <li>Everything in Team</li>
+            <li>Unlimited repositories</li>
+            <li>SAML single sign-on</li>
+            <li>Audit log and data export</li>
+            <li>Priority support, 4h response</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="compare">
+        <caption class="sr-only">Feature comparison across plans</caption>
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Solo</th><th scope="col">Team</th><th scope="col">Company</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Merges per month</th><td>20</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Repositories</th><td>1</td><td>5</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Team members</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Custom domain</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><th scope="row">Email digests</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><th scope="row">SAML SSO</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><th scope="row">Support</th><td>Community</td><td>Email, 1 day</td><td>Priority, 4 hours</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">What people say</span>
+        <h2 style="margin-top:10px">Mostly relief</h2>
+      </div>
+      <div class="quotes">
+        <blockquote class="quote" data-reveal>
+          <p>"We'd not shipped a changelog entry in five months. Not because we weren't shipping — because nobody wanted to be the one writing it."</p>
+          <footer><span class="avatar">RN</span><span><b class="small">Rosa Nyberg</b><br><span class="tiny muted">Head of Product, Kestrel</span></span></footer>
+        </blockquote>
+        <blockquote class="quote" data-reveal data-reveal-delay="70">
+          <p>"The grouping is the whole product. Forty merges become six entries and the six are the right six, which I did not expect."</p>
+          <footer><span class="avatar">DA</span><span><b class="small">Danny Arbogast</b><br><span class="tiny muted">Engineering Lead, Foundry</span></span></footer>
+        </blockquote>
+        <blockquote class="quote" data-reveal data-reveal-delay="140">
+          <p>"Support tickets about 'is this fixed yet' dropped by about a third. We didn't change anything else that month."</p>
+          <footer><span class="avatar">MO</span><span><b class="small">Mei Okonkwo</b><br><span class="tiny muted">Founder, Tessera</span></span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="faq">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">FAQ</span>
+        <h2 style="margin-top:10px">The things you're about to ask</h2>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>Does it publish without me looking at it?</summary>
+          <p>Only if you turn that on. The default is that every entry waits for approval, and most teams keep it that way. Auto-publish exists for teams that trust the draft quality after a month or two.</p>
+        </details>
+        <details>
+          <summary>What does it read from my repository?</summary>
+          <p>Pull request titles, descriptions, labels and the merge commit. Not your source code. The GitHub App requests read access to metadata and pull requests only, and you can see exactly what it asked for on the install screen.</p>
+        </details>
+        <details>
+          <summary>Our pull request titles are terrible. Will this work?</summary>
+          <p>Better than you'd think, because the description and the linked issue usually carry the intent even when the title says "fix stuff". Where there's genuinely nothing to work with, Vertex flags the entry rather than inventing something.</p>
+        </details>
+        <details>
+          <summary>Can I self-host it?</summary>
+          <p>Not today. It's on the roadmap for teams on the Company plan, with no date attached — we'd rather not promise a quarter and miss it.</p>
+        </details>
+        <details>
+          <summary>What happens if I cancel?</summary>
+          <p>Your changelog stays up and your API keeps serving. You drop to the free plan's limits, and the custom domain stops resolving after thirty days. Nothing is deleted.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="container">
+      <div class="cta">
+        <h2>Stop writing these by hand</h2>
+        <p>Connect a repository and see what Vertex drafts from your last release. Two minutes, no card, delete the account whenever.</p>
+        <form data-waitlist data-success="Check your inbox — the setup link is on its way." novalidate>
+          <input type="email" name="email" placeholder="you@company.com" aria-label="Work email" required>
+          <button class="btn" type="submit">Get started</button>
+        </form>
+        <p data-status role="status"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <span class="logo__mark" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l6 12H1z" fill="#fff"/></svg>
+          </span>
+          Vertex
+        </a>
+        <p class="small muted" style="margin-top:12px;max-width:32ch">Changelogs your customers actually read, drafted from the work you already merged.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="#">API reference</a></li>
+          <li><a href="#">Webhooks</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Vertex Software Ltd</span>
+      <span>Built in Bristol</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

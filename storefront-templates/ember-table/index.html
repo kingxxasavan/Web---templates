@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Table — wood-fired pizza, Leeds</title>
+<meta name="description" content="Wood-fired pizza and small plates on Gildersome Road, Leeds. Open Tuesday to Sunday.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="mark" href="index.html">Ember<span>.</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="book.html">Book a table</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero__art" aria-hidden="true">
+      <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+        <rect width="1200" height="600" fill="#241d18"/>
+        <circle cx="240" cy="300" r="190" fill="#3a2b20"/>
+        <circle cx="240" cy="300" r="140" fill="#c2542f" opacity=".55"/>
+        <circle cx="240" cy="300" r="92" fill="#e08a4a" opacity=".5"/>
+        <g fill="#3a2b20">
+          <rect x="700" y="120" width="360" height="26" rx="13"/>
+          <rect x="740" y="180" width="280" height="26" rx="13"/>
+          <rect x="700" y="240" width="330" height="26" rx="13"/>
+        </g>
+        <path d="M0 520c200-40 400 40 600 0s400-50 600-10v90H0z" fill="#1b1512"/>
+      </svg>
+    </div>
+    <div class="container hero__inner">
+      <span class="eyebrow">Gildersome Road, Leeds</span>
+      <h1>Ember Table</h1>
+      <p>Forty-eight hour dough, a wood oven that runs at 430&deg;C, and a short menu that changes when the produce does.</p>
+      <div class="hero__actions">
+        <a class="btn" href="book.html">Book a table</a>
+        <a class="btn btn--light" href="menu.html">See the menu</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="container strip__inner">
+      <span>Tue&ndash;Thu 5.30&ndash;10</span>
+      <span>Fri&ndash;Sat 12&ndash;11</span>
+      <span>Sun 12&ndash;8</span>
+      <span>Closed Mondays</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container container--narrow center">
+      <span class="eyebrow">What we do</span>
+      <h2 style="margin-top:12px">One oven, one dough, no shortcuts</h2>
+      <p class="muted" style="margin-top:20px;font-size:1.06rem">
+        The dough is mixed on Sunday for the week and ferments cold for forty-eight hours, which is
+        why it tastes of something before anything goes on top of it. The oven takes four hours to
+        come up to heat and we light it whether we are busy or not.
+      </p>
+      <p class="muted" style="margin-top:16px;font-size:1.06rem">
+        The menu is short because everything on it is made here. When the sausage runs out on a
+        Monday &mdash; and it does &mdash; that is the honest version of the trade-off.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="center" style="margin-bottom:44px">
+        <span class="eyebrow">The menu</span>
+        <h2 style="margin-top:12px">This week</h2>
+      </div>
+
+      <div class="menu-tabs" role="tablist" aria-label="Menu sections">
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="small" aria-selected="true">Small plates</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="pizza" aria-selected="false">From the oven</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="sides" aria-selected="false">Sides</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="sweet" aria-selected="false">Sweet</button>
+      </div>
+
+      <div class="dishes" data-dishes></div>
+      <p class="menu-note" data-menu-note hidden></p>
+
+      <div class="center" style="margin-top:44px">
+        <a class="btn btn--ghost" href="menu.html">Full menu, including drinks</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="rule"><span>The room</span></div>
+      <div class="plates" style="margin-top:32px">
+        <div class="plate" data-reveal>
+          <svg viewBox="0 0 300 300" role="img" aria-label="A margherita straight from the oven">
+            <rect width="300" height="300" fill="#efe4d4"/>
+            <circle cx="150" cy="150" r="106" fill="#e8d5b8"/>
+            <circle cx="150" cy="150" r="88" fill="#c2542f" opacity=".75"/>
+            <g fill="#fdf6ea"><circle cx="122" cy="126" r="16"/><circle cx="178" cy="142" r="14"/><circle cx="140" cy="182" r="15"/></g>
+            <g fill="#5f7a4e"><circle cx="164" cy="112" r="7"/><circle cx="110" cy="166" r="6"/><circle cx="182" cy="180" r="6"/></g>
+          </svg>
+        </div>
+        <div class="plate" data-reveal>
+          <svg viewBox="0 0 300 300" role="img" aria-label="The wood oven at full heat">
+            <rect width="300" height="300" fill="#2b211a"/>
+            <path d="M60 220a90 90 0 0 1 180 0z" fill="#3e2f24"/>
+            <path d="M96 220a54 54 0 0 1 108 0z" fill="#c2542f"/>
+            <path d="M124 220a26 26 0 0 1 52 0z" fill="#f0a75e"/>
+            <rect y="220" width="300" height="80" fill="#1d1610"/>
+          </svg>
+        </div>
+        <div class="plate" data-reveal>
+          <svg viewBox="0 0 300 300" role="img" aria-label="Burrata with blood orange">
+            <rect width="300" height="300" fill="#f5efe6"/>
+            <circle cx="150" cy="150" r="104" fill="#ece3d6"/>
+            <circle cx="140" cy="140" r="46" fill="#fdfaf4"/>
+            <g fill="#c2542f" opacity=".85"><path d="M190 120a30 30 0 1 1-.1 0z"/><path d="M104 196a26 26 0 1 1-.1 0z"/></g>
+            <path d="M96 118c22-10 44 6 58-4" stroke="#5f7a4e" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="plate" data-reveal>
+          <svg viewBox="0 0 300 300" role="img" aria-label="The dining room at night">
+            <rect width="300" height="300" fill="#241d18"/>
+            <circle cx="80" cy="76" r="20" fill="#e6a082" opacity=".75"/>
+            <circle cx="160" cy="58" r="16" fill="#e6a082" opacity=".6"/>
+            <circle cx="232" cy="80" r="18" fill="#e6a082" opacity=".7"/>
+            <rect x="40" y="180" width="220" height="14" rx="7" fill="#3e2f24"/>
+            <rect x="60" y="194" width="18" height="70" fill="#3e2f24"/>
+            <rect x="222" y="194" width="18" height="70" fill="#3e2f24"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container center">
+      <span class="eyebrow" style="color:#e6a082">Booking</span>
+      <h2 style="margin-top:12px">Twelve tables, one sitting</h2>
+      <p style="margin-top:18px;max-width:50ch;margin-inline:auto;color:rgba(243,236,227,.75)">
+        We do not turn tables. Book at seven and the table is yours for the evening. It means we
+        take fewer covers and it is the reason people stay for a third round.
+      </p>
+      <a class="btn btn--light" style="margin-top:30px" href="book.html">Book a table</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <span class="mark">Ember<span style="color:#e6a082">.</span></span>
+        <p class="small" style="margin-top:14px;max-width:34ch">
+          Wood-fired pizza and small plates on Gildersome Road. Walk-ins welcome at the counter,
+          booking advised for the room.
+        </p>
+        <p class="small" style="margin-top:16px">
+          <strong data-open-now>&nbsp;</strong>
+        </p>
+      </div>
+      <div>
+        <h4>Find us</h4>
+        <p class="small">114 Gildersome Road<br>Leeds LS27 7BQ</p>
+        <p class="small" style="margin-top:12px"><a href="tel:+441130000000">0113 000 0000</a></p>
+        <p class="small"><a href="mailto:hello@embertable.example">hello@embertable.example</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p class="small">Tue&ndash;Thu 5.30&ndash;10pm<br>Fri&ndash;Sat 12&ndash;11pm<br>Sun 12&ndash;8pm<br>Monday closed</p>
+        <p class="small" style="margin-top:12px"><a href="book.html">Book a table &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Ember Table</span>
+      <span>Fired with British oak</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/menu.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

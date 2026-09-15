@@ -1,0 +1,116 @@
+<section class="section section--tight">
+  <div class="container">
+    <p class="small muted"><a href="/templates" style="text-decoration:none">&larr; All templates</a></p>
+
+    <div class="layout-aside mt-2">
+      <div>
+        <div class="card card--flush card--raised">
+          <div class="row row--between" style="padding:12px 16px;border-bottom:1px solid var(--border)">
+            <span class="small muted">Live preview</span>
+            <a class="btn btn--ghost btn--sm" href="/preview/<%= template.slug %>/" target="_blank" rel="noopener">Open full size &nearr;</a>
+          </div>
+          <iframe
+            src="/preview/<%= template.slug %>/"
+            title="<%= template.name %> live preview"
+            loading="lazy"
+            style="width:100%;height:560px;border:0;display:block;background:#fff"></iframe>
+        </div>
+
+        <div class="mt-5">
+          <h2>About this template</h2>
+          <p class="lede mt-2"><%= template.description %></p>
+        </div>
+
+        <div class="mt-4">
+          <h3>What's included</h3>
+          <div class="tag-list mt-2">
+            <% template.featureLabels.forEach(function (label) { %>
+              <span class="tag"><%= label %></span>
+            <% }); %>
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid--2">
+          <div class="card">
+            <h4>Built with</h4>
+            <p class="small muted mt-1"><%= template.tech.join(' · ') %>. No build step and no dependencies — open <code>index.html</code> and it works.</p>
+          </div>
+          <div class="card">
+            <h4>Pages</h4>
+            <p class="small muted mt-1"><%= template.pages %> fully designed page<%= template.pages === 1 ? '' : 's' %>, each responsive down to 360px and keyboard navigable.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card card--raised layout-aside__sticky">
+          <div class="row" style="gap:6px">
+            <span class="tag tag--accent"><%= template.category %></span>
+            <span class="tag"><%= template.style %></span>
+          </div>
+          <h1 style="font-size:1.9rem;margin-top:12px"><%= template.name %></h1>
+          <p class="small muted mt-1"><%= template.tagline %></p>
+
+          <div class="row mt-3" style="align-items:baseline;gap:8px">
+            <span class="price price--lg"><%= money(template.price_cents) %></span>
+            <span class="small muted">one time, yours for life</span>
+          </div>
+
+          <% if (owned) { %>
+            <div class="notice notice--ok mt-3"><div><strong>You own this.</strong><p class="small mt-1">Download it any time from your account.</p></div></div>
+            <a class="btn btn--block mt-2" href="/account">Go to downloads</a>
+          <% } else if (inCart) { %>
+            <div class="notice notice--ok mt-3"><div><strong>In your cart.</strong></div></div>
+            <a class="btn btn--accent btn--block mt-2" href="/cart">Go to cart</a>
+            <form method="post" action="/cart/remove/<%= template.slug %>" class="mt-2">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="redirect_to" value="/templates/<%= template.slug %>">
+              <button class="btn btn--quiet btn--block" type="submit">Remove from cart</button>
+            </form>
+          <% } else { %>
+            <form method="post" action="/cart/add/<%= template.slug %>" class="mt-3">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="redirect_to" value="/cart">
+              <button class="btn btn--accent btn--block btn--lg" type="submit">Add to cart — <%= money(template.price_cents) %></button>
+            </form>
+          <% } %>
+
+          <ul class="stack small muted mt-3" style="list-style:none;padding:0;margin-top:20px">
+            <li>✓ Full, unminified source</li>
+            <li>✓ Commercial use, one site</li>
+            <li>✓ Re-download forever</li>
+            <li>✓ <a href="/licence">200-word licence</a></li>
+          </ul>
+
+          <hr class="divider" style="margin-block:20px">
+
+          <h4>Add-ons</h4>
+          <p class="tiny muted mt-1">Optional, applied to everything in your order.</p>
+          <div class="stack mt-2">
+            <% Object.entries(addons).forEach(function ([id, addon]) { %>
+              <div class="row row--between" style="gap:8px;align-items:flex-start">
+                <div style="flex:1">
+                  <b class="small"><%= addon.name %></b>
+                  <p class="tiny muted"><%= addon.blurb %></p>
+                </div>
+                <span class="small price">+<%= money(addon.priceCents) %></span>
+              </div>
+            <% }); %>
+          </div>
+          <a class="btn btn--quiet btn--sm btn--block mt-2" href="/cart">Choose add-ons in the cart</a>
+        </div>
+      </aside>
+    </div>
+
+    <% if (related.length) { %>
+      <div class="mt-5">
+        <h2>Similar templates</h2>
+        <div class="grid grid--3 mt-3">
+          <% related.forEach(function (template) { %>
+            <%- include('../partials/template-card', { template }) %>
+          <% }); %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</section>

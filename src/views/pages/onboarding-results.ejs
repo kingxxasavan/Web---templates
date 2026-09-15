@@ -1,0 +1,78 @@
+<section class="section section--tight">
+  <div class="container">
+    <span class="eyebrow">Your matches</span>
+    <h1 class="mt-1"><%= matches.length %> template<%= matches.length === 1 ? '' : 's' %> that fit your brief</h1>
+
+    <div class="row mt-3" style="gap:8px">
+      <% if (brief.category) { %><span class="tag tag--accent"><%= (categories.find(c => c.key === brief.category) || {}).label || brief.category %></span><% } %>
+      <% if (brief.selling) { %><span class="tag">selling: <%= brief.selling %></span><% } %>
+      <% if (brief.style) { %><span class="tag"><%= brief.style %></span><% } %>
+      <% if (brief.animation) { %><span class="tag"><%= brief.animation %> motion</span><% } %>
+      <% (brief.features || []).forEach(function (f) { %><span class="tag"><%= featureLabels[f] || f %></span><% }); %>
+      <a class="btn btn--quiet btn--sm" href="/find">Change answers</a>
+    </div>
+
+    <div class="stack-lg mt-5">
+      <% matches.forEach(function (match, index) { %>
+        <article class="card card--raised" style="padding:0;overflow:hidden">
+          <div class="match">
+            <div class="match__thumb">
+              <%- include('../partials/thumb', { template: match.template }) %>
+            </div>
+            <div class="match__body">
+              <div class="row row--between">
+                <div class="row" style="gap:8px">
+                  <% if (index === 0) { %><span class="tag tag--accent">Best match</span><% } %>
+                  <span class="tag"><%= match.fit %>% fit</span>
+                </div>
+                <span class="price"><%= money(match.template.price_cents) %></span>
+              </div>
+
+              <h2 style="font-size:1.5rem;margin-top:12px"><%= match.template.name %></h2>
+              <p class="small muted mt-1"><%= match.template.tagline %></p>
+
+              <% if (match.reasons.length) { %>
+                <ul class="reasons mt-3">
+                  <% match.reasons.forEach(function (reason) { %>
+                    <li><span aria-hidden="true">✓</span> <%= reason %></li>
+                  <% }); %>
+                </ul>
+              <% } %>
+
+              <% if (match.missingFeatures && match.missingFeatures.length) { %>
+                <p class="small mt-2" style="color:var(--warn)">
+                  <b>Not included:</b>
+                  <%= match.missingFeatures.map(function (f) { return featureLabels[f] || f; }).join(', ') %>.
+                  You'd be building <%= match.missingFeatures.length === 1 ? 'that' : 'those' %> yourself.
+                </p>
+              <% } %>
+
+              <div class="row mt-4">
+                <% if (cartSlugs.includes(match.template.slug)) { %>
+                  <a class="btn btn--ghost" href="/cart">In your cart &rarr;</a>
+                <% } else { %>
+                  <form method="post" action="/cart/add/<%= match.template.slug %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="redirect_to" value="/find/<%= briefId %>">
+                    <button class="btn btn--accent" type="submit">Add to cart — <%= money(match.template.price_cents) %></button>
+                  </form>
+                <% } %>
+                <a class="btn btn--ghost" href="/templates/<%= match.template.slug %>">Details &amp; live preview</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+
+    <div class="card mt-5" style="background:var(--surface-2)">
+      <div class="row row--between">
+        <div>
+          <h3>Need a domain to go with it?</h3>
+          <p class="small muted mt-1">The finder already has your brief — it'll suggest names ranked by how registrable they actually are.</p>
+        </div>
+        <a class="btn btn--ghost" href="/domains">Open the domain finder</a>
+      </div>
+    </div>
+  </div>
+</section>

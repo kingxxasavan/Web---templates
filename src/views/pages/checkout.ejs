@@ -1,0 +1,76 @@
+<section class="section section--tight">
+  <div class="container">
+    <p class="small muted"><a href="/cart" style="text-decoration:none">&larr; Back to cart</a></p>
+    <h1 class="mt-2">Checkout</h1>
+
+    <div class="layout-aside mt-4">
+      <div>
+        <% if (errors && errors.length) { %>
+          <div class="notice notice--error"><div><% errors.forEach(function (e) { %><p><%= e %></p><% }); %></div></div>
+        <% } %>
+
+        <form class="card" method="post" action="/checkout">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+          <h3>Where should the download go?</h3>
+          <p class="small muted mt-1">No account required. We'll create one behind this address so your templates stay downloadable, and you can set a password afterwards if you want.</p>
+
+          <div class="field mt-3">
+            <label for="email">Email address</label>
+            <input id="email" type="email" name="email" required autocomplete="email"
+                   value="<%= email %>" <%= currentUser ? 'readonly' : '' %> placeholder="you@example.com">
+            <% if (currentUser) { %>
+              <p class="field__hint">Signed in as <%= currentUser.email %>.</p>
+            <% } else { %>
+              <p class="field__hint">Already have an account? <a href="/login">Sign in first</a> and everything lands in it.</p>
+            <% } %>
+          </div>
+
+          <button class="btn btn--accent btn--lg btn--block" type="submit">
+            <% if (stripeLive) { %>Pay <%= money(cart.total_cents) %> with card<% } else { %>Continue to simulated checkout<% } %>
+          </button>
+
+          <p class="tiny muted mt-2">
+            <% if (stripeLive) { %>
+              You'll be taken to Stripe's hosted checkout. We never see or store your card details.
+            <% } else { %>
+              This store has no Stripe key configured, so the next page simulates a successful payment. No card is asked for and no money moves.
+            <% } %>
+          </p>
+        </form>
+
+        <div class="card mt-3" style="background:var(--surface-2)">
+          <h4>What happens next</h4>
+          <div class="steps mt-3">
+            <div class="step"><span class="step__num"></span><div><b>You pay <%= money(cart.total_cents) %></b><p class="small muted">Once. No subscription, no renewal.</p></div></div>
+            <div class="step"><span class="step__num"></span><div><b>Downloads unlock immediately</b><p class="small muted">A zip per template, with your licence inside it.</p></div></div>
+            <div class="step"><span class="step__num"></span><div><b>They stay in your account</b><p class="small muted">Re-download any time, on any machine, forever.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card card--raised layout-aside__sticky">
+          <h3>Order summary</h3>
+          <table class="table mt-2">
+            <tbody>
+              <% cart.lines.forEach(function (line) { %>
+                <tr>
+                  <td><%= line.name %><% if (line.kind === 'addon') { %> <span class="tag">add-on</span><% } %></td>
+                  <td class="num"><%= money(line.unit_cents) %></td>
+                </tr>
+              <% }); %>
+              <% if (cart.discount_cents > 0) { %>
+                <tr style="color:var(--ok)"><td>Bundle discount</td><td class="num">−<%= money(cart.discount_cents) %></td></tr>
+              <% } %>
+            </tbody>
+            <tfoot>
+              <tr><td>Total</td><td class="num price price--lg"><%= money(cart.total_cents) %></td></tr>
+            </tfoot>
+          </table>
+          <a class="btn btn--quiet btn--sm btn--block mt-2" href="/cart">Edit cart</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

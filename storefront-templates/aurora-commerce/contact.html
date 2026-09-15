@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Aurora</title>
+<meta name="description" content="Get in touch about an order, a repair, or wholesale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">Aurora<span>.</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.8"/></svg>
+    </button>
+    <nav class="menu" id="menu" aria-label="Primary">
+      <a href="index.html" >Shop</a>
+      <a href="product.html">Product</a>
+      <a href="about.html">Our story</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <button class="cart-btn" type="button" data-open-cart>
+        Cart <span class="cart-btn__count" data-cart-count hidden>0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section">
+    <div class="container split" style="align-items:start">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1 style="margin-top:12px">Say hello</h1>
+        <p class="muted" style="margin-top:18px;font-size:1.05rem">
+          We answer everything within one working day. If it is about a repair, include a photo
+          and we can usually tell you straight away whether it is fixable.
+        </p>
+
+        <div style="margin-top:36px;display:grid;gap:24px">
+          <div>
+            <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)">Studio</h3>
+            <p style="margin-top:6px">Unit 4, Sunny Bank Mills<br>Farsley, Leeds LS28 5UJ</p>
+          </div>
+          <div>
+            <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)">Open</h3>
+            <p style="margin-top:6px">First Saturday of the month, 10am&ndash;4pm<br>Weekdays by arrangement</p>
+          </div>
+          <div>
+            <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)">Email</h3>
+            <p style="margin-top:6px">hello@aurora.example<br>wholesale@aurora.example</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form class="value" style="padding:32px" data-signup data-success="Thanks — we'll reply within a working day." novalidate>
+          <h2 style="font-size:1.5rem">Send a message</h2>
+          <p class="small muted" style="margin-top:8px">
+            This form validates but does not send yet — point <code>action</code> at Formspree,
+            Netlify Forms, or your own endpoint. See README.md.
+          </p>
+
+          <div style="margin-top:22px;display:grid;gap:16px">
+            <div>
+              <label for="c-name" style="display:block;font-size:.86rem;font-weight:550;margin-bottom:6px">Your name</label>
+              <input id="c-name" name="name" type="text" required
+                     style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font:inherit">
+            </div>
+            <div>
+              <label for="email" style="display:block;font-size:.86rem;font-weight:550;margin-bottom:6px">Email</label>
+              <input id="email" name="email" type="email" required
+                     style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font:inherit">
+            </div>
+            <div>
+              <label for="c-subject" style="display:block;font-size:.86rem;font-weight:550;margin-bottom:6px">What is it about?</label>
+              <select id="c-subject" name="subject"
+                      style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font:inherit;background:#fff">
+                <option>An order</option>
+                <option>A repair</option>
+                <option>Wholesale</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div>
+              <label for="c-message" style="display:block;font-size:.86rem;font-weight:550;margin-bottom:6px">Message</label>
+              <textarea id="c-message" name="message" required rows="5"
+                        style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font:inherit;resize:vertical"></textarea>
+            </div>
+            <button class="btn btn--accent btn--block" type="submit">Send message</button>
+            <p data-status role="status" class="small" style="color:var(--accent);min-height:1.2em"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">Aurora<span>.</span></a>
+        <p class="small muted" style="margin-top:12px;max-width:34ch">Small-batch ceramics, textiles and kitchenware, made in Leeds since 2016.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="index.html#shop">Ceramics</a></li>
+          <li><a href="index.html#shop">Textiles</a></li>
+          <li><a href="index.html#shop">Kitchen</a></li>
+          <li><a href="product.html">Gift cards</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Delivery</a></li>
+          <li><a href="contact.html">Returns</a></li>
+          <li><a href="contact.html">Repairs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="about.html">Our story</a></li>
+          <li><a href="about.html">Materials</a></li>
+          <li><a href="contact.html">Stockists</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Aurora Studio Ltd</span>
+      <span>Made in Leeds</span>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer-backdrop" data-drawer-backdrop data-close-cart></div>
+<aside class="drawer" data-drawer aria-hidden="true" aria-label="Shopping cart">
+  <div class="drawer__head">
+    <h3>Your cart</h3>
+    <button class="drawer__close" type="button" data-close-cart aria-label="Close cart">&times;</button>
+  </div>
+  <div class="drawer__body" data-cart-body></div>
+  <div class="drawer__foot">
+    <div class="totals" data-cart-totals></div>
+    <button class="btn btn--accent btn--block" type="button" data-checkout disabled>Checkout</button>
+    <p class="tiny muted" style="margin-top:10px;text-align:center">Shipping calculated at checkout</p>
+  </div>
+</aside>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

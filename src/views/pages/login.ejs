@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="container container--narrow" style="max-width:440px">
+    <h1>Sign in</h1>
+    <p class="small muted mt-2">Your templates are waiting where you left them.</p>
+
+    <% if (errors.length) { %>
+      <div class="notice notice--error mt-3"><div><% errors.forEach(function (e) { %><p><%= e %></p><% }); %></div></div>
+    <% } %>
+
+    <form class="card mt-4" method="post" action="/login">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" required autocomplete="email" value="<%= values.email || '' %>">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required autocomplete="current-password">
+      </div>
+      <button class="btn btn--accent btn--block" type="submit">Sign in</button>
+    </form>
+
+    <p class="small muted mt-3 center">No account? <a href="/register">Create one</a> — or just buy something, we'll make one for you.</p>
+  </div>
+</section>

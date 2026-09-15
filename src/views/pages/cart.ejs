@@ -1,0 +1,132 @@
+<section class="section section--tight">
+  <div class="container">
+    <h1>Your cart</h1>
+
+    <% if (cancelled) { %>
+      <div class="notice notice--warn mt-3"><div><strong>Checkout cancelled.</strong><p class="small mt-1">Nothing was charged. Your cart is exactly as you left it.</p></div></div>
+    <% } %>
+
+    <% if (cart.isEmpty) { %>
+      <div class="card mt-4 center" style="padding:48px 24px">
+        <h3>Nothing in here yet</h3>
+        <p class="muted mt-2">Browse the catalogue, or let the finder narrow it down for you.</p>
+        <div class="row mt-3" style="justify-content:center">
+          <a class="btn btn--accent" href="/find">Find my template</a>
+          <a class="btn btn--ghost" href="/templates">Browse all</a>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="layout-aside mt-4">
+        <div>
+          <div class="card card--flush">
+            <table class="table">
+              <thead>
+                <tr><th>Template</th><th class="num">Price</th><th><span class="sr-only">Remove</span></th></tr>
+              </thead>
+              <tbody>
+                <% cart.templates.forEach(function (template) { %>
+                  <tr>
+                    <td>
+                      <a href="/templates/<%= template.slug %>" style="font-weight:600;text-decoration:none"><%= template.name %></a>
+                      <div class="tiny muted"><%= template.category %> · <%= template.style %></div>
+                    </td>
+                    <td class="num"><%= money(template.price_cents) %></td>
+                    <td class="num">
+                      <form method="post" action="/cart/remove/<%= template.slug %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="redirect_to" value="/cart">
+                        <button class="btn btn--quiet btn--sm" type="submit">Remove</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+                <% cart.addonLines.forEach(function (line) { %>
+                  <tr>
+                    <td>
+                      <b><%= line.name %></b> <span class="tag">add-on</span>
+                      <div class="tiny muted"><%= line.blurb %></div>
+                    </td>
+                    <td class="num"><%= money(line.unit_cents) %></td>
+                    <td class="num">
+                      <form method="post" action="/cart/addon/<%= line.sku %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="redirect_to" value="/cart">
+                        <button class="btn btn--quiet btn--sm" type="submit">Remove</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if (cart.nudge) { %>
+            <div class="notice notice--ok mt-3">
+              <div>
+                <strong>Add <%= cart.nudge.needed %> more template<%= cart.nudge.needed === 1 ? '' : 's' %> and save <%= money(cart.nudge.saving_cents) %>.</strong>
+                <p class="small mt-1">Any <%= store.bundle.minItems %> templates cost <%= money(store.bundle.priceCents) %> instead of <%= money(store.bundle.minItems * store.templatePriceCents) %>. <a href="/templates">Browse the catalogue</a>.</p>
+              </div>
+            </div>
+          <% } %>
+
+          <div class="card mt-3">
+            <h3>Add-ons</h3>
+            <p class="small muted mt-1">Optional extras, applied to every template in this order.</p>
+            <div class="stack mt-3">
+              <% Object.entries(addons).forEach(function ([id, addon]) { %>
+                <% const on = cart.addons.includes(id); %>
+                <div class="row row--between" style="gap:14px;align-items:flex-start;padding:12px;border:1px solid <%= on ? 'var(--accent)' : 'var(--border)' %>;border-radius:var(--radius-sm);background:<%= on ? 'var(--accent-soft)' : 'transparent' %>">
+                  <div style="flex:1;min-width:180px">
+                    <b class="small"><%= addon.name %></b>
+                    <p class="tiny muted"><%= addon.blurb %></p>
+                  </div>
+                  <div class="row" style="gap:10px">
+                    <span class="small price">+<%= money(addon.priceCents) %></span>
+                    <form method="post" action="/cart/addon/<%= id %>">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <input type="hidden" name="redirect_to" value="/cart">
+                      <button class="btn <%= on ? 'btn--quiet' : 'btn--ghost' %> btn--sm" type="submit"><%= on ? 'Remove' : 'Add' %></button>
+                    </form>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card card--raised layout-aside__sticky">
+            <h3>Summary</h3>
+            <table class="table mt-2">
+              <tbody>
+                <tr><td>Subtotal</td><td class="num"><%= money(cart.subtotal_cents) %></td></tr>
+                <% if (cart.discount_cents > 0) { %>
+                  <tr style="color:var(--ok)">
+                    <td>Bundle discount<div class="tiny"><%= cart.bundles %> × <%= store.bundle.minItems %> templates</div></td>
+                    <td class="num">−<%= money(cart.discount_cents) %></td>
+                  </tr>
+                <% } %>
+              </tbody>
+              <tfoot>
+                <tr><td>Total</td><td class="num price price--lg"><%= money(cart.total_cents) %></td></tr>
+              </tfoot>
+            </table>
+
+            <a class="btn btn--accent btn--block btn--lg mt-3" href="/checkout">Checkout</a>
+
+            <% if (!stripeLive) { %>
+              <div class="notice notice--warn mt-3">
+                <div class="tiny"><strong>Simulated payments.</strong> No Stripe key is configured, so checkout completes without a card and nothing is charged.</div>
+              </div>
+            <% } %>
+
+            <form method="post" action="/cart/clear" class="mt-2">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn btn--quiet btn--sm btn--block" type="submit">Empty cart</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    <% } %>
+  </div>
+</section>

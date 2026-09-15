@@ -1,0 +1,82 @@
+<%
+/* An abstract wireframe of the template's layout, drawn per category in the
+   template's own accent colour. Cheap, sharp at any size, and it conveys the
+   shape of the page better than a shrunk-down screenshot would. */
+const a = template.accent;
+const soft = a + '22';
+const softer = a + '12';
+%>
+<div class="thumb" style="background:<%= softer %>">
+  <svg viewBox="0 0 320 200" role="img" aria-label="<%= template.name %> layout preview" preserveAspectRatio="xMidYMid slice">
+    <rect width="320" height="200" fill="#fff"/>
+    <rect x="0" y="0" width="320" height="16" fill="<%= soft %>"/>
+    <circle cx="10" cy="8" r="2.4" fill="<%= a %>"/>
+    <rect x="18" y="6" width="26" height="4" rx="2" fill="<%= a %>" opacity=".55"/>
+    <rect x="250" y="6" width="18" height="4" rx="2" fill="#c9cdd6"/>
+    <rect x="274" y="6" width="18" height="4" rx="2" fill="#c9cdd6"/>
+
+    <% if (template.category === 'ecommerce') { %>
+      <rect x="16" y="28" width="288" height="52" rx="6" fill="<%= soft %>"/>
+      <rect x="28" y="42" width="96" height="9" rx="4" fill="<%= a %>"/>
+      <rect x="28" y="57" width="140" height="5" rx="2" fill="#c9cdd6"/>
+      <% for (let i = 0; i < 4; i++) { %>
+        <rect x="<%= 16 + i * 74 %>" y="92" width="62" height="54" rx="6" fill="#eef0f4"/>
+        <rect x="<%= 16 + i * 74 %>" y="92" width="62" height="36" rx="6" fill="<%= soft %>"/>
+        <rect x="<%= 22 + i * 74 %>" y="133" width="34" height="4" rx="2" fill="#b9bec9"/>
+        <rect x="<%= 22 + i * 74 %>" y="140" width="18" height="4" rx="2" fill="<%= a %>"/>
+      <% } %>
+      <rect x="16" y="158" width="288" height="28" rx="6" fill="#f4f5f8"/>
+
+    <% } else if (template.category === 'portfolio') { %>
+      <rect x="16" y="30" width="170" height="14" rx="5" fill="<%= a %>"/>
+      <rect x="16" y="52" width="120" height="6" rx="3" fill="#c9cdd6"/>
+      <rect x="16" y="74" width="140" height="110" rx="7" fill="<%= soft %>"/>
+      <rect x="166" y="74" width="138" height="52" rx="7" fill="#eef0f4"/>
+      <rect x="166" y="132" width="66" height="52" rx="7" fill="#eef0f4"/>
+      <rect x="238" y="132" width="66" height="52" rx="7" fill="<%= soft %>"/>
+
+    <% } else if (template.category === 'saas') { %>
+      <rect x="16" y="30" width="150" height="12" rx="5" fill="<%= a %>"/>
+      <rect x="16" y="50" width="120" height="5" rx="2" fill="#c9cdd6"/>
+      <rect x="16" y="62" width="92" height="5" rx="2" fill="#c9cdd6"/>
+      <rect x="16" y="78" width="54" height="15" rx="7" fill="<%= a %>"/>
+      <rect x="78" y="78" width="46" height="15" rx="7" fill="#e6e8ee"/>
+      <rect x="186" y="30" width="118" height="70" rx="8" fill="<%= soft %>"/>
+      <% for (let i = 0; i < 3; i++) { %>
+        <rect x="<%= 16 + i * 98 %>" y="112" width="88" height="72" rx="7" fill="#f4f5f8" stroke="#e6e8ee"/>
+        <rect x="<%= 26 + i * 98 %>" y="124" width="30" height="5" rx="2" fill="<%= a %>"/>
+        <rect x="<%= 26 + i * 98 %>" y="136" width="44" height="12" rx="4" fill="#dfe2e9"/>
+        <rect x="<%= 26 + i * 98 %>" y="156" width="60" height="4" rx="2" fill="#dfe2e9"/>
+        <rect x="<%= 26 + i * 98 %>" y="164" width="48" height="4" rx="2" fill="#dfe2e9"/>
+      <% } %>
+
+    <% } else if (template.category === 'restaurant') { %>
+      <rect x="0" y="16" width="320" height="76" fill="<%= soft %>"/>
+      <rect x="112" y="40" width="96" height="12" rx="5" fill="<%= a %>"/>
+      <rect x="132" y="60" width="56" height="5" rx="2" fill="<%= a %>" opacity=".5"/>
+      <% for (let i = 0; i < 5; i++) { %>
+        <rect x="24" y="<%= 106 + i * 17 %>" width="<%= 90 + (i % 3) * 30 %>" height="5" rx="2" fill="#c9cdd6"/>
+        <rect x="278" y="<%= 106 + i * 17 %>" width="18" height="5" rx="2" fill="<%= a %>"/>
+      <% } %>
+
+    <% } else if (template.category === 'blog') { %>
+      <rect x="64" y="34" width="192" height="11" rx="4" fill="<%= a %>"/>
+      <% for (let i = 0; i < 9; i++) { %>
+        <rect x="64" y="<%= 60 + i * 13 %>" width="<%= i === 8 ? 120 : 192 %>" height="5" rx="2" fill="#dadde4"/>
+      <% } %>
+      <rect x="64" y="180" width="60" height="8" rx="4" fill="<%= soft %>"/>
+
+    <% } else { %>
+      <rect x="16" y="30" width="160" height="12" rx="5" fill="<%= a %>"/>
+      <rect x="16" y="50" width="128" height="5" rx="2" fill="#c9cdd6"/>
+      <rect x="196" y="28" width="108" height="64" rx="8" fill="<%= soft %>"/>
+      <% for (let i = 0; i < 3; i++) { %>
+        <rect x="<%= 16 + i * 98 %>" y="104" width="88" height="80" rx="7" fill="#f4f5f8" stroke="#e6e8ee"/>
+        <circle cx="<%= 36 + i * 98 %>" cy="124" r="9" fill="<%= soft %>"/>
+        <rect x="<%= 26 + i * 98 %>" y="142" width="52" height="5" rx="2" fill="#c9cdd6"/>
+        <rect x="<%= 26 + i * 98 %>" y="153" width="66" height="4" rx="2" fill="#dfe2e9"/>
+        <rect x="<%= 26 + i * 98 %>" y="162" width="40" height="4" rx="2" fill="#dfe2e9"/>
+      <% } %>
+    <% } %>
+  </svg>
+</div>

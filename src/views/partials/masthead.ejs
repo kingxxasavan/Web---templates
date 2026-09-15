@@ -1,0 +1,39 @@
+<header class="masthead">
+  <div class="container masthead__inner">
+    <a class="brand" href="/">
+      <span class="brand__mark" aria-hidden="true">$5</span>
+      <span class="brand__name"><%= store.name %></span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+        <path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.8"/>
+      </svg>
+    </button>
+
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <a href="/templates" <%= path.startsWith('/templates') ? 'aria-current="page"' : '' %>>Templates</a>
+      <a href="/find" <%= path.startsWith('/find') ? 'aria-current="page"' : '' %>>Find yours</a>
+      <a href="/domains" <%= path.startsWith('/domains') ? 'aria-current="page"' : '' %>>Domain finder</a>
+      <a href="/tutorials" <%= path.startsWith('/tutorials') ? 'aria-current="page"' : '' %>>Tutorials</a>
+      <a href="/pricing" <%= path === '/pricing' ? 'aria-current="page"' : '' %>>Pricing</a>
+
+      <span class="spacer" aria-hidden="true"></span>
+
+      <a class="cart-pill" href="/cart" aria-label="Cart, <%= cartCount %> item<%= cartCount === 1 ? '' : 's' %>">
+        Cart
+        <% if (cartCount > 0) { %><span class="cart-pill__count"><%= cartCount %></span><% } %>
+      </a>
+
+      <% if (currentUser) { %>
+        <a href="/account" <%= path.startsWith('/account') ? 'aria-current="page"' : '' %>>Account</a>
+        <form method="post" action="/logout" style="display:inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn--quiet btn--sm" type="submit">Sign out</button>
+        </form>
+      <% } else { %>
+        <a href="/login">Sign in</a>
+      <% } %>
+    </nav>
+  </div>
+</header>

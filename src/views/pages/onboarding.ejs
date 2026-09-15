@@ -1,0 +1,68 @@
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <span class="eyebrow">Guided finder</span>
+    <h1 class="mt-1">Five questions</h1>
+    <p class="lede mt-2">Then we rank all <%= store.name %> templates against your answers — with the reason for every match, and what each one is missing.</p>
+
+    <form method="post" action="/find" class="mt-5" id="finder">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <% questions.forEach(function (q, index) { %>
+        <fieldset class="card mt-3" style="border:1px solid var(--border);padding:24px">
+          <legend class="sr-only"><%= q.question %></legend>
+          <div class="row" style="gap:10px;align-items:baseline">
+            <span class="tag tag--accent"><%= index + 1 %> / <%= questions.length %></span>
+            <h3 style="margin:0"><%= q.question %></h3>
+          </div>
+          <% if (q.help) { %><p class="small muted mt-1"><%= q.help %></p><% } %>
+
+          <div class="option-grid mt-3">
+            <% q.options.forEach(function (option) { %>
+              <%
+                const checked = q.type === 'multi'
+                  ? (saved[q.key] || []).includes(option.value)
+                  : saved[q.key] === option.value;
+              %>
+              <label class="option">
+                <input
+                  type="<%= q.type === 'multi' ? 'checkbox' : 'radio' %>"
+                  name="<%= q.key %>"
+                  value="<%= option.value %>"
+                  <%= checked ? 'checked' : '' %>>
+                <span class="option__body">
+                  <b><%= option.label %></b>
+                  <% if (option.hint) { %><span class="tiny muted"><%= option.hint %></span><% } %>
+                </span>
+              </label>
+            <% }); %>
+          </div>
+        </fieldset>
+      <% }); %>
+
+      <fieldset class="card mt-3" style="border:1px solid var(--border);padding:24px">
+        <legend class="sr-only">About your business</legend>
+        <div class="row" style="gap:10px;align-items:baseline">
+          <span class="tag">Optional</span>
+          <h3 style="margin:0">What's it called?</h3>
+        </div>
+        <p class="small muted mt-1">Only used to seed the domain finder on your results page. Nothing is sent anywhere.</p>
+        <div class="grid grid--2 mt-3">
+          <div>
+            <label for="b-name">Business or project name</label>
+            <input id="b-name" type="text" name="name" maxlength="80" value="<%= saved.name || '' %>" placeholder="Ember Table">
+          </div>
+          <div>
+            <label for="b-keywords">A few describing words</label>
+            <input id="b-keywords" type="text" name="keywords" maxlength="120" value="<%= saved.keywords || '' %>" placeholder="wood fired pizza leeds">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="row mt-4">
+        <button class="btn btn--accent btn--lg" type="submit">Show my matches</button>
+        <a class="btn btn--quiet" href="/templates">Skip, browse everything</a>
+      </div>
+      <p class="tiny muted mt-2">You can leave anything blank — unanswered questions just don't affect the ranking.</p>
+    </form>
+  </div>
+</section>

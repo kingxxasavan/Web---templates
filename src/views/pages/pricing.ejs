@@ -1,0 +1,78 @@
+<section class="section section--tight">
+  <div class="container">
+    <div class="center" style="max-width:56ch;margin-inline:auto">
+      <span class="eyebrow">Pricing</span>
+      <h1 class="mt-1">One price. No tiers.</h1>
+      <p class="lede mt-2" style="margin-inline:auto">Every template is <%= money(store.templatePriceCents) %>, once. There is no subscription to forget about and no "pro" version of the same file.</p>
+    </div>
+
+    <div class="grid grid--3 mt-5">
+      <div class="card card--raised">
+        <span class="tag">Single</span>
+        <div class="row mt-2" style="align-items:baseline;gap:6px">
+          <span class="price" style="font-size:2.4rem"><%= money(store.templatePriceCents) %></span>
+          <span class="small muted">per template</span>
+        </div>
+        <ul class="stack small mt-3" style="list-style:none;padding:0">
+          <li>✓ Full unminified source</li>
+          <li>✓ Commercial use on one site</li>
+          <li>✓ Unlimited re-downloads</li>
+          <li>✓ All tutorials</li>
+        </ul>
+        <a class="btn btn--block mt-3" href="/templates">Browse templates</a>
+      </div>
+
+      <div class="card card--raised" style="border-color:var(--accent);box-shadow:var(--shadow-lg)">
+        <span class="tag tag--accent">Bundle · best value</span>
+        <div class="row mt-2" style="align-items:baseline;gap:6px">
+          <span class="price" style="font-size:2.4rem"><%= money(store.bundle.priceCents) %></span>
+          <span class="small muted">for any <%= store.bundle.minItems %></span>
+        </div>
+        <p class="small muted mt-1">Instead of <%= money(store.bundle.minItems * store.templatePriceCents) %> — applied automatically in the cart, no code to enter.</p>
+        <ul class="stack small mt-3" style="list-style:none;padding:0">
+          <li>✓ Everything in Single, ×<%= store.bundle.minItems %></li>
+          <li>✓ Mix any categories you like</li>
+          <li>✓ Stacks — six templates is two bundles</li>
+        </ul>
+        <a class="btn btn--accent btn--block mt-3" href="/templates">Pick <%= store.bundle.minItems %></a>
+      </div>
+
+      <div class="card card--raised">
+        <span class="tag">Add-ons</span>
+        <div class="row mt-2" style="align-items:baseline;gap:6px">
+          <span class="price" style="font-size:2.4rem">+<%= money(700) %></span>
+          <span class="small muted">and up</span>
+        </div>
+        <p class="small muted mt-1">Optional. Applied to every template in the order.</p>
+        <ul class="stack small mt-3" style="list-style:none;padding:0">
+          <% Object.entries(addons).forEach(function ([id, addon]) { %>
+            <li><b><%= addon.name %></b> — <%= money(addon.priceCents) %><br><span class="tiny muted"><%= addon.blurb %></span></li>
+          <% }); %>
+        </ul>
+        <a class="btn btn--ghost btn--block mt-3" href="/cart">See them in the cart</a>
+      </div>
+    </div>
+
+    <div class="card mt-5" style="background:var(--surface-2)">
+      <h2>Questions people actually ask</h2>
+      <div class="grid grid--2 mt-3">
+        <div>
+          <h4>Is it really one payment?</h4>
+          <p class="small muted mt-1">Yes. There's no renewal, no licence key, and nothing stops working if you never come back.</p>
+        </div>
+        <div>
+          <h4>Can I use it for a client?</h4>
+          <p class="small muted mt-1">Yes — one licence per site you build. Two clients, two licences.</p>
+        </div>
+        <div>
+          <h4>What if I lose the files?</h4>
+          <p class="small muted mt-1">They're in your account permanently. Sign in and download again.</p>
+        </div>
+        <div>
+          <h4>Do I need to know how to code?</h4>
+          <p class="small muted mt-1">To change text and colours, no — the <a href="/tutorials/change-colours-and-fonts">tutorial</a> covers it. To restructure a page, some HTML helps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

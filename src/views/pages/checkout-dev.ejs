@@ -1,0 +1,44 @@
+<section class="section">
+  <div class="container container--narrow">
+    <div class="notice notice--warn">
+      <div>
+        <strong>Simulated checkout — nothing is charged.</strong>
+        <p class="small mt-1">
+          This page stands in for Stripe Checkout because no <code>STRIPE_SECRET_KEY</code> is configured.
+          It asks for no card details and moves no money. Set the key in <code>.env</code> and this page
+          is replaced by Stripe's real hosted checkout.
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--raised mt-4">
+      <span class="eyebrow">Order <%= order.reference %></span>
+      <h1 class="mt-1" style="font-size:2rem">Confirm your order</h1>
+
+      <table class="table mt-4">
+        <tbody>
+          <% items.forEach(function (item) { %>
+            <tr>
+              <td><%= item.name %><% if (item.kind === 'addon') { %> <span class="tag">add-on</span><% } %></td>
+              <td class="num"><%= money(item.unit_cents * item.quantity) %></td>
+            </tr>
+          <% }); %>
+          <% if (order.discount_cents > 0) { %>
+            <tr style="color:var(--ok)"><td>Bundle discount</td><td class="num">−<%= money(order.discount_cents) %></td></tr>
+          <% } %>
+        </tbody>
+        <tfoot>
+          <tr><td>Total</td><td class="num price price--lg"><%= money(order.total_cents) %></td></tr>
+        </tfoot>
+      </table>
+
+      <p class="small muted mt-3">Receipt goes to <b><%= order.email %></b>.</p>
+
+      <form method="post" action="/checkout/dev/<%= order.reference %>" class="mt-3">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn--accent btn--lg btn--block" type="submit">Complete simulated payment</button>
+      </form>
+      <a class="btn btn--quiet btn--sm btn--block mt-2" href="/cart">Cancel and go back</a>
+    </div>
+  </div>
+</section>

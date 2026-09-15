@@ -1,0 +1,84 @@
+<section class="section section--tight">
+  <div class="container">
+    <div class="row row--between">
+      <div>
+        <span class="eyebrow">Account</span>
+        <h1 class="mt-1"><%= currentUser.name || currentUser.email %></h1>
+        <p class="small muted mt-1"><%= entitlements.length %> template<%= entitlements.length === 1 ? '' : 's' %> owned · <%= history.length %> order<%= history.length === 1 ? '' : 's' %></p>
+      </div>
+      <a class="btn btn--ghost" href="/templates">Browse templates</a>
+    </div>
+
+    <h2 class="mt-5">Your templates</h2>
+
+    <% if (!entitlements.length) { %>
+      <div class="card mt-3 center" style="padding:44px 24px">
+        <h3>Nothing bought yet</h3>
+        <p class="muted mt-2">Once you buy a template it lives here permanently — re-download it as often as you like.</p>
+        <a class="btn btn--accent mt-3" href="/find">Find my template</a>
+      </div>
+    <% } else { %>
+      <div class="grid grid--3 mt-3">
+        <% entitlements.forEach(function (entitlement) { %>
+          <article class="tile">
+            <%- include('../partials/thumb', { template: entitlement.template }) %>
+            <div class="tile__body">
+              <b><%= entitlement.template.name %></b>
+              <p class="tiny muted"><%= entitlement.template.tagline %></p>
+
+              <% if (entitlement.addons.length) { %>
+                <div class="tag-list mt-1">
+                  <% entitlement.addons.forEach(function (id) { %>
+                    <span class="tag tag--accent"><%= (addons[id] || {}).name || id %></span>
+                  <% }); %>
+                </div>
+              <% } %>
+
+              <div class="tile__foot" style="flex-direction:column;align-items:stretch;gap:8px">
+                <form method="post" action="/account/download/<%= entitlement.template_slug %>">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn--accent btn--sm btn--block" type="submit">Download .zip</button>
+                </form>
+                <div class="row row--between tiny muted">
+                  <span><%= entitlement.download_count %> download<%= entitlement.download_count === 1 ? '' : 's' %></span>
+                  <a href="/preview/<%= entitlement.template_slug %>/" target="_blank" rel="noopener">Preview &nearr;</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } %>
+
+    <% if (history.length) { %>
+      <h2 class="mt-5">Order history</h2>
+      <div class="card card--flush mt-3">
+        <table class="table">
+          <thead>
+            <tr><th>Reference</th><th>Date</th><th>Items</th><th class="num">Total</th></tr>
+          </thead>
+          <tbody>
+            <% history.forEach(function (order) { %>
+              <tr>
+                <td><a href="/checkout/receipt/<%= order.reference %>" style="font-weight:600;text-decoration:none"><%= order.reference %></a></td>
+                <td class="small muted"><%= (order.paid_at || order.created_at).slice(0, 10) %></td>
+                <td class="small muted"><%= order.items.map(function (i) { return i.name; }).join(', ') %></td>
+                <td class="num"><%= money(order.total_cents) %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <% if (suggestions.length) { %>
+      <h2 class="mt-5">You don't have these yet</h2>
+      <p class="small muted mt-1">Any three templates cost <%= money(store.bundle.priceCents) %> together.</p>
+      <div class="grid grid--3 mt-3">
+        <% suggestions.forEach(function (template) { %>
+          <%- include('../partials/template-card', { template }) %>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</section>

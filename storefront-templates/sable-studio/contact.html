@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Sable Studio</title>
+<meta name="description" content="Start a project with Sable Studio. We reply to every enquiry within one working day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="mark" href="index.html"><span class="mark__dot" aria-hidden="true"></span>Sable Studio</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="work.html">Work</a>
+      <a href="about.html">Studio</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <a class="btn" style="margin-left:8px;padding:9px 18px;font-size:.86rem" href="contact.html">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section">
+    <div class="container" style="display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:start" id="contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1 style="margin-top:14px;font-size:clamp(2.2rem,5vw,3.4rem)">Start a project</h1>
+        <p class="muted" style="margin-top:18px">
+          Every enquiry gets a reply within one working day, including the ones we turn down &mdash;
+          and we will tell you why, and suggest someone better suited where we can.
+        </p>
+
+        <form style="margin-top:36px" data-contact novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="company">Company <span class="muted" style="font-weight:400">(optional)</span></label>
+            <input id="company" name="company" type="text" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="kind">What kind of work?</label>
+            <select id="kind" name="kind">
+              <option>Product design and build</option>
+              <option>Design only</option>
+              <option>Engineering only</option>
+              <option>Brand</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="budget-label">Rough budget</label>
+            <div class="budget" role="radiogroup" aria-labelledby="budget-label">
+              <label><input type="radio" name="budget" value="under-25" ><span>Under &pound;25k</span></label>
+              <label><input type="radio" name="budget" value="25-60" checked><span>&pound;25k&ndash;&pound;60k</span></label>
+              <label><input type="radio" name="budget" value="60-150"><span>&pound;60k&ndash;&pound;150k</span></label>
+              <label><input type="radio" name="budget" value="150-plus"><span>&pound;150k+</span></label>
+            </div>
+            <p class="tiny muted" style="margin-top:8px">A range is fine. It tells us whether we are the right size of studio, not how much to charge.</p>
+          </div>
+          <div class="field">
+            <label for="message">About the project</label>
+            <textarea id="message" name="message" rows="6" required
+                      placeholder="What are you building, who is it for, and when does it need to exist?"></textarea>
+            <p class="field-error"></p>
+          </div>
+          <button class="btn btn--lg" type="submit">Send enquiry</button>
+          <p data-status role="status" class="small" style="margin-top:14px;color:var(--accent);min-height:1.3em"></p>
+        </form>
+
+        <p class="tiny muted" style="margin-top:24px;max-width:50ch">
+          This form validates but does not send yet &mdash; give it an <code>action</code> or post it
+          from JavaScript. See README.md.
+        </p>
+      </div>
+
+      <aside>
+        <div style="padding:30px;background:var(--surface-2);border-radius:var(--radius)">
+          <h2 style="font-size:1.4rem">Rather just email?</h2>
+          <p class="small muted" style="margin-top:10px">Completely fine. No form is going to tell us anything the email would not.</p>
+          <p style="margin-top:16px"><a href="mailto:hello@sable.example" style="color:var(--accent);font-weight:600">hello@sable.example</a></p>
+          <p class="small" style="margin-top:8px"><a href="tel:+441170000000">0117 000 0000</a></p>
+
+          <hr style="border:0;border-top:1px solid var(--border);margin-block:24px">
+
+          <h3 style="font-size:.95rem">Where we are</h3>
+          <p class="small muted" style="margin-top:8px">Unit 7, Paintworks<br>Bath Road<br>Bristol BS4 3EH</p>
+
+          <h3 style="font-size:.95rem;margin-top:22px">Availability</h3>
+          <p class="small muted" style="margin-top:8px">Taking new projects from <strong>May 2026</strong>. Discovery work can usually start sooner.</p>
+
+          <h3 style="font-size:.95rem;margin-top:22px">Response time</h3>
+          <p class="small muted" style="margin-top:8px">One working day, every time. If you have not heard in two, something went wrong &mdash; please chase us.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="mark" href="index.html"><span class="mark__dot" aria-hidden="true"></span>Sable Studio</a>
+        <p class="small" style="margin-top:14px;max-width:34ch">
+          A six-person design and engineering studio in Bristol. We build the thing, then we help
+          you run it.
+        </p>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#services">Product design</a></li>
+          <li><a href="index.html#services">Engineering</a></li>
+          <li><a href="index.html#services">Brand</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:hello@sable.example">hello@sable.example</a></li>
+          <li><a href="tel:+441170000000">0117 000 0000</a></li>
+          <li><span>Unit 7, Paintworks<br>Bristol BS4 3EH</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Sable Studio Ltd &middot; Company 00000000</span>
+      <span>Bristol, UK</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

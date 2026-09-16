@@ -12,7 +12,9 @@
 
   --ink: #14161c;
   --ink-2: #3b4150;
-  --ink-3: #6b7280;
+  /* Dark enough to clear AA on the tinted panels (--accent-soft, --surface-2)
+     as well as on white — muted text sits on all three. */
+  --ink-3: #656c7a;
   --ink-4: #9aa1ae;
 
   --surface: #ffffff;

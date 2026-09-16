@@ -13,7 +13,7 @@
   --bg-3: #1c1f25;
   --fg: #f2f3f5;
   --fg-2: #a8adb8;
-  --fg-3: #71767f;
+  --fg-3: #838994;   /* lightened from #71767f so labels clear AA (5.5:1) on --bg */
   --line: #262a31;
 
   --radius: 4px;

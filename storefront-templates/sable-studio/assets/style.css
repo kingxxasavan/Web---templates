@@ -9,7 +9,9 @@
 
   --ink: #11171c;
   --ink-2: #3f4a53;
-  --ink-3: #6d7882;
+  /* Darkened so muted text clears AA on the tinted alternate surface too,
+     not just on the primary one. */
+  --ink-3: #65707a;
 
   --surface: #ffffff;
   --surface-2: #f5f7f9;
@@ -86,8 +88,11 @@ p { margin: 0; }
 .mark__dot { width: 26px; height: 26px; border-radius: 7px; background: var(--accent); }
 
 .nav { display: flex; gap: 3px; margin-left: auto; align-items: center; }
-.nav a { padding: 8px 13px; border-radius: 6px; font-size: .92rem; color: var(--ink-2); font-weight: 500; }
-.nav a:hover, .nav a[aria-current="page"] { background: var(--surface-3); color: var(--ink); }
+/* Scoped with :not(.btn): a call-to-action button living in the nav must keep
+   its own colours. Without this, `.nav a` outranks `.btn` on specificity and
+   paints dark link text onto a saturated button, which fails contrast. */
+.nav a:not(.btn) { padding: 8px 13px; border-radius: 6px; font-size: .92rem; color: var(--ink-2); font-weight: 500; }
+.nav a:not(.btn):hover, .nav a:not(.btn)[aria-current="page"] { background: var(--surface-3); color: var(--ink); }
 .nav-toggle { display: none; margin-left: auto; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; cursor: pointer; }
 
 /* ------------------------------------------------------------- hero */

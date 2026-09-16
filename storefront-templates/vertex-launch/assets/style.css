@@ -3,14 +3,18 @@
    ========================================================================== */
 
 :root {
-  --accent: #2f9e7f;
-  --accent-dark: #258066;
+  /* Darkened from #2f9e7f so white button text clears WCAG AA (4.8:1).
+     The lighter green is kept as --accent-tint for decorative fills only,
+     never behind text. */
+  --accent: #258066;
+  --accent-dark: #1f6d59;
+  --accent-tint: #2f9e7f;
   --accent-soft: #e6f5f0;
-  --accent-ring: rgba(47, 158, 127, .3);
+  --accent-ring: rgba(37, 128, 102, .32);
 
   --ink: #0f1a17;
   --ink-2: #3d4b47;
-  --ink-3: #6b7975;
+  --ink-3: #5c6864;  /* darkened so muted text clears AA on --surface-3 too */
 
   --surface: #ffffff;
   --surface-2: #f6f9f8;
@@ -92,8 +96,11 @@ p { margin: 0; }
 .logo__mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
 
 .nav { display: flex; gap: 4px; margin-left: auto; align-items: center; }
-.nav a { padding: 8px 13px; border-radius: 999px; font-size: .92rem; color: var(--ink-2); font-weight: 500; }
-.nav a:hover { background: var(--surface-3); color: var(--ink); }
+/* Scoped with :not(.btn): a call-to-action button living in the nav must keep
+   its own colours. Without this, `.nav a` outranks `.btn` on specificity and
+   paints dark link text onto a saturated button, which fails contrast. */
+.nav a:not(.btn) { padding: 8px 13px; border-radius: 999px; font-size: .92rem; color: var(--ink-2); font-weight: 500; }
+.nav a:not(.btn):hover { background: var(--surface-3); color: var(--ink); }
 .nav-toggle { display: none; margin-left: auto; background: none; border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; cursor: pointer; }
 
 /* ------------------------------------------------------------- hero */
@@ -158,7 +165,7 @@ p { margin: 0; }
   transition: background .2s ease, color .2s ease;
 }
 .toggle button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
-.toggle .save { color: var(--accent); font-size: .74rem; margin-left: 6px; }
+.toggle .save { color: #1d785e; font-size: .74rem; margin-left: 6px; }
 
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: start; margin-top: 44px; }
 .plan { padding: 30px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); position: relative; }
@@ -177,7 +184,9 @@ p { margin: 0; }
 .compare thead th { font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-3); }
 .compare td:not(:first-child), .compare th:not(:first-child) { text-align: center; }
 .compare .yes { color: var(--accent); font-weight: 700; }
-.compare .no { color: var(--border); }
+/* This dash carries meaning ("not included"), so it needs real contrast
+   rather than being a hairline the eye skips. */
+.compare .no { color: var(--ink-3); }
 
 /* ------------------------------------------------------------- quotes */
 

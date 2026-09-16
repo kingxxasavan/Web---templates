@@ -19,10 +19,23 @@ Double-click `index.html`. Or `npx serve .` if you prefer a local server.
 
 ## The theme toggle
 
-Dark is the default. The toggle writes the choice to `localStorage` and a small
-inline script in each `<head>` reads it **before first paint**, so there's no
-flash of the wrong theme on load. If a visitor has never chosen, the site
-follows their OS `prefers-color-scheme`.
+Dark is the default and stays the default. The toggle writes the choice to
+`localStorage` and a small inline script in each `<head>` reads it **before
+first paint**, so there's no flash of the wrong theme on load.
+
+The site deliberately does **not** follow the visitor's OS
+`prefers-color-scheme`. Dark is the design here rather than a preference, and a
+visitor arriving on a light-mode machine should still see the template as it
+was built. Only the toggle overrides it, and that choice persists.
+
+If you would rather follow the OS, add this to the inline script in each
+`<head>`, after the `localStorage` check:
+
+```js
+if (!saved && window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.documentElement.setAttribute('data-theme', 'light');
+}
+```
 
 Both palettes are at the top of `assets/style.css`:
 

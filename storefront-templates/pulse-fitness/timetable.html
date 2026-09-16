@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timetable — Pulse Fitness</title>
+<meta name="description" content="The full weekly class timetable at Pulse Fitness, Sheffield.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar__inner">
+    <a class="logo" href="index.html">Pulse<span>.</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="timetable.html" aria-current="page">Timetable</a>
+      <a href="join.html">Membership</a>
+      <a class="btn btn--sm" style="margin-left:8px" href="join.html">Free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="kicker">Every class, every day</span>
+      <h1 style="margin-top:16px;font-size:clamp(2.4rem,6vw,4.4rem)">Timetable</h1>
+      <p class="muted" style="margin-top:18px;max-width:50ch">
+        Twenty-two classes a week, all coached, all capped. Booking opens seven days ahead and
+        closes fifteen minutes before the start.
+      </p>
+
+      <div style="margin-top:44px">
+
+      <div class="day-tabs" data-day-tabs role="tablist" aria-label="Day of the week"></div>
+
+      <div class="type-filter">
+        <span class="tiny muted" style="margin-right:4px">Filter:</span>
+        <button class="type-chip" type="button" data-type="strength" aria-pressed="false">Strength</button>
+        <button class="type-chip" type="button" data-type="condition" aria-pressed="false">Condition</button>
+        <button class="type-chip" type="button" data-type="mobility" aria-pressed="false">Mobility</button>
+        <button class="type-chip" type="button" data-type="skills" aria-pressed="false">Skills</button>
+      </div>
+
+      <h3 data-day-heading style="margin-bottom:16px;font-size:1rem;color:var(--ink-3);letter-spacing:.1em">&nbsp;</h3>
+      <div class="classes" data-classes></div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Class types</span>
+        <h2 style="margin-top:12px">What each one actually is</h2>
+      </div>
+
+      <div style="display:grid;gap:18px">
+        <div style="padding:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+          <span class="klass__type" style="background:#fdeced;color:#b52f35">Strength</span>
+          <h3 style="margin-top:12px">Barbell Club &middot; Strength Foundations &middot; Saturday Strength</h3>
+          <p class="small muted" style="margin-top:8px">
+            Squat, press, deadlift, on a written twelve-week progression. Foundations is the
+            beginner version and moves at the pace of whoever is newest in the room. Bring a
+            notebook or use the app; the point is that the numbers go up over months, not sessions.
+          </p>
+        </div>
+        <div style="padding:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+          <span class="klass__type" style="background:#e8f1fb;color:#2f6bb5">Condition</span>
+          <h3 style="margin-top:12px">Engine Room &middot; Express Conditioning &middot; Friday Partner</h3>
+          <p class="small muted" style="margin-top:8px">
+            Rowing, bike, sled, carries. Hard, structured intervals rather than random exhaustion.
+            Express is thirty minutes at lunchtime and you will not need a shower afterwards,
+            which is the entire design brief.
+          </p>
+        </div>
+        <div style="padding:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+          <span class="klass__type" style="background:#e9f5ec;color:#26723f">Mobility</span>
+          <h3 style="margin-top:12px">Hips &amp; Shoulders &middot; Restorative</h3>
+          <p class="small muted" style="margin-top:8px">
+            Loaded stretching and positional work, run by a physio. Not yoga, though it borrows
+            from it. If your squat is stuck this is usually the answer.
+          </p>
+        </div>
+        <div style="padding:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+          <span class="klass__type" style="background:#f4eefb;color:#6b3fb5">Skills</span>
+          <h3 style="margin-top:12px">Olympic Lifting &middot; Gymnastic Skills</h3>
+          <p class="small muted" style="margin-top:8px">
+            Snatch, clean and jerk, and bodyweight work on the rings and bar. Capped at eight and
+            ten respectively because these need hands-on coaching. Expect to spend the first month
+            with an empty bar and to be glad of it later.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="logo" href="index.html">Pulse<span style="color:#e05056">.</span></a>
+        <p class="small" style="margin-top:14px;max-width:34ch">
+          A barbell and conditioning gym in Sheffield. Coached classes, capped numbers,
+          no contracts longer than a month.
+        </p>
+      </div>
+      <div>
+        <h4>Train</h4>
+        <ul>
+          <li><a href="timetable.html">Timetable</a></li>
+          <li><a href="join.html">Membership</a></li>
+          <li><a href="join.html">Free trial</a></li>
+          <li><a href="index.html#coaches">Coaches</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><span>Unit 12, Neepsend Works<br>Sheffield S3 8AT</span></li>
+          <li><a href="tel:+441140000000">0114 000 0000</a></li>
+          <li><a href="mailto:train@pulse.example">train@pulse.example</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul>
+          <li><span>Mon&ndash;Fri 6am&ndash;9pm</span></li>
+          <li><span>Sat 8am&ndash;2pm</span></li>
+          <li><span>Sun open gym 8am&ndash;2pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; 2026 Pulse Fitness Ltd</span>
+      <span>Sheffield</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/schedule.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

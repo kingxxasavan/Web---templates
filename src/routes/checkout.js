@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-const config = require('../config');
 const cartService = require('../services/cart');
 const payments = require('../services/payments');
 const orders = require('../services/orders');
@@ -191,4 +190,3 @@ module.exports.webhook = function webhook(req, res) {
   res.json({ received: true });
 };
 
-module.exports.config = config;

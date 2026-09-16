@@ -21,14 +21,20 @@ Double-click `index.html`, or `npx serve .`.
 
 ```css
 :root {
-  --measure: 68ch;       /* body text */
-  --measure-wide: 82ch;  /* post lists */
+  --measure: 39rem;       /* body text — about 68 characters */
+  --measure-wide: 46rem;  /* post lists — about 82 characters */
 }
 ```
 
 68 characters is the cap for a reason: long lines are the most common reason
 people stop reading, and no amount of styling compensates. If you widen this,
 widen the leading too or the eye loses its place returning to the next line.
+
+**Why `rem` and not `ch`.** `ch` is the width of a `0` in *that element's own
+font*. The article header is set in the sans UI font and the body in the reading
+serif, so `68ch` resolves to two different pixel widths and the two blocks stop
+sharing a left edge — a misalignment that is obvious once you notice it and
+maddening to track down. `rem` is font-independent, so the whole column lines up.
 
 Three fonts do three jobs:
 

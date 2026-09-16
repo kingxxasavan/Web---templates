@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 const money = (c) => `$${(c / 100).toFixed(c % 100 === 0 ? 0 : 2)}`;
 
-export default function CartView({ initialCart }) {
+export default function CartView({ initialCart, signedIn = true }) {
   const [cart, setCart] = useState(initialCart);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
@@ -31,6 +31,11 @@ export default function CartView({ initialCart }) {
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
+      // Signed out: send them to sign up, cart intact in the cookie.
+      if (data.needsAuth && data.redirect) {
+        router.push(data.redirect);
+        return;
+      }
       setError(data.error || "Checkout failed.");
       setBusy(false);
       return;
@@ -120,8 +125,19 @@ export default function CartView({ initialCart }) {
             disabled={busy}
             className="mt-5 h-11 w-full rounded-full bg-ink text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
           >
-            {busy ? "Processing…" : "Complete purchase"}
+            {busy
+              ? "Processing…"
+              : signedIn
+                ? "Complete purchase"
+                : "Continue to checkout"}
           </button>
+
+          {!signedIn && (
+            <p className="mt-3 text-center text-[11.5px] leading-relaxed text-faint">
+              No account needed to browse or price up an order. You&rsquo;ll
+              create one at checkout and your cart comes with you.
+            </p>
+          )}
 
           <p className="mt-4 text-center text-[11.5px] leading-relaxed text-faint">
             Instant download · Lifetime access · Commercial licence

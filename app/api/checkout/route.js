@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { createOrder, fulfillOrder, getCart, sendReceipt } from "@/lib/store";
+import { createOrder, fulfillOrder, getCart, sendReceipt, mergeGuestCart } from "@/lib/store";
+import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
 import { money } from "@/lib/catalog";
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -18,7 +19,23 @@ export async function POST(request) {
 
   const user = await currentUser();
   if (!user) {
-    return NextResponse.json({ error: "Sign in first.", needsAuth: true }, { status: 401 });
+    // The cart survives in the cookie; the visitor returns here after signing
+    // up, with everything still in it.
+    return NextResponse.json(
+      {
+        error: "Create an account to complete your purchase — your cart is saved.",
+        needsAuth: true,
+        redirect: "/register?next=%2Fcart",
+      },
+      { status: 401 }
+    );
+  }
+
+  // A cart built before signing in may still be sitting in the cookie.
+  const pending = await readGuestCart();
+  if (pending.length) {
+    await mergeGuestCart(user.id, pending);
+    await clearGuestCart();
   }
 
   const cart = await getCart(user.id);

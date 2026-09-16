@@ -1,0 +1,35 @@
+Foundry Template Licence
+Template: quill-journal
+Copyright (c) 2026 Foundry. All rights reserved.
+
+This template is original work. It is not derived from, and does not
+redistribute, any third-party open-source theme.
+
+YOU MAY
+  - Use this template on an unlimited number of projects, personal or
+    commercial.
+  - Use it on projects you build for paying clients, and charge for that work.
+  - Modify the source in any way you like.
+  - Deploy it on any number of domains.
+  - Keep using it indefinitely. This licence does not expire.
+
+  No attribution or backlink is required.
+
+YOU MAY NOT
+  - Resell, sublicense or redistribute the template itself, modified or
+    unmodified.
+  - Include it in another template, theme pack, starter kit or marketplace
+    listing.
+  - Share the source files with anyone who has not obtained their own licence.
+
+In short: sell the websites you build with this, not the template.
+
+THIRD-PARTY ASSETS
+  Fonts are loaded from Google Fonts and remain under their own licences
+  (generally the SIL Open Font Licence). Any icons or illustrations included
+  here were drawn for this template and are covered by this licence.
+
+NO WARRANTY
+  This template is provided "as is", without warranty of any kind, express or
+  implied. The copyright holder is not liable for any claim or damages arising
+  from its use.

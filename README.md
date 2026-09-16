@@ -1,128 +1,167 @@
-# Foundry — a website template store
+# Foundry — a full-stack template store
 
-A static storefront that sells nine original website templates as downloadable
-source code. No backend, no database, no build server — it deploys to Vercel's
-free tier and the only running cost is your domain.
+A working storefront that sells nine original website templates as
+downloadable source. Accounts, cart, checkout, order history and
+ownership-gated downloads — not a landing page with a Gumroad link.
 
-![9 templates](https://img.shields.io/badge/templates-9-black) ![no backend](https://img.shields.io/badge/backend-none-black)
+**One-time pricing: $5 · $10 · $35.** No subscriptions.
 
 ---
 
+## Pricing
+
+| Tier | Price | What's in it |
+|---|---|---|
+| **Starter** | **$5** | 6 single-purpose templates, no build step |
+| **Pro** | **$10** | 3 multi-page / app-grade templates |
+| **Bundle** | **$35** | All 9 — saves $25 against $60 separately |
+
+Prices live in `lib/catalog.js` and are re-synced into the database on every
+boot. The client never sends an amount: totals are always recomputed
+server-side from the catalogue at checkout.
+
+## The stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Framework | Next.js 16, App Router | Route handlers give a real API beside the pages |
+| Database | libSQL (`@libsql/client`) | One client speaks to a local file *and* hosted Turso, so the data layer is identical in dev and production |
+| Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
+| Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
+| Tests | `node --test` | No test framework to install |
+
+## How a purchase works
+
+1. **Register** — `POST /api/auth/register`. Password hashed with scrypt and a
+   per-user salt; the session token is random 32 bytes, stored in the database
+   only as a SHA-256 hash, so a leaked dump cannot be replayed as a login.
+2. **Add to cart** — `POST /api/cart`. The slug is validated against the
+   catalogue before it touches anything.
+3. **Checkout** — `POST /api/checkout` prices the cart server-side and writes a
+   pending order.
+4. **Fulfilment** — grants one `entitlements` row per template. A bundle fans
+   out to all nine, so the download check stays a single indexed lookup.
+5. **Download** — `GET /api/download/[slug]` verifies ownership, then streams
+   the zip.
+
+The zips live in `private/downloads/`, **outside `public/`**, so there is no
+URL that serves them directly — every download passes the ownership check.
+`next.config.mjs` uses `outputFileTracingIncludes` to ship them with the
+download function, since nothing imports them.
+
+### Cart rules worth knowing
+
+- Anything already in your library is dropped from the cart.
+- If the bundle is present, individual items fold into it — nobody is charged
+  twice for the same file.
+- `fulfillOrder` is idempotent, so a replayed Stripe webhook cannot
+  double-grant or corrupt the order.
+
+## Security
+
+- Passwords: scrypt, 64-byte key, per-user salt, `timingSafeEqual` comparison.
+- Sessions: httpOnly + SameSite=Lax + Secure in production; 30-day expiry
+  checked server-side.
+- CSRF: SameSite=Lax blocks cross-site form POSTs, and every mutating route
+  additionally checks `Origin` against `Host`.
+- Login: identical response whether the email is unknown or the password is
+  wrong, so the endpoint cannot be used to enumerate accounts. Rate-limited to
+  8 attempts per 15 minutes.
+- Path traversal: slugs are checked against the catalogue before being used in
+  a path.
+
 ## Why the inventory is original
 
-Every template in `templates/` was written from scratch. None of it is a
-repackaged open-source theme, and that is a deliberate commercial decision
-rather than a point of pride:
+Every template in `templates/` was written from scratch. That is a commercial
+decision, not a point of pride:
 
-- **MIT / Apache / BSD** code may be resold, but only with the original
-  copyright notice and LICENSE intact. Strip them and it is copyright
-  infringement. Keep them and you are charging for something the buyer can
-  clone free from GitHub in thirty seconds.
-- **GPL / AGPL** code may be sold, but every buyer gets the right to
-  redistribute it for free, which collapses the model.
-- **CC BY-NC** and "free for personal use" themes forbid commercial resale
-  outright.
-- Themes also bundle fonts, icons and photography under *separate* licences
-  that are usually stricter than the code.
+- **MIT / Apache / BSD** may be resold, but only with the original copyright
+  notice intact — so you are charging for something the buyer can clone free
+  from GitHub, with someone else's name in the folder.
+- **GPL / AGPL** lets every buyer redistribute it onward for free.
+- **CC BY-NC** and "free for personal use" forbid commercial resale outright.
+- Themes bundle fonts, icons and photography under *separate*, stricter
+  licences than the code.
 
-Gumroad, Lemon Squeezy and ThemeForest all remove listings that resell
-open-source work, and buyers charge back when they discover it. Owning the
-inventory outright avoids all of that. `templates/*/LICENSE.txt` is the licence
-each buyer receives.
-
-## What's in the box
-
-| Template | For | Pages | Stack | Price |
-|---|---|---|---|---|
-| Helix | AI SaaS landing page | 1 | Next.js, three.js | $79 |
-| Vertex Launch | SaaS landing page | 2 | HTML/CSS/JS | $29 |
-| Aurora Commerce | Small online store | 4 | HTML/CSS/JS | $29 |
-| Sable Studio | Agency / services | 4 | HTML/CSS/JS | $29 |
-| Monolith Portfolio | Photography / design | 3 | HTML/CSS/JS | $29 |
-| Atelier Lookbook | Fashion / editorial | 3 | HTML/CSS/JS | $29 |
-| Quill Journal | Blog / essays | 3 | HTML/CSS/JS | $29 |
-| Ember Table | Restaurant | 3 | HTML/CSS/JS | $29 |
-| Pulse Fitness | Gym / classes | 3 | HTML/CSS/JS | $29 |
-
-$311 individually, $149 as a bundle.
-
-## How selling works
-
-The store ships in **free-download mode** so it is useful the moment it
-deploys. Each template's button serves its zip straight from `/public`.
-
-To charge for one, set its `checkoutUrl` in `lib/templates.js`:
-
-```js
-{
-  slug: "aurora-commerce",
-  price: 29,
-  checkoutUrl: "https://yourname.gumroad.com/l/aurora",  // ← add this
-}
-```
-
-`components/GetButton.jsx` then sends buyers to that hosted checkout instead of
-serving the file. Gumroad, Lemon Squeezy and Polar all handle payment, VAT/sales
-tax and file delivery, which is what keeps this a static site with no backend to
-maintain. Upload the same zip from `public/downloads/` as the product file.
-
-Leave `checkoutUrl` as `null` on one or two templates and they become a free
-lead magnet for the paid ones.
+Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
+buyers charge back when they find the original. Owning the inventory removes
+the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
 
 ## Running it
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # zips the templates, then builds the site
-npm run zips     # rebuild the download zips only
+npm test         # 20 tests, no framework needed
+npm run build    # zips the templates, then builds
 ```
 
-`scripts/build-zips.mjs` packages every folder in `templates/` into
-`public/downloads/<slug>.zip` plus an `everything.zip` bundle. It runs
-automatically before `next build`, so downloads can never drift from the
-source. `public/downloads/` is gitignored — it is generated, not committed.
+No configuration is needed to run locally. The database is created at
+`./data/store.db` on first boot and checkout runs in simulation mode, so you
+can register, buy and download immediately.
+
+## Deploying
+
+1. **Database.** Vercel's filesystem is ephemeral, so create a hosted database
+   — Turso has a free tier and needs no code change:
+   ```bash
+   npx turso db create foundry
+   npx turso db show foundry --url      # → DATABASE_URL
+   npx turso db tokens create foundry   # → DATABASE_AUTH_TOKEN
+   ```
+2. **Import** the repo at [vercel.com/new](https://vercel.com/new).
+   `vercel.json` pins the framework and build command.
+3. **Set env vars** from `.env.example`.
+4. **Stripe**, when you're ready to take real money: set `STRIPE_SECRET_KEY`,
+   add a webhook to `https://yourdomain/api/webhook/stripe` for
+   `checkout.session.completed`, and set `STRIPE_WEBHOOK_SECRET`.
+
+Until Stripe keys are set, checkout completes instantly and orders are
+labelled "simulated" in the order history.
 
 ## Adding a template
 
 1. Drop the folder into `templates/<slug>/`.
-2. Add an entry to `TEMPLATES` in `lib/templates.js`.
-3. Save a preview image to `public/thumbs/<slug>.webp` (1100×825).
+2. Add an entry to `TEMPLATES` in `lib/catalog.js` with a `tier`.
+3. Save a preview to `public/thumbs/<slug>.webp` (1100×825).
 4. Copy a `LICENSE.txt` in from any existing template.
 
-The zip, the listing card, the detail page at `/t/<slug>`, the footer link and
-the bundle all pick it up automatically.
-
-## Deploying
-
-Import the repo at [vercel.com/new](https://vercel.com/new) and deploy. The
-`vercel.json` pins the Next.js preset and the build command, so no dashboard
-configuration is needed.
-
-After the first deploy, set `SITE` in `app/layout.js` to your real domain so
-Open Graph tags resolve.
+The zip, the listing, `/t/<slug>`, the footer and the bundle all pick it up.
 
 ## Structure
 
 ```
 app/
-  page.js            home — hero, grid, bundle, licence, FAQ
-  t/[slug]/page.js   template detail pages (statically generated)
-  globals.css        theme tokens
-components/          masthead, cards, buttons, footer
-lib/templates.js     the catalogue — prices, copy, checkout URLs
-scripts/
-  build-zips.mjs     packages templates/ into public/downloads/
-templates/           the products themselves
-public/thumbs/       preview images
+  page.js                    storefront
+  t/[slug]/page.js           template detail
+  cart/, account/            cart and library
+  login/, register/
+  api/
+    auth/{register,login,logout}/
+    cart/                    server-priced cart
+    checkout/                Stripe or simulation
+    download/[slug]/         ownership-gated zip delivery
+    webhook/stripe/          signature-verified fulfilment
+lib/
+  catalog.js                 products, tiers, prices
+  db.js                      libSQL client, schema, seeding
+  password.js                scrypt helpers (no Next import — unit tested)
+  auth.js                    sessions, rate limiting, origin checks
+  store.js                   cart, orders, entitlements
+scripts/build-zips.mjs       templates/ → private/downloads/
+templates/                   the products
+tests/store.test.js
 ```
 
 ## Honest notes
 
-- The store is real and functional; the **business** still needs traffic.
-  Template sales are a distribution problem, not a product problem — budget
-  for SEO, a launch, or an audience before expecting revenue.
-- There is no analytics wired up yet. Add Vercel Analytics or Plausible before
-  driving traffic, or you will not know what converts.
-- Prices in `lib/templates.js` are a starting point, not a researched
-  position. Test them.
+- **The store works; the business still needs traffic.** Template sales are a
+  distribution problem. Nine templates on a URL nobody visits earns nothing —
+  budget for SEO, a launch, or an existing audience.
+- **No analytics yet.** Add Vercel Analytics or Plausible before driving
+  traffic, or you won't know what converts.
+- **No password reset flow.** If you take real money, add one — buyers will
+  lock themselves out.
+- **No email receipts.** Stripe sends its own, but the simulated path sends
+  nothing.
+- Prices are a starting point, not a researched position. Test them.

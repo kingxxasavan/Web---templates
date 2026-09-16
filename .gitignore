@@ -4,4 +4,5 @@ out
 .env*.local
 .DS_Store
 .vercel
-public/downloads
+private/downloads
+data/

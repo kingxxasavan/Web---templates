@@ -1,5 +1,5 @@
 /**
- * Packages each template in templates/ into public/downloads/<slug>.zip,
+ * Packages each template in templates/ into private/downloads/<slug>.zip (served only through the authorised API route),
  * plus one bundle zip containing all of them.
  *
  * Runs before `next build`, so the downloads always match the source in the
@@ -13,7 +13,7 @@ import archiver from "archiver";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SRC = path.join(ROOT, "templates");
-const OUT = path.join(ROOT, "public", "downloads");
+const OUT = path.join(ROOT, "private", "downloads");
 
 const EXCLUDE = ["node_modules/**", ".next/**", ".env*", "**/.DS_Store", "out/**"];
 

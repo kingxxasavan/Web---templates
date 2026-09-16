@@ -3,18 +3,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
-import GetButton from "@/components/GetButton";
+import AddToCart from "@/components/AddToCart";
 import TemplateCard from "@/components/TemplateCard";
 import { Check, Badge } from "@/components/store";
-import { TEMPLATES, templateBySlug } from "@/lib/templates";
-
-export function generateStaticParams() {
-  return TEMPLATES.map((t) => ({ slug: t.slug }));
-}
+import { currentUser } from "@/lib/auth";
+import { ownedSlugs } from "@/lib/store";
+import { TEMPLATES, TIERS, bySlug, money } from "@/lib/catalog";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const t = templateBySlug(slug);
+  const t = bySlug(slug);
   if (!t) return {};
   return {
     title: `${t.name} — ${t.tagline} template`,
@@ -29,9 +27,13 @@ export async function generateMetadata({ params }) {
 
 export default async function TemplatePage({ params }) {
   const { slug } = await params;
-  const t = templateBySlug(slug);
+  const t = bySlug(slug);
   if (!t) notFound();
 
+  const user = await currentUser();
+  const owned = user ? await ownedSlugs(user.id) : new Set();
+  const isOwned = owned.has(t.slug);
+  const price = TIERS[t.tier].priceCents;
   const others = TEMPLATES.filter((o) => o.slug !== t.slug).slice(0, 3);
 
   return (
@@ -57,7 +59,6 @@ export default async function TemplatePage({ params }) {
           </Link>
 
           <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_340px]">
-            {/* preview */}
             <div>
               <div className="card overflow-hidden rounded-2xl">
                 <Image
@@ -98,12 +99,11 @@ export default async function TemplatePage({ params }) {
                 </pre>
                 <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-faint">
                   The download contains the complete, unminified source plus a
-                  README for this template.
+                  README and the licence for this template.
                 </p>
               </div>
             </div>
 
-            {/* buy rail */}
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div className="card rounded-2xl p-6">
                 <div className="flex items-start justify-between gap-3">
@@ -111,7 +111,11 @@ export default async function TemplatePage({ params }) {
                     <h1 className="text-[22px] tracking-[-0.015em]">{t.name}</h1>
                     <p className="mt-1 text-[13.5px] text-muted">{t.tagline}</p>
                   </div>
-                  {t.tier === "premium" && <Badge tone="accent">Premium</Badge>}
+                  {isOwned ? (
+                    <Badge tone="accent">Owned</Badge>
+                  ) : (
+                    t.tier === "pro" && <Badge>Pro</Badge>
+                  )}
                 </div>
 
                 <p className="mt-4 text-[13.5px] leading-relaxed text-muted">
@@ -120,13 +124,19 @@ export default async function TemplatePage({ params }) {
 
                 <div className="mt-6 flex items-baseline gap-2 border-t border-line pt-6">
                   <span className="font-display text-4xl tracking-tight">
-                    <span className="text-lg text-muted">$</span>
-                    {t.price}
+                    {money(price)}
                   </span>
-                  <span className="text-[12.5px] text-faint">one payment</span>
+                  <span className="text-[12.5px] text-faint">
+                    one-time payment
+                  </span>
                 </div>
 
-                <GetButton item={t} size="lg" className="mt-5 w-full" />
+                <AddToCart
+                  slug={t.slug}
+                  owned={isOwned}
+                  label={`Add to cart — ${money(price)}`}
+                  className="mt-5 w-full"
+                />
 
                 <dl className="mt-6 flex flex-col gap-3 border-t border-line pt-5 text-[13px]">
                   {[
@@ -150,14 +160,13 @@ export default async function TemplatePage({ params }) {
             </aside>
           </div>
 
-          {/* more */}
           <div className="mt-20">
             <h2 className="mb-6 text-[20px] tracking-[-0.015em]">
               Other templates
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((o) => (
-                <TemplateCard key={o.slug} t={o} />
+                <TemplateCard key={o.slug} t={o} owned={owned.has(o.slug)} />
               ))}
             </div>
           </div>

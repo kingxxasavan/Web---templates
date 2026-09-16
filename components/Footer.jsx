@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TEMPLATES } from "@/lib/templates";
+import { TEMPLATES } from "@/lib/catalog";
 
 export default function Footer() {
   return (

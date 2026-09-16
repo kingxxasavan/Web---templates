@@ -26,10 +26,6 @@ export default function AddToCart({ slug, label, owned = false, className = "" }
       body: JSON.stringify({ slug, action: "add" }),
     });
 
-    if (res.status === 401) {
-      router.push(`/login?next=${encodeURIComponent(`/t/${slug}`)}`);
-      return;
-    }
     if (!res.ok) {
       setState("error");
       return;

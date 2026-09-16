@@ -3,10 +3,12 @@ import Masthead from "@/components/Masthead";
 import TemplateCard from "@/components/TemplateCard";
 import AddToCart from "@/components/AddToCart";
 import Footer from "@/components/Footer";
+import TourLauncher from "@/components/TourLauncher";
 import { Reveal, Check, Badge } from "@/components/store";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
 import { ratingSummary } from "@/lib/reviews";
+import { tourConfig, showcase } from "@/lib/tour";
 import {
   TEMPLATES,
   TIERS,
@@ -61,9 +63,12 @@ export default async function Home() {
     ratingSummary(),
   ]);
   const total = individualTotal();
+  const tour = tourConfig();
+  const proof = showcase();
 
   return (
     <>
+      <TourLauncher tour={tour} showcase={proof} variant="auto" />
       <Masthead />
 
       {/* hero */}
@@ -95,12 +100,7 @@ export default async function Home() {
               >
                 Browse all {TEMPLATES.length}
               </a>
-              <a
-                href="#bundle"
-                className="rounded-full border border-line px-6 py-3 text-[14px] text-ink transition-colors hover:border-ink/25"
-              >
-                Everything for {money(BUNDLE.priceCents)}
-              </a>
+              <TourLauncher tour={tour} showcase={proof} variant="button" />
             </div>
           </Reveal>
         </div>

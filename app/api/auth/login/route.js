@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { mergeGuestCart } from "@/lib/store";
+import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
 import {
   findUserByEmail,
   verifyPassword,
@@ -43,5 +45,12 @@ export async function POST(request) {
 
   await clearAttempts(normalised);
   await createSession(user.id);
-  return NextResponse.json({ ok: true, email: user.email });
+
+  const guest = await readGuestCart();
+  if (guest.length) {
+    await mergeGuestCart(user.id, guest);
+    await clearGuestCart();
+  }
+
+  return NextResponse.json({ ok: true, email: user.email, merged: guest.length });
 }

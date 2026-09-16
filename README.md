@@ -28,6 +28,8 @@ server-side from the catalogue at checkout.
 | Database | libSQL (`@libsql/client`) | One client speaks to a local file *and* hosted Turso, so the data layer is identical in dev and production |
 | Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
 | Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
+| Email | Resend over `fetch`, with a logged fallback | No SDK, and both mail flows work before a provider exists |
+| Analytics | Vercel Analytics + a first-party sales dashboard | Traffic from Vercel, revenue from your own database |
 | Tests | `node --test` | No test framework to install |
 
 ## How a purchase works
@@ -57,6 +59,53 @@ download function, since nothing imports them.
 - `fulfillOrder` is idempotent, so a replayed Stripe webhook cannot
   double-grant or corrupt the order.
 
+## Password reset
+
+`/forgot` issues a single-use token, stored only as a SHA-256 hash and valid
+for one hour. Requesting a new link invalidates the previous one, and
+completing a reset **destroys every existing session** for that account — if
+the reset happened because someone else had access, that access ends there.
+
+The response to a reset request is identical whether or not the address is
+registered, so the endpoint cannot be used to discover who has an account.
+
+## Receipts and email
+
+`lib/email.js` sends through Resend when `RESEND_API_KEY` is set and otherwise
+logs the message. Either way **every send is recorded in the `emails` table**,
+so there is a delivery record and the admin mail log shows failures.
+
+Receipts go out after fulfilment from both the simulated path and the Stripe
+webhook — and only on first fulfilment, so a replayed webhook cannot re-send.
+A mail failure never fails a purchase: the entitlement is already granted by
+that point, so errors are swallowed and recorded rather than surfaced.
+
+## Reviews
+
+Reviews are restricted to **verified buyers**: writing one requires an
+entitlement row, which only exists after a fulfilled order. Buying the bundle
+entitles you to review any template. The unique key on `(user_id, slug)` means
+one review per buyer per template — editable, not repeatable.
+
+Author emails are masked (`jo***@example.com`) and ratings are constrained to
+1–5 integers in both the application and a `CHECK` constraint. Averages appear
+on the listing cards and in the buy rail.
+
+## Analytics
+
+Two halves, deliberately:
+
+- **Traffic** — `@vercel/analytics` and `@vercel/speed-insights` are mounted in
+  the root layout. Cookie-less, and they no-op outside a Vercel deployment.
+  Enable Analytics in your Vercel project to see visitors, referrers and pages.
+- **Money** — `/admin` reads your own database: all-time and 30-day revenue,
+  average order value, signup→purchase conversion, a daily revenue chart, best
+  sellers by revenue, recent orders, review average and the mail log.
+
+Admin access is an allowlist in `ADMIN_EMAILS`, not a database flag, so a
+compromised account cannot promote itself. A non-admin gets a 404 rather than
+a 403 — the page should not announce that it exists.
+
 ## Security
 
 - Passwords: scrypt, 64-byte key, per-user salt, `timingSafeEqual` comparison.
@@ -69,6 +118,10 @@ download function, since nothing imports them.
   8 attempts per 15 minutes.
 - Path traversal: slugs are checked against the catalogue before being used in
   a path.
+- Reset tokens: 32 random bytes, stored hashed, single use, one-hour expiry,
+  and superseded by any newer request.
+- Reviews: write access requires a purchase; ratings are bounded in code and by
+  a database `CHECK`.
 
 ## Why the inventory is original
 
@@ -92,7 +145,7 @@ the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm test         # 20 tests, no framework needed
+npm test         # 36 tests, no framework needed
 npm run build    # zips the templates, then builds
 ```
 
@@ -135,22 +188,29 @@ app/
   page.js                    storefront
   t/[slug]/page.js           template detail
   cart/, account/            cart and library
-  login/, register/
+  login/, register/, forgot/, reset/
+  admin/                     sales dashboard
   api/
-    auth/{register,login,logout}/
+    auth/{register,login,logout,forgot,reset}/
     cart/                    server-priced cart
     checkout/                Stripe or simulation
     download/[slug]/         ownership-gated zip delivery
+    reviews/                 verified-buyer reviews
     webhook/stripe/          signature-verified fulfilment
 lib/
   catalog.js                 products, tiers, prices
+  accounts.js                user records and reset tokens (unit tested)
+  email.js                   Resend or logged, always recorded
+  reviews.js                 verified-purchase reviews
+  metrics.js                 sales figures for the dashboard
+  admin.js                   ADMIN_EMAILS allowlist
   db.js                      libSQL client, schema, seeding
   password.js                scrypt helpers (no Next import — unit tested)
   auth.js                    sessions, rate limiting, origin checks
   store.js                   cart, orders, entitlements
 scripts/build-zips.mjs       templates/ → private/downloads/
 templates/                   the products
-tests/store.test.js
+tests/{store,accounts}.test.js
 ```
 
 ## Honest notes
@@ -158,10 +218,11 @@ tests/store.test.js
 - **The store works; the business still needs traffic.** Template sales are a
   distribution problem. Nine templates on a URL nobody visits earns nothing —
   budget for SEO, a launch, or an existing audience.
-- **No analytics yet.** Add Vercel Analytics or Plausible before driving
-  traffic, or you won't know what converts.
-- **No password reset flow.** If you take real money, add one — buyers will
-  lock themselves out.
-- **No email receipts.** Stripe sends its own, but the simulated path sends
-  nothing.
+- **Turn on Analytics in the Vercel dashboard** — the code is wired up, but
+  the project setting still has to be enabled.
+- **Email needs a real provider before launch.** Without `RESEND_API_KEY`,
+  receipts and reset links are only logged — buyers never receive them.
+- **Reviews are published immediately.** There is no moderation queue. Fine at
+  low volume; add one if it gets abused.
+- **Set `ADMIN_EMAILS`** or `/admin` is unreachable, by design.
 - Prices are a starting point, not a researched position. Test them.

@@ -6,9 +6,12 @@ import Footer from "@/components/Footer";
 import AddToCart from "@/components/AddToCart";
 import TemplateCard from "@/components/TemplateCard";
 import { Check, Badge } from "@/components/store";
+import Reviews from "@/components/Reviews";
+import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
 import { TEMPLATES, TIERS, bySlug, money } from "@/lib/catalog";
+import { reviewsFor, ratingFor, myReview } from "@/lib/reviews";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -31,8 +34,13 @@ export default async function TemplatePage({ params }) {
   if (!t) notFound();
 
   const user = await currentUser();
-  const owned = user ? await ownedSlugs(user.id) : new Set();
+  const [owned, reviews, rating] = await Promise.all([
+    user ? ownedSlugs(user.id) : Promise.resolve(new Set()),
+    reviewsFor(t.slug),
+    ratingFor(t.slug),
+  ]);
   const isOwned = owned.has(t.slug);
+  const mine = user && isOwned ? await myReview(user.id, t.slug) : null;
   const price = TIERS[t.tier].priceCents;
   const others = TEMPLATES.filter((o) => o.slug !== t.slug).slice(0, 3);
 
@@ -118,6 +126,16 @@ export default async function TemplatePage({ params }) {
                   )}
                 </div>
 
+                {rating.count > 0 && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <Stars value={rating.average} />
+                    <span className="text-[12.5px] text-muted">
+                      {rating.average.toFixed(1)} · {rating.count} review
+                      {rating.count > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )}
+
                 <p className="mt-4 text-[13.5px] leading-relaxed text-muted">
                   {t.blurb}
                 </p>
@@ -159,6 +177,13 @@ export default async function TemplatePage({ params }) {
               </p>
             </aside>
           </div>
+
+          <Reviews
+            slug={t.slug}
+            initialReviews={reviews}
+            canReview={isOwned}
+            mine={mine}
+          />
 
           <div className="mt-20">
             <h2 className="mb-6 text-[20px] tracking-[-0.015em]">

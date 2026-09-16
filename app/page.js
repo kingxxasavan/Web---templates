@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Reveal, Check, Badge } from "@/components/store";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
+import { ratingSummary } from "@/lib/reviews";
 import {
   TEMPLATES,
   TIERS,
@@ -55,7 +56,10 @@ const FAQ = [
 
 export default async function Home() {
   const user = await currentUser();
-  const owned = user ? await ownedSlugs(user.id) : new Set();
+  const [owned, ratings] = await Promise.all([
+    user ? ownedSlugs(user.id) : Promise.resolve(new Set()),
+    ratingSummary(),
+  ]);
   const total = individualTotal();
 
   return (
@@ -168,6 +172,7 @@ export default async function Home() {
                 <TemplateCard
                   t={t}
                   owned={owned.has(t.slug)}
+                  rating={ratings.get(t.slug)}
                   priority={i < 3}
                 />
               </Reveal>

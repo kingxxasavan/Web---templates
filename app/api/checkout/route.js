@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { createOrder, fulfillOrder, getCart } from "@/lib/store";
+import { createOrder, fulfillOrder, getCart, sendReceipt } from "@/lib/store";
 import { money } from "@/lib/catalog";
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -29,6 +29,7 @@ export async function POST(request) {
   if (!stripeKey) {
     const order = await createOrder(user.id, "simulated");
     await fulfillOrder(order.id, "simulated-payment");
+    await sendReceipt(order.id, new URL(request.url).origin);
     return NextResponse.json({
       ok: true,
       simulated: true,

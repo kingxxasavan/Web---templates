@@ -1,4 +1,6 @@
 import { Inter, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -47,7 +49,13 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Cookie-less visitor and performance data, collected by Vercel.
+            Both no-op outside a Vercel deployment. */}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

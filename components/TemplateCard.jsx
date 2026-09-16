@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./store";
+import Stars from "./Stars";
 import { TIERS, money } from "@/lib/catalog";
 
-export default function TemplateCard({ t, owned = false, priority = false }) {
+export default function TemplateCard({ t, owned = false, rating = null, priority = false }) {
   const price = TIERS[t.tier].priceCents;
 
   return (
@@ -42,6 +43,13 @@ export default function TemplateCard({ t, owned = false, priority = false }) {
             )}
           </span>
         </div>
+
+        {rating?.count > 0 && (
+          <div className="mt-2 flex items-center gap-1.5">
+            <Stars value={rating.average} size={12} />
+            <span className="text-[11.5px] text-faint">({rating.count})</span>
+          </div>
+        )}
 
         <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-faint">
           {t.blurb}

@@ -62,7 +62,17 @@ export default function AuthForm({ mode }) {
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-[12.5px] text-muted">Password</span>
+          <span className="flex items-center justify-between text-[12.5px] text-muted">
+            Password
+            {!isRegister && (
+              <Link
+                href="/forgot"
+                className="text-faint underline underline-offset-4 transition-colors hover:text-ink"
+              >
+                Forgot?
+              </Link>
+            )}
+          </span>
           <input
             type="password"
             required

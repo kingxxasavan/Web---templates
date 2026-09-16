@@ -1,35 +1,23 @@
 {
-  "name": "fivedollar-store",
+  "name": "helix",
   "version": "1.0.0",
   "private": true,
-  "description": "The $5 Store \u2014 a full-stack marketplace for high-quality website templates with guided onboarding, Stripe payments and gated downloads.",
-  "type": "commonjs",
-  "main": "src/server.js",
-  "engines": {
-    "node": ">=20"
-  },
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "db:migrate": "node src/db/migrate.js",
-    "db:seed": "node src/db/seed.js",
-    "db:reset": "node src/db/reset.js",
-    "test": "node --test tests/*.test.js",
-    "audit:contrast": "node scripts/contrast-audit.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "archiver": "^7.0.1",
-    "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^11.5.0",
-    "connect-sqlite3": "^0.9.15",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "express-ejs-layouts": "^2.5.1",
-    "express-rate-limit": "^7.4.1",
-    "helmet": "^8.0.0",
-    "express-session": "^1.18.1",
-    "morgan": "^1.10.0",
-    "stripe": "^17.4.0"
+    "next": "16.3.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "framer-motion": "^12.23.12",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "tailwindcss": "^4.1.13",
+    "postcss": "^8.5.6"
   }
 }

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu — Ember Table</title>
+<meta name="description" content="Small plates, wood-fired pizza, sides and sweets. Updated weekly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="mark" href="index.html">Ember<span>.</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="menu.html" aria-current="page">Menu</a>
+      <a href="book.html">Book a table</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section">
+    <div class="container">
+      <div class="center">
+        <span class="eyebrow">Menu</span>
+        <h1 style="margin-top:14px;font-size:clamp(2.4rem,6vw,4rem)">What we are cooking</h1>
+        <p class="muted" style="margin-top:18px;max-width:52ch;margin-inline:auto">
+          Updated most Tuesdays. Everything is made here except the bread flour, the anchovies and
+          the wine, and we will happily tell you where those come from too.
+        </p>
+      </div>
+
+      <div style="margin-top:56px">
+
+      <div class="menu-tabs" role="tablist" aria-label="Menu sections">
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="small" aria-selected="true">Small plates</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="pizza" aria-selected="false">From the oven</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="sides" aria-selected="false">Sides</button>
+        <button class="menu-tab" type="button" role="tab" data-menu-tab="sweet" aria-selected="false">Sweet</button>
+      </div>
+
+      <div class="dishes" data-dishes></div>
+      <p class="menu-note" data-menu-note hidden></p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="booking">
+        <div>
+          <span class="eyebrow">Drinks</span>
+          <h2 style="margin-top:12px">Short, and mostly Italian</h2>
+          <table class="hours" style="margin-top:24px">
+            <tbody>
+              <tr><td>Negroni</td><td>£9</td></tr>
+              <tr><td>Aperol spritz</td><td>£8</td></tr>
+              <tr><td>Peroni, 330ml</td><td>£5</td></tr>
+              <tr><td>Local pale ale, pint</td><td>£6</td></tr>
+              <tr><td>House red or white, 175ml</td><td>£6.50</td></tr>
+              <tr><td>House red or white, bottle</td><td>£24</td></tr>
+              <tr><td>Something better, ask</td><td>£28&ndash;£70</td></tr>
+              <tr><td>San Pellegrino, 750ml</td><td>£3.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <span class="eyebrow">Good to know</span>
+          <h2 style="margin-top:12px">Before you ask</h2>
+          <div style="margin-top:24px;display:grid;gap:20px">
+            <div>
+              <h3 style="font-size:1.05rem;font-family:var(--font-body);font-weight:600">Allergies</h3>
+              <p class="small muted" style="margin-top:6px">Tell us when you book and again when you sit down. The kitchen is small and flour is everywhere, so we cannot promise a coeliac-safe environment &mdash; we would rather say that than take the booking.</p>
+            </div>
+            <div>
+              <h3 style="font-size:1.05rem;font-family:var(--font-body);font-weight:600">Children</h3>
+              <p class="small muted" style="margin-top:6px">Very welcome before 7pm. Half portions of anything, no separate menu.</p>
+            </div>
+            <div>
+              <h3 style="font-size:1.05rem;font-family:var(--font-body);font-weight:600">Large groups</h3>
+              <p class="small muted" style="margin-top:6px">Up to eight online. Nine and over, call &mdash; we can move tables but we need a day's notice.</p>
+            </div>
+            <div>
+              <h3 style="font-size:1.05rem;font-family:var(--font-body);font-weight:600">Service</h3>
+              <p class="small muted" style="margin-top:6px">No service charge is added. If you want to tip, it goes to the floor and the kitchen in equal shares.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <span class="mark">Ember<span style="color:#e6a082">.</span></span>
+        <p class="small" style="margin-top:14px;max-width:34ch">
+          Wood-fired pizza and small plates on Gildersome Road. Walk-ins welcome at the counter,
+          booking advised for the room.
+        </p>
+        <p class="small" style="margin-top:16px">
+          <strong data-open-now>&nbsp;</strong>
+        </p>
+      </div>
+      <div>
+        <h4>Find us</h4>
+        <p class="small">114 Gildersome Road<br>Leeds LS27 7BQ</p>
+        <p class="small" style="margin-top:12px"><a href="tel:+441130000000">0113 000 0000</a></p>
+        <p class="small"><a href="mailto:hello@embertable.example">hello@embertable.example</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p class="small">Tue&ndash;Thu 5.30&ndash;10pm<br>Fri&ndash;Sat 12&ndash;11pm<br>Sun 12&ndash;8pm<br>Monday closed</p>
+        <p class="small" style="margin-top:12px"><a href="book.html">Book a table &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Ember Table</span>
+      <span>Fired with British oak</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/menu.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

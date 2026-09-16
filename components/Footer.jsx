@@ -1,75 +1,71 @@
-const GROUPS = [
-  {
-    t: "Product",
-    l: ["Overview", "Integrations", "Security", "Changelog", "Status"],
-  },
-  { t: "Company", l: ["About", "Customers", "Careers", "Blog", "Contact"] },
-  { t: "Resources", l: ["Docs", "API reference", "Benchmarks", "Help center"] },
-  { t: "Legal", l: ["Privacy", "Terms", "DPA", "Subprocessors"] },
-];
+import Link from "next/link";
+import { TEMPLATES } from "@/lib/catalog";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.07] px-6 pb-10 pt-16">
+    <footer className="border-t border-line px-6 pb-10 pt-14">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
-          <div className="col-span-2">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-violet to-cyan">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path
-                    d="M3.5 2c0 3 9 3.5 9 6.5S3.5 11 3.5 14M12.5 2c0 3-9 3.5-9 6.5s9 2.5 9 5.5"
-                    stroke="#06060a"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink">
+                <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
+                  <path d="M2 11.5L8 2l6 9.5H2z" fill="#0a0a0b" />
                 </svg>
               </span>
-              <span className="text-[15px] font-semibold">Helix</span>
+              <span className="text-[15px] font-semibold">Foundry</span>
             </div>
-            <p className="mt-4 max-w-xs text-[13.5px] leading-relaxed text-muted">
-              The AI support agent that closes tickets instead of deflecting
-              them.
+            <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-muted">
+              Original website templates, written from scratch. Buy once, use
+              forever.
             </p>
-            <div className="mt-5 flex gap-2">
-              {["SOC 2 Type II", "GDPR"].map((b) => (
-                <span
-                  key={b}
-                  className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 text-[11px] text-muted"
-                >
-                  {b}
-                </span>
-              ))}
-            </div>
           </div>
 
-          {GROUPS.map((g) => (
-            <div key={g.t}>
-              <h3 className="text-[12px] font-medium uppercase tracking-[0.14em] text-muted/60">
-                {g.t}
-              </h3>
-              <ul className="mt-4 flex flex-col gap-2.5">
-                {g.l.map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#top"
-                      className="text-[13.5px] text-muted transition-colors hover:text-ink"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="col-span-2 md:col-span-2">
+            <h3 className="text-[12px] font-medium uppercase tracking-[0.14em] text-faint">
+              Templates
+            </h3>
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+              {TEMPLATES.map((t) => (
+                <li key={t.slug}>
+                  <Link
+                    href={`/t/${t.slug}`}
+                    className="text-[13px] text-muted transition-colors hover:text-ink"
+                  >
+                    {t.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-[12px] font-medium uppercase tracking-[0.14em] text-faint">
+              Store
+            </h3>
+            <ul className="mt-4 flex flex-col gap-2">
+              {[
+                ["Licence", "/#licence"],
+                ["Questions", "/#faq"],
+                ["Bundle", "/#bundle"],
+              ].map(([l, h]) => (
+                <li key={l}>
+                  <Link
+                    href={h}
+                    className="text-[13px] text-muted transition-colors hover:text-ink"
+                  >
+                    {l}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.07] pt-7 sm:flex-row">
-          <p className="text-[12.5px] text-muted/60">
-            © {new Date().getFullYear()} Helix Labs, Inc. All rights reserved.
-          </p>
-          <p className="text-[12.5px] text-muted/50">
-            Built for teams who&rsquo;d rather sleep.
+        <div className="mt-12 border-t border-line pt-6">
+          <p className="text-[12.5px] text-faint">
+            © {new Date().getFullYear()} Foundry. Every template is original
+            work.
           </p>
         </div>
       </div>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pulse Fitness — Sheffield</title>
+<meta name="description" content="A barbell and conditioning gym in Sheffield. Coached classes, capped numbers, no long contracts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar__inner">
+    <a class="logo" href="index.html">Pulse<span>.</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="timetable.html">Timetable</a>
+      <a href="join.html">Membership</a>
+      <a class="btn btn--sm" style="margin-left:8px" href="join.html">Free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <svg aria-hidden="true" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="700" fill="#0c0d10"/>
+        <g fill="#1d1f25">
+          <rect x="80" y="420" width="420" height="40" rx="20"/>
+          <rect x="60" y="390" width="60" height="100" rx="12"/>
+          <rect x="460" y="390" width="60" height="100" rx="12"/>
+        </g>
+        <circle cx="1080" cy="240" r="220" fill="#d63f45" opacity=".26"/>
+        <circle cx="1180" cy="420" r="140" fill="#d63f45" opacity=".16"/>
+        <g fill="#1d1f25">
+          <rect x="880" y="520" width="380" height="30" rx="15"/>
+          <rect x="860" y="498" width="46" height="74" rx="10"/>
+          <rect x="1234" y="498" width="46" height="74" rx="10"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap hero__inner">
+      <span class="kicker">Neepsend, Sheffield</span>
+      <h1>Lift heavy.<br><em>Breathe hard.</em><br>Go home.</h1>
+      <p>
+        Coached classes capped at fourteen, a rolling monthly membership, and a coach who
+        knows your name by the second week.
+      </p>
+      <div class="hero__cta">
+        <a class="btn" href="join.html">Book a free trial</a>
+        <a class="btn btn--light" href="timetable.html">See the timetable</a>
+      </div>
+      <p class="small" style="margin-top:20px;color:var(--accent-on-dark)" data-next-class>&nbsp;</p>
+      <div class="hero__facts">
+        <div><b>14</b><span>Class cap</span></div>
+        <div><b>22</b><span>Classes a week</span></div>
+        <div><b>1 mo</b><span>Longest contract</span></div>
+        <div><b>3</b><span>Coaches</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">This week</span>
+        <h2 style="margin-top:12px">Timetable</h2>
+        <p>Every class is coached and capped. Book through the app or turn up &mdash; if there is a space you are in.</p>
+      </div>
+
+      <div class="day-tabs" data-day-tabs role="tablist" aria-label="Day of the week"></div>
+
+      <div class="type-filter">
+        <span class="tiny muted" style="margin-right:4px">Filter:</span>
+        <button class="type-chip" type="button" data-type="strength" aria-pressed="false">Strength</button>
+        <button class="type-chip" type="button" data-type="condition" aria-pressed="false">Condition</button>
+        <button class="type-chip" type="button" data-type="mobility" aria-pressed="false">Mobility</button>
+        <button class="type-chip" type="button" data-type="skills" aria-pressed="false">Skills</button>
+      </div>
+
+      <h3 data-day-heading style="margin-bottom:16px;font-size:1rem;color:var(--ink-3);letter-spacing:.1em">&nbsp;</h3>
+      <div class="classes" data-classes></div>
+
+      <div style="margin-top:28px">
+        <a class="btn btn--ghost" href="timetable.html">Full week &amp; class descriptions</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="coaches">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Coaches</span>
+        <h2 style="margin-top:12px">Three of us</h2>
+        <p>All three coach every week. Nobody is here to sell you a package.</p>
+      </div>
+      <div class="coaches">
+        <article class="coach" data-reveal>
+          <div class="coach__img">
+            <svg viewBox="0 0 300 300" role="img" aria-label="Portrait of Ade Fashola">
+              <rect width="300" height="300" fill="#fdeced"/>
+              <circle cx="150" cy="118" r="54" fill="#e8a9ac"/>
+              <path d="M72 300c0-44 35-78 78-78s78 34 78 78z" fill="#e8a9ac"/>
+            </svg>
+          </div>
+          <div class="coach__body">
+            <span class="coach__role">Head coach — strength</span>
+            <h3 style="margin-top:8px">Ade Fashola</h3>
+            <p>Fifteen years coaching barbell work, six of them with the GB masters squad. Will make you deload and will be right about it.</p>
+          </div>
+        </article>
+        <article class="coach" data-reveal>
+          <div class="coach__img">
+            <svg viewBox="0 0 300 300" role="img" aria-label="Portrait of Nour Haddad">
+              <rect width="300" height="300" fill="#e8f1fb"/>
+              <circle cx="150" cy="118" r="54" fill="#a9c5e8"/>
+              <path d="M72 300c0-44 35-78 78-78s78 34 78 78z" fill="#a9c5e8"/>
+            </svg>
+          </div>
+          <div class="coach__body">
+            <span class="coach__role">Conditioning</span>
+            <h3 style="margin-top:8px">Nour Haddad</h3>
+            <p>Came from rowing, which explains the engine sessions. Runs the Friday partner workout that everyone complains about and nobody misses.</p>
+          </div>
+        </article>
+        <article class="coach" data-reveal>
+          <div class="coach__img">
+            <svg viewBox="0 0 300 300" role="img" aria-label="Portrait of Kit Marsden">
+              <rect width="300" height="300" fill="#e9f5ec"/>
+              <circle cx="150" cy="118" r="54" fill="#a9d4b6"/>
+              <path d="M72 300c0-44 35-78 78-78s78 34 78 78z" fill="#a9d4b6"/>
+            </svg>
+          </div>
+          <div class="coach__body">
+            <span class="coach__role">Mobility & gymnastics</span>
+            <h3 style="margin-top:8px">Kit Marsden</h3>
+            <p>Physio background. The reason the mobility class is on the timetable twice a week rather than tacked onto the end of something else.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap wrap--narrow center">
+      <span class="kicker">What it is like</span>
+      <h2 style="margin-top:14px">Not a bootcamp</h2>
+      <p style="margin-top:22px;color:rgba(238,240,243,.75);font-size:1.06rem">
+        Nobody shouts. Nobody is going to make you do burpees until you are sick to prove a point.
+        Sessions are structured, progressive and written down, so you can see what you lifted six
+        weeks ago and why this week is heavier.
+      </p>
+      <p style="margin-top:16px;color:rgba(238,240,243,.75);font-size:1.06rem">
+        About a third of the room has never touched a barbell before joining. The Strength
+        Foundations class exists entirely for them, and people stay in it as long as they want to.
+      </p>
+      <a class="btn btn--light" style="margin-top:30px" href="join.html">Book a free trial</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="logo" href="index.html">Pulse<span style="color:#e05056">.</span></a>
+        <p class="small" style="margin-top:14px;max-width:34ch">
+          A barbell and conditioning gym in Sheffield. Coached classes, capped numbers,
+          no contracts longer than a month.
+        </p>
+      </div>
+      <div>
+        <h4>Train</h4>
+        <ul>
+          <li><a href="timetable.html">Timetable</a></li>
+          <li><a href="join.html">Membership</a></li>
+          <li><a href="join.html">Free trial</a></li>
+          <li><a href="index.html#coaches">Coaches</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><span>Unit 12, Neepsend Works<br>Sheffield S3 8AT</span></li>
+          <li><a href="tel:+441140000000">0114 000 0000</a></li>
+          <li><a href="mailto:train@pulse.example">train@pulse.example</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul>
+          <li><span>Mon&ndash;Fri 6am&ndash;9pm</span></li>
+          <li><span>Sat 8am&ndash;2pm</span></li>
+          <li><span>Sun open gym 8am&ndash;2pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; 2026 Pulse Fitness Ltd</span>
+      <span>Sheffield</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/schedule.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

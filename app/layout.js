@@ -1,12 +1,9 @@
 import { Inter, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const instrument = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
@@ -15,43 +12,36 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const SITE = "https://helix-ai.vercel.app";
+const SITE = "https://your-store.vercel.app";
 
 export const metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "Helix — The AI support agent that closes tickets",
-    template: "%s · Helix",
+    default: "Foundry — original website templates you can ship today",
+    template: "%s · Foundry",
   },
   description:
-    "Helix reads your docs, your codebase and your past tickets, then resolves 71% of customer conversations end-to-end — before your team wakes up.",
+    "Nine original, hand-built website templates. Clean source code, no build step on most, no attribution required. Download the source and ship.",
   keywords: [
-    "AI customer support",
-    "AI support agent",
-    "support automation",
-    "AI helpdesk",
-    "Zendesk AI",
-    "Intercom alternative",
+    "website templates",
+    "HTML templates",
+    "Next.js templates",
+    "landing page template",
+    "SaaS template",
   ],
   openGraph: {
-    title: "Helix — The AI support agent that closes tickets",
+    title: "Foundry — original website templates you can ship today",
     description:
-      "Resolve 71% of support conversations end-to-end. Helix learns from your docs, code and ticket history.",
+      "Nine original, hand-built website templates. Clean source, commercial licence, no attribution required.",
     url: SITE,
-    siteName: "Helix",
+    siteName: "Foundry",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Helix — The AI support agent that closes tickets",
-    description:
-      "Resolve 71% of support conversations end-to-end, automatically.",
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport = {
-  themeColor: "#06060a",
+  themeColor: "#0a0a0b",
   width: "device-width",
   initialScale: 1,
 };
@@ -59,7 +49,13 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
-      <body className="grain antialiased">{children}</body>
+      <body>
+        {children}
+        {/* Cookie-less visitor and performance data, collected by Vercel.
+            Both no-op outside a Vercel deployment. */}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

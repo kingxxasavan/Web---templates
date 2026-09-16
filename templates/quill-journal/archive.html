@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archive — Quill Journal</title>
+<meta name="description" content="Every post, searchable and filterable by tag.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="wordmark" href="index.html">Quill<span>.</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="links" aria-label="Menu">
+      <svg width="17" height="13" viewBox="0 0 17 13" aria-hidden="true"><path d="M0 1h17M0 6.5h17M0 12h17" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <nav class="links" id="links" aria-label="Primary">
+      <a href="index.html">Latest</a>
+      <a href="archive.html" aria-current="page">Archive</a>
+      <a href="article.html">Sample post</a>
+      <a href="#subscribe">Subscribe</a>
+      <button class="search-toggle" type="button" data-search-toggle aria-expanded="false" aria-controls="searchbar" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="searchbar" id="searchbar" data-open="false">
+  <div class="wrap">
+    <label class="sr-only" for="search">Search posts</label>
+    <input id="search" type="search" data-search placeholder="Search posts&hellip; (press / anywhere)">
+  </div>
+</div>
+
+<main>
+
+  <section class="section">
+    <div class="wrap measure-wide">
+      <h1>Archive</h1>
+      <p class="muted" style="margin-top:14px;max-width:var(--measure)">
+        Everything, oldest at the bottom. Search filters as you type; press
+        <kbd style="font-family:var(--font-mono);font-size:.85em;background:var(--surface-3);padding:1px 6px;border-radius:3px">/</kbd>
+        anywhere to jump to the box.
+      </p>
+
+      <div style="margin-top:32px">
+        <label class="sr-only" for="archive-search">Search posts</label>
+        <input id="archive-search" type="search" data-search placeholder="Search posts&hellip;"
+               style="width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font:inherit;font-size:1rem">
+      </div>
+
+      <div class="tag-bar" style="margin-top:20px">
+        <button class="tag" type="button" data-tag="craft" aria-pressed="false">craft</button>
+        <button class="tag" type="button" data-tag="software" aria-pressed="false">software</button>
+        <button class="tag" type="button" data-tag="process" aria-pressed="false">process</button>
+        <button class="tag" type="button" data-tag="teams" aria-pressed="false">teams</button>
+        <button class="tag" type="button" data-tag="tools" aria-pressed="false">tools</button>
+        <span class="meta" style="margin-left:auto;align-self:center" data-count></span>
+      </div>
+
+      <div class="posts">
+        <article class="post" data-post data-tags="craft software" data-search-text="The cost of a decision you never revisit Every codebase carries a handful of choices nobody has looked at since the week they were made. They are not bugs, and that is exactly why they survive. craft software">
+          <time class="post__date" datetime="2026-03-02">2 March 2026</time>
+          <div>
+            <a class="post__title" href="article.html">The cost of a decision you never revisit</a>
+            <p class="post__excerpt">Every codebase carries a handful of choices nobody has looked at since the week they were made. They are not bugs, and that is exactly why they survive.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">craft</a><a class="tag" href="archive.html">software</a></div>
+          </div>
+        </article>
+        <article class="post" data-post data-tags="process teams" data-search-text="Against the estimate Not against planning. Against the specific ritual where a number is extracted from an engineer, written down, and then treated as a promise by everyone who was not in the room. process teams">
+          <time class="post__date" datetime="2026-02-14">14 February 2026</time>
+          <div>
+            <a class="post__title" href="article.html">Against the estimate</a>
+            <p class="post__excerpt">Not against planning. Against the specific ritual where a number is extracted from an engineer, written down, and then treated as a promise by everyone who was not in the room.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">process</a><a class="tag" href="archive.html">teams</a></div>
+          </div>
+        </article>
+        <article class="post" data-post data-tags="craft software" data-search-text="Reading code you did not write The skill nobody teaches and everybody needs. A method, in four passes, that works whether the code is four hundred lines or four hundred thousand. craft software">
+          <time class="post__date" datetime="2026-01-27">27 January 2026</time>
+          <div>
+            <a class="post__title" href="article.html">Reading code you did not write</a>
+            <p class="post__excerpt">The skill nobody teaches and everybody needs. A method, in four passes, that works whether the code is four hundred lines or four hundred thousand.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">craft</a><a class="tag" href="archive.html">software</a></div>
+          </div>
+        </article>
+        <article class="post" data-post data-tags="tools process" data-search-text="The tool that is almost right Almost-right tools are more expensive than obviously-wrong ones, because nobody can build the case for replacing them. tools process">
+          <time class="post__date" datetime="2026-01-08">8 January 2026</time>
+          <div>
+            <a class="post__title" href="article.html">The tool that is almost right</a>
+            <p class="post__excerpt">Almost-right tools are more expensive than obviously-wrong ones, because nobody can build the case for replacing them.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">tools</a><a class="tag" href="archive.html">process</a></div>
+          </div>
+        </article>
+        <article class="post" data-post data-tags="craft teams" data-search-text="Notes on writing things down A decision log is not documentation. It is the answer to why on earth did we do it this way, asked by you, in two years. craft teams">
+          <time class="post__date" datetime="2025-12-11">11 December 2025</time>
+          <div>
+            <a class="post__title" href="article.html">Notes on writing things down</a>
+            <p class="post__excerpt">A decision log is not documentation. It is the answer to "why on earth did we do it this way", asked by you, in two years.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">craft</a><a class="tag" href="archive.html">teams</a></div>
+          </div>
+        </article>
+        <article class="post" data-post data-tags="teams" data-search-text="Small teams and the myth of the bus factor Everyone worries about the person who might leave. Almost nobody notices the person who cannot leave, which is the more expensive problem. teams">
+          <time class="post__date" datetime="2025-11-19">19 November 2025</time>
+          <div>
+            <a class="post__title" href="article.html">Small teams and the myth of the bus factor</a>
+            <p class="post__excerpt">Everyone worries about the person who might leave. Almost nobody notices the person who cannot leave, which is the more expensive problem.</p>
+            <div class="post__foot"><a class="tag" href="archive.html">teams</a></div>
+          </div>
+        </article>
+      </div>
+      <p class="empty" data-empty hidden>Nothing matches that. Try a different word or clear the tag.</p>
+
+      <div class="subscribe" id="subscribe">
+        <h3 style="font-family:var(--font-display);font-weight:400;font-size:1.5rem">Get these by email</h3>
+        <p class="small muted" style="margin-top:8px">
+          Roughly fortnightly. No tracking pixels, no "you might also like", and one click to leave.
+        </p>
+        <form data-subscribe novalidate>
+          <label class="sr-only" for="sub-email">Email address</label>
+          <input id="sub-email" name="email" type="email" placeholder="you@example.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p data-status role="status"></p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="wordmark" href="index.html">Quill<span>.</span></a>
+        <p class="small muted" style="margin-top:12px;max-width:38ch">
+          Essays on software, craft and the slow accumulation of judgement.
+          Roughly fortnightly, occasionally not.
+        </p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul>
+          <li><a href="index.html">Latest</a></li>
+          <li><a href="archive.html">Archive</a></li>
+          <li><a href="archive.html">By tag</a></li>
+          <li><a href="#">RSS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="#">Email</a></li>
+          <li><a href="#" rel="me">Mastodon</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; 2026 Quill Journal</span>
+      <span>Set in Instrument Serif and Inter</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

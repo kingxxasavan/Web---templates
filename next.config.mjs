@@ -7,6 +7,16 @@ const nextConfig = {
   outputFileTracingIncludes: {
     "/api/download/[slug]": ["./private/downloads/**"],
   },
+  async headers() {
+    return [
+      {
+        // Live template demos must not compete with the store in search
+        // results, or read as duplicate content.
+        source: "/preview/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -59,6 +59,48 @@ download function, since nothing imports them.
 - `fulfillOrder` is idempotent, so a replayed Stripe webhook cannot
   double-grant or corrupt the order.
 
+## The tour
+
+A first-time visitor lands *inside* a real, working template — Aurora Commerce,
+running live in a frame — and is walked through its pages as though it were
+simply the site. Only at the end does it shrink away and reveal that everything
+they just used is a $10 product, followed by a rotating showcase of the rest.
+
+It argues for the build quality far better than a screenshot grid does, because
+the visitor has actually used it.
+
+- Mounts *over* the storefront rather than redirecting, so crawlers and
+  returning visitors still get the store. The tour is an addition, never a gate.
+- Shows once per browser (`localStorage`), with "Skip tour" always visible and
+  a "Take the tour" button in the hero for anyone who wants it again.
+- Steps live in `lib/tour.js`; arrow keys and Escape work.
+
+## Live previews instead of screenshots
+
+Product pages run the real template in a frame with its pages as tabs, a
+device-width switcher and a per-page description, so a buyer can walk every
+page and function before paying. `scripts/build-previews.mjs` copies the static
+templates into `public/preview/<slug>/` at build time.
+
+**The trade-off:** a served template's markup is viewable, the same as on any
+template marketplace. That is the price of a demo people trust, and the paid
+artefact is still the packaged source, README and licence, which only come
+through the authorised download route. Previews carry `X-Robots-Tag: noindex`
+so they never compete with the store in search.
+
+Helix needs a build step, so it keeps a still and lists its sections instead.
+
+## Carts without an account
+
+Browsing, adding to the cart and seeing a full total need no account and no
+database — a signed-out cart lives in a cookie. Only checkout requires signing
+up, and the cookie cart is merged into the account on registration, sign in and
+at checkout, so nothing picked out beforehand is lost.
+
+Only slugs are stored. Prices are always recomputed server-side from the
+catalogue, so editing the cookie changes which items are in the cart and
+nothing else; an injected value is dropped on read.
+
 ## Password reset
 
 `/forgot` issues a single-use token, stored only as a SHA-256 hash and valid
@@ -140,12 +182,25 @@ Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
 buyers charge back when they find the original. Owning the inventory removes
 the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
 
+## When the database is down
+
+The storefront is built entirely from the static catalogue, so a browsing
+visitor never sees an error because the data layer is unreachable or not yet
+configured. Reads behind the storefront degrade through `readOrFallback` —
+ratings, ownership and the session lookup fall back to empty. **Writes never
+do**: a purchase that silently does nothing is worse than an error.
+
+This is what fixes the blank-page deploy. With `DATABASE_URL` unset on Vercel,
+the `file:` fallback lands on a read-only filesystem; previously that took the
+whole site down, and now it costs only accounts and orders.
+
 ## Running it
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
 npm test         # 36 tests, no framework needed
+npm run previews # rebuild the live template previews only
 npm run build    # zips the templates, then builds
 ```
 
@@ -204,14 +259,25 @@ lib/
   reviews.js                 verified-purchase reviews
   metrics.js                 sales figures for the dashboard
   admin.js                   ADMIN_EMAILS allowlist
+  guest-cart.js              signed-out cart, cookie only
+  tour.js                    the first-visit walkthrough
   db.js                      libSQL client, schema, seeding
   password.js                scrypt helpers (no Next import — unit tested)
   auth.js                    sessions, rate limiting, origin checks
   store.js                   cart, orders, entitlements
-scripts/build-zips.mjs       templates/ → private/downloads/
+scripts/
+  build-zips.mjs             templates/ → private/downloads/ (paid, gated)
+  build-previews.mjs         templates/ → public/preview/ (live demos)
 templates/                   the products
 tests/{store,accounts}.test.js
 ```
+
+## Still to do
+
+- **Firebase.** Not started. The data layer is SQL through libSQL, so moving to
+  Firestore is a rewrite of every query rather than a config change, and it
+  wants to be its own commit rather than riding along on top of a fix you were
+  waiting to deploy. Say the word and it's next.
 
 ## Honest notes
 

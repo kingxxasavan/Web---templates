@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Masthead from "@/components/Masthead";
@@ -7,10 +6,11 @@ import AddToCart from "@/components/AddToCart";
 import TemplateCard from "@/components/TemplateCard";
 import { Check, Badge } from "@/components/store";
 import Reviews from "@/components/Reviews";
+import LivePreview from "@/components/LivePreview";
 import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
-import { TEMPLATES, TIERS, bySlug, money } from "@/lib/catalog";
+import { TEMPLATES, TIERS, bySlug, money, pageCount } from "@/lib/catalog";
 import { reviewsFor, ratingFor, myReview } from "@/lib/reviews";
 
 export async function generateMetadata({ params }) {
@@ -68,16 +68,7 @@ export default async function TemplatePage({ params }) {
 
           <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_340px]">
             <div>
-              <div className="card overflow-hidden rounded-2xl">
-                <Image
-                  src={`/thumbs/${t.slug}.webp`}
-                  alt={`${t.name} template preview`}
-                  width={1100}
-                  height={825}
-                  priority
-                  className="w-full"
-                />
-              </div>
+              <LivePreview template={t} />
 
               <div className="mt-10">
                 <h2 className="text-[20px] tracking-[-0.015em]">
@@ -159,7 +150,7 @@ export default async function TemplatePage({ params }) {
                 <dl className="mt-6 flex flex-col gap-3 border-t border-line pt-5 text-[13px]">
                   {[
                     ["Built for", t.audience],
-                    ["Pages", t.pages],
+                    ["Pages", pageCount(t)],
                     ["Stack", t.stack.join(", ")],
                     ["Licence", "Commercial, no attribution"],
                   ].map(([k, v]) => (

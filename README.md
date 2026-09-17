@@ -61,19 +61,23 @@ download function, since nothing imports them.
 
 ## The tour
 
-A first-time visitor lands *inside* a real, working template — Aurora Commerce,
-running live in a frame — and is walked through its pages as though it were
-simply the site. Only at the end does it shrink away and reveal that everything
-they just used is a $10 product, followed by a rotating showcase of the rest.
+A first-time visitor lands *inside* a real template — picked at random from
+the eight that run in a frame — and can genuinely use it. Every link, filter,
+cart drawer and form in there is live; nothing is overlaid or faked. A guide
+panel sits in the corner naming the page, what's built into it, and one thing
+worth trying, and it **follows** the visitor: navigate inside the template and
+the guide catches up rather than fighting you.
 
-It argues for the build quality far better than a screenshot grid does, because
-the visitor has actually used it.
+"Show me another" swaps to a different template, so the tour is as long as
+they want it. When they're done it shrinks away and reveals that everything
+they just used is a product, followed by a rotating showcase of the rest.
 
 - Mounts *over* the storefront rather than redirecting, so crawlers and
-  returning visitors still get the store. The tour is an addition, never a gate.
-- Shows once per browser (`localStorage`), with "Skip tour" always visible and
-  a "Take the tour" button in the hero for anyone who wants it again.
-- Steps live in `lib/tour.js`; arrow keys and Escape work.
+  returning visitors still get the store. It is never a gate.
+- Shows once per browser, with "Skip tour" always visible and a "Take the
+  tour" button in the hero.
+- Steps come from the catalogue's per-page metadata, so adding a template adds
+  it to the tour pool automatically.
 
 ## Live previews instead of screenshots
 
@@ -135,7 +139,7 @@ on the listing cards and in the buy rail.
 
 ## Analytics
 
-Two halves, deliberately:
+Three sources, deliberately:
 
 - **Traffic** — `@vercel/analytics` and `@vercel/speed-insights` are mounted in
   the root layout. Cookie-less, and they no-op outside a Vercel deployment.
@@ -143,6 +147,18 @@ Two halves, deliberately:
 - **Money** — `/admin` reads your own database: all-time and 30-day revenue,
   average order value, signup→purchase conversion, a daily revenue chart, best
   sellers by revenue, recent orders, review average and the mail log.
+- **Behaviour** — Firebase Analytics, when `NEXT_PUBLIC_FIREBASE_*` is set.
+  Beyond page views it records `tour_start`, `tour_next_template`,
+  `tour_reveal` (with pages and templates seen), `add_to_cart`,
+  `begin_checkout`, `checkout_needs_account` and `purchase` — enough to tell
+  whether the tour actually sells anything. Tracking never throws: an ad
+  blocker costs you a data point, not a working page.
+
+A Firebase web config is public by design — it ships in the bundle of every
+Firebase web app and identifies the project rather than authenticating it.
+Your **security rules** are what protect the data. Moving accounts and orders
+onto Firestore is separate and needs a service account key, which is a real
+secret; see `.env.example`.
 
 Admin access is an allowlist in `ADMIN_EMAILS`, not a database flag, so a
 compromised account cannot promote itself. A non-admin gets a 404 rather than

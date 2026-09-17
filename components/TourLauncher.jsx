@@ -13,7 +13,7 @@ const SEEN = "foundry_tour_seen";
  * or a returning visitor gets is still the store — the tour is an addition,
  * never a gate.
  */
-export default function TourLauncher({ tour, showcase, variant = "auto" }) {
+export default function TourLauncher({ pool, showcase, variant = "auto" }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function TourLauncher({ tour, showcase, variant = "auto" }) {
       )}
 
       <AnimatePresence>
-        {open && <Tour tour={tour} showcase={showcase} onClose={close} />}
+        {open && <Tour pool={pool} showcase={showcase} onClose={close} />}
       </AnimatePresence>
     </>
   );

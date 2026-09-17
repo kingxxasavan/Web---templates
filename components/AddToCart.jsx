@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/firebase-client";
 
 export default function AddToCart({ slug, label, owned = false, className = "" }) {
   const [state, setState] = useState("idle");
@@ -31,6 +32,7 @@ export default function AddToCart({ slug, label, owned = false, className = "" }
       return;
     }
     setState("added");
+    track("add_to_cart", { item_id: slug });
     router.refresh();
   }
 

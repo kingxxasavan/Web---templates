@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/firebase-client";
 
 const money = (c) => `$${(c / 100).toFixed(c % 100 === 0 ? 0 : 2)}`;
 
@@ -27,12 +28,18 @@ export default function CartView({ initialCart, signedIn = true }) {
   async function checkout() {
     setBusy(true);
     setError(null);
+    track("begin_checkout", {
+      value: cart.subtotalCents / 100,
+      currency: "USD",
+      items: cart.items.map((i) => i.slug),
+    });
     const res = await fetch("/api/checkout", { method: "POST" });
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
       // Signed out: send them to sign up, cart intact in the cookie.
       if (data.needsAuth && data.redirect) {
+        track("checkout_needs_account");
         router.push(data.redirect);
         return;
       }
@@ -40,6 +47,11 @@ export default function CartView({ initialCart, signedIn = true }) {
       setBusy(false);
       return;
     }
+    track("purchase", {
+      transaction_id: data.orderId,
+      value: cart.subtotalCents / 100,
+      currency: "USD",
+    });
     router.push(data.redirect);
     router.refresh();
   }

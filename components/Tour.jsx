@@ -1,37 +1,81 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { money } from "@/lib/catalog";
+import { track } from "@/lib/firebase-client";
 
 const ease = [0.16, 1, 0.3, 1];
 
 /**
- * The visitor lands inside a real, working template and is walked through it
- * as though it were simply the site. Only at the end is it revealed that
- * everything they just used is a product — which argues for the quality far
- * better than a screenshot grid does.
+ * A tour you can actually use. The frame is live and unblocked — clicking a
+ * product, opening the cart or navigating to another page all work, and the
+ * guide follows the visitor rather than driving them.
  */
-export default function Tour({ tour, showcase, onClose }) {
-  const [step, setStep] = useState(0);
+export default function Tour({ pool, showcase, onClose }) {
+  // Chosen on the client so the tour differs per visit without the server
+  // and the first client render disagreeing.
+  const [tour, setTour] = useState(null);
+  const [stopIndex, setStopIndex] = useState(0);
+  const [visited, setVisited] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
+  const [revealed, setRevealed] = useState(false);
+  const [minimised, setMinimised] = useState(false);
+  const [seenCount, setSeenCount] = useState(0);
+  const frameRef = useRef(null);
 
-  const steps = tour.steps;
-  const atReveal = step >= steps.length;
-  const current = steps[Math.min(step, steps.length - 1)];
-
-  const next = useCallback(() => setStep((s) => s + 1), []);
-  const back = useCallback(() => setStep((s) => Math.max(0, s - 1)), []);
+  const pick = useCallback(
+    (exclude) => {
+      const options = pool.filter((t) => t.slug !== exclude);
+      return options[Math.floor(Math.random() * options.length)];
+    },
+    [pool]
+  );
 
   useEffect(() => {
-    if (!atReveal) setLoading(true);
-  }, [step, atReveal]);
+    const first = pick(null);
+    setTour(first);
+    track("tour_start", { template: first.slug });
+  }, [pick]);
+
+  const stop = tour?.stops[stopIndex] ?? null;
+  const allSeen = tour ? visited.size >= tour.stops.length : false;
+
+  const goto = useCallback((i) => {
+    setStopIndex(i);
+    setLoading(true);
+  }, []);
+
+  /** Keeps the guide in step when the visitor navigates inside the frame. */
+  const syncToFrame = useCallback(() => {
+    setLoading(false);
+    if (!tour) return;
+    try {
+      const path = frameRef.current?.contentWindow?.location?.pathname ?? "";
+      const file = path.split("/").pop() || "index.html";
+      const i = tour.stops.findIndex((s) => s.file === file);
+      if (i >= 0) {
+        setStopIndex(i);
+        setVisited((prev) => new Set(prev).add(file));
+      }
+    } catch {
+      // A cross-origin frame can't be read; the manual controls still work.
+    }
+  }, [tour]);
+
+  function nextTemplate() {
+    const another = pick(tour.slug);
+    track("tour_next_template", { from: tour.slug, to: another.slug });
+    setSeenCount((n) => n + 1);
+    setTour(another);
+    setStopIndex(0);
+    setVisited(new Set());
+    setLoading(true);
+  }
 
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") back();
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -39,7 +83,9 @@ export default function Tour({ tour, showcase, onClose }) {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [next, back, onClose]);
+  }, [onClose]);
+
+  if (!tour) return null;
 
   return (
     <motion.div
@@ -52,118 +98,142 @@ export default function Tour({ tour, showcase, onClose }) {
       aria-modal="true"
       aria-label="Template tour"
     >
-      {/* the template, running full screen until the reveal */}
       <motion.div
         animate={
-          atReveal
+          revealed
             ? { scale: 0.4, y: "-31%", opacity: 0.3, filter: "blur(4px)" }
             : { scale: 1, y: 0, opacity: 1, filter: "blur(0px)" }
         }
         transition={{ duration: 1.1, ease }}
-        className="absolute inset-0 origin-center overflow-hidden rounded-none bg-white"
-        style={{ borderRadius: atReveal ? 24 : 0 }}
+        className="absolute inset-0 origin-center overflow-hidden bg-white"
+        style={{ borderRadius: revealed ? 24 : 0 }}
       >
-        {loading && !atReveal && (
+        {loading && !revealed && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-base">
             <span className="text-[13px] text-faint">Loading…</span>
           </div>
         )}
+        {/* No overlay: every link, button and form in here is live. */}
         <iframe
-          key={current.file}
-          src={`/preview/${tour.slug}/${current.file}`}
-          title={current.name}
-          onLoad={() => setLoading(false)}
-          sandbox="allow-same-origin allow-scripts allow-forms"
+          ref={frameRef}
+          key={`${tour.slug}-${stop.file}`}
+          src={`/preview/${tour.slug}/${stop.file}`}
+          title={`${tour.name} — ${stop.name}`}
+          onLoad={syncToFrame}
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
           className="h-full w-full border-0 bg-white"
         />
-        {/* stops clicks inside the frame from navigating away mid-tour */}
-        {!atReveal && <div className="absolute inset-0" aria-hidden />}
       </motion.div>
 
-      {/* skip */}
-      {!atReveal && (
+      {!revealed && (
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 z-20 rounded-full bg-base/85 px-4 py-2 text-[13px] text-ink backdrop-blur-xl transition-colors hover:bg-base"
+          className="absolute right-5 top-5 z-30 rounded-full bg-base/85 px-4 py-2 text-[13px] text-ink backdrop-blur-xl transition-colors hover:bg-base"
         >
           Skip tour
         </button>
       )}
 
-      {/* guide */}
       <AnimatePresence>
-        {!atReveal && (
+        {!revealed && (
           <motion.div
             key="guide"
             initial={{ y: 60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 60, opacity: 0 }}
             transition={{ duration: 0.5, ease }}
-            className="absolute bottom-5 left-1/2 z-20 w-[min(560px,calc(100%-2.5rem))] -translate-x-1/2"
+            className="absolute bottom-5 right-5 z-30 w-[min(400px,calc(100%-2.5rem))]"
           >
-            <div className="rounded-2xl border border-line bg-base/92 p-5 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.9)] backdrop-blur-xl">
-              <div className="flex items-center gap-2">
+            <div className="rounded-2xl border border-line bg-base/94 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+              <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
                 <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-medium text-accent">
-                  {current.name}
+                  {tour.name}
                 </span>
-                <span className="text-[11.5px] text-faint">
-                  {step + 1} of {steps.length}
+                <span className="truncate text-[11.5px] text-faint">
+                  {visited.size}/{tour.stops.length} pages
                 </span>
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={step}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-2.5 text-[14.5px] leading-relaxed text-ink"
-                >
-                  {current.copy}
-                </motion.p>
-              </AnimatePresence>
-
-              <div className="mt-4 flex items-center gap-3">
-                <div className="flex flex-1 gap-1">
-                  {steps.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`h-1 flex-1 rounded-full transition-colors duration-500 ${
-                        i <= step ? "bg-accent" : "bg-line"
-                      }`}
-                    />
-                  ))}
-                </div>
-                {step > 0 && (
-                  <button
-                    onClick={back}
-                    className="text-[13px] text-muted transition-colors hover:text-ink"
-                  >
-                    Back
-                  </button>
-                )}
                 <button
-                  onClick={next}
-                  className="rounded-full bg-ink px-5 py-2 text-[13.5px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
+                  onClick={() => setMinimised((m) => !m)}
+                  className="ml-auto rounded-md px-2 py-1 text-[11.5px] text-muted transition-colors hover:text-ink"
                 >
-                  {step === steps.length - 1 ? "Finish" : "Next"}
+                  {minimised ? "Show guide" : "Hide"}
                 </button>
               </div>
+
+              {!minimised && (
+                <div className="p-4">
+                  <p className="text-[13.5px] font-medium">{stop.name}</p>
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-muted">
+                    {stop.blurb}
+                  </p>
+                  {stop.try && (
+                    <p className="mt-2.5 rounded-lg border border-accent/20 bg-accent/[0.07] px-3 py-2 text-[12.5px] leading-relaxed text-accent">
+                      Try it: {stop.try}
+                    </p>
+                  )}
+
+                  {/* page switcher — or just click around in the page itself */}
+                  <div className="mt-3.5 flex flex-wrap gap-1.5">
+                    {tour.stops.map((s, i) => (
+                      <button
+                        key={s.file}
+                        onClick={() => goto(i)}
+                        className={`rounded-md px-2.5 py-1 text-[11.5px] transition-colors ${
+                          i === stopIndex
+                            ? "bg-ink text-base"
+                            : visited.has(s.file)
+                              ? "bg-white/[0.07] text-ink"
+                              : "text-muted hover:bg-white/[0.05] hover:text-ink"
+                        }`}
+                      >
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 flex items-center gap-2 border-t border-line pt-3.5">
+                    <button
+                      onClick={nextTemplate}
+                      className="rounded-full border border-line px-3.5 py-2 text-[12.5px] text-ink transition-colors hover:border-ink/25"
+                    >
+                      Show me another
+                    </button>
+                    <button
+                      onClick={() => {
+                        track("tour_reveal", {
+                          template: tour.slug,
+                          pages_seen: visited.size,
+                          templates_seen: seenCount + 1,
+                        });
+                        setRevealed(true);
+                      }}
+                      className="ml-auto rounded-full bg-ink px-4 py-2 text-[12.5px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
+                    >
+                      {allSeen ? "I've seen enough" : "Done exploring"}
+                    </button>
+                  </div>
+
+                  {seenCount > 0 && (
+                    <p className="mt-2.5 text-center text-[11px] text-faint">
+                      {seenCount + 1} templates so far — there are{" "}
+                      {showcase.length} in all.
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* the reveal */}
       <AnimatePresence>
-        {atReveal && (
+        {revealed && (
           <motion.div
             key="reveal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="absolute inset-0 z-20 flex flex-col items-center justify-end overflow-y-auto bg-gradient-to-t from-base via-base/98 via-45% to-transparent px-6 pb-10 pt-[46vh]"
+            className="absolute inset-0 z-30 flex flex-col items-center justify-end overflow-y-auto bg-gradient-to-t from-base via-base/98 via-45% to-transparent px-6 pb-10 pt-[46vh]"
           >
             <div className="w-full max-w-3xl text-center">
               <motion.p
@@ -181,8 +251,10 @@ export default function Tour({ tour, showcase, onClose }) {
                 transition={{ duration: 0.8, delay: 0.9, ease }}
                 className="mt-4 text-balance text-[2.2rem] leading-[1.08] tracking-[-0.03em] sm:text-5xl"
               >
-                That whole site was a{" "}
-                <span className="serif-accent text-accent">template.</span>
+                {seenCount > 0 ? "Those were all " : "That whole site was a "}
+                <span className="serif-accent text-accent">
+                  {seenCount > 0 ? "templates." : "template."}
+                </span>
               </motion.h2>
 
               <motion.p
@@ -191,20 +263,19 @@ export default function Tour({ tour, showcase, onClose }) {
                 transition={{ duration: 0.8, delay: 1.15, ease }}
                 className="mx-auto mt-5 max-w-lg text-pretty text-[15.5px] leading-relaxed text-muted"
               >
-                Every page you just clicked through is {tour.name} —{" "}
+                Everything you just clicked through is {tour.name} —{" "}
                 {tour.pages} pages of source you can own for{" "}
-                {money(tour.priceCents)}. We build all nine of them to that
-                standard, which is easier to show than to claim.
+                {money(tour.priceCents)}. All {showcase.length} are built to
+                that standard, which is easier to show than to claim.
               </motion.p>
 
-              {/* rotating proof */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.35, ease }}
                 className="mt-9"
               >
-                <Rotator items={showcase} />
+                <Rotator items={showcase.filter((s) => s.slug !== tour.slug)} />
               </motion.div>
 
               <motion.div
@@ -234,7 +305,6 @@ export default function Tour({ tour, showcase, onClose }) {
   );
 }
 
-/** Cycles the other templates so the reveal shows range, not one lucky build. */
 function Rotator({ items }) {
   const [i, setI] = useState(0);
 
@@ -244,6 +314,7 @@ function Rotator({ items }) {
   }, [items.length]);
 
   const item = items[i];
+  if (!item) return null;
 
   return (
     <div className="mx-auto w-full max-w-md">

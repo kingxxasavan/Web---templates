@@ -284,9 +284,28 @@ instead of "Something went wrong".
 database. The database needs either `FIREBASE_SERVICE_ACCOUNT` +
 `FIREBASE_DATABASE_URL`, or `DATABASE_URL` + `DATABASE_AUTH_TOKEN`.
 
-Health names the failure precisely, including the two setup mistakes that
-actually happen: service-account JSON mangled on paste (`bad_service_account`)
-and a missing or malformed database URL (`bad_database_url`).
+Health names the failure precisely. Its `env` block reports, by **name only
+and never by value**, which variables the running deployment can actually see:
+
+```json
+"env": { "firebase": {
+  "ready": false,
+  "missing": ["FIREBASE_SERVICE_ACCOUNT"],
+  "serviceAccount": { "set": true, "validJson": true,
+                      "privateKeyLooksValid": false,
+                      "problem": "private_key doesn't look like a PEM key..." },
+  "databaseUrl": { "set": true, "from": "NEXT_PUBLIC_FIREBASE_DATABASE_URL" },
+  "projectMismatch": null } }
+```
+
+That distinguishes the setup mistakes that actually happen: a variable never
+added, added to the wrong Vercel environment, added without redeploying, JSON
+mangled on paste, `\n` escapes stripped from `private_key`, or a service
+account belonging to a different Firebase project.
+
+`serverExternalPackages: ["firebase-admin"]` is set in `next.config.mjs`.
+firebase-admin resolves parts of itself with dynamic requires that Next's
+server bundler cannot follow, so it has to stay external to load at runtime.
 
 ## When the database is down
 

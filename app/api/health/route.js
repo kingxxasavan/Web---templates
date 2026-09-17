@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { backend, backendName } from "@/lib/backend";
 import { describeDbError, usingLocalFile } from "@/lib/db-errors";
+import { envReport } from "@/lib/env-report";
 
 /**
  * A one-call answer to "why can't anyone sign up?".
@@ -12,6 +13,7 @@ import { describeDbError, usingLocalFile } from "@/lib/db-errors";
  */
 export async function GET() {
   const checks = {};
+  const env = envReport();
 
   // database
   if (usingLocalFile()) {
@@ -22,10 +24,14 @@ export async function GET() {
         "DATABASE_URL is not set, so the app is on its development-only " +
         "local file. On a serverless host that filesystem is read-only, " +
         "which is why sign-up fails while browsing still works.",
-      fix:
-        "Firebase: set FIREBASE_SERVICE_ACCOUNT (the whole service account " +
-        "JSON) and FIREBASE_DATABASE_URL. Or libSQL: set DATABASE_URL and " +
-        "DATABASE_AUTH_TOKEN.",
+      missing: env.firebase.missing,
+      fix: env.firebase.serviceAccount.problem
+        ? `FIREBASE_SERVICE_ACCOUNT: ${env.firebase.serviceAccount.problem}`
+        : env.firebase.missing.length
+          ? `Not visible to this deployment: ${env.firebase.missing.join(", ")}. ` +
+            "Add them in Vercel, tick every environment, then REDEPLOY — " +
+            "environment variables only reach a new build."
+          : "Set FIREBASE_SERVICE_ACCOUNT and FIREBASE_DATABASE_URL, or DATABASE_URL.",
     };
   } else {
     try {
@@ -40,12 +46,19 @@ export async function GET() {
       };
     } catch (err) {
       const { message, reason } = describeDbError(err);
+      // A service account that is present but malformed lands here, so carry
+      // the specific diagnosis across rather than reporting a bare failure.
+      const setupProblem = env.firebase.serviceAccount.problem;
       checks.database = {
         ok: false,
         configured: true,
         backend: backendName() === "rtdb" ? "Firebase Realtime Database" : "libSQL",
-        reason,
+        reason: setupProblem ? "bad_service_account" : reason,
         detail: message,
+        fix:
+          setupProblem ??
+          env.firebase.projectMismatch ??
+          "Check the database credentials and that the service is reachable.",
       };
     }
   }
@@ -93,6 +106,7 @@ export async function GET() {
         ? "Accounts and orders are working."
         : "Accounts and orders are unavailable — see checks.database.",
       checks,
+      env,
     },
     { status: healthy ? 200 : 503 }
   );

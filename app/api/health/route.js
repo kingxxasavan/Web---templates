@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
+import { backend, backendName } from "@/lib/backend";
 import { describeDbError, usingLocalFile } from "@/lib/db-errors";
 
 /**
@@ -21,16 +22,31 @@ export async function GET() {
         "DATABASE_URL is not set, so the app is on its development-only " +
         "local file. On a serverless host that filesystem is read-only, " +
         "which is why sign-up fails while browsing still works.",
-      fix: "Create a Turso database and set DATABASE_URL and DATABASE_AUTH_TOKEN.",
+      fix:
+        "Firebase: set FIREBASE_SERVICE_ACCOUNT (the whole service account " +
+        "JSON) and FIREBASE_DATABASE_URL. Or libSQL: set DATABASE_URL and " +
+        "DATABASE_AUTH_TOKEN.",
     };
   } else {
     try {
-      const db = await getDb();
-      await db.execute("SELECT 1");
-      checks.database = { ok: true, configured: true, detail: "Reachable." };
+      // A read that touches the real store, whichever backend is active.
+      if (backendName() === "rtdb") await backend().countUsers();
+      else await (await getDb()).execute("SELECT 1");
+      checks.database = {
+        ok: true,
+        configured: true,
+        backend: backendName() === "rtdb" ? "Firebase Realtime Database" : "libSQL",
+        detail: "Reachable.",
+      };
     } catch (err) {
       const { message, reason } = describeDbError(err);
-      checks.database = { ok: false, configured: true, reason, detail: message };
+      checks.database = {
+        ok: false,
+        configured: true,
+        backend: backendName() === "rtdb" ? "Firebase Realtime Database" : "libSQL",
+        reason,
+        detail: message,
+      };
     }
   }
 

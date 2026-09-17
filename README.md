@@ -25,7 +25,7 @@ server-side from the catalogue at checkout.
 | Layer | Choice | Why |
 |---|---|---|
 | Framework | Next.js 16, App Router | Route handlers give a real API beside the pages |
-| Database | libSQL (`@libsql/client`) | One client speaks to a local file *and* hosted Turso, so the data layer is identical in dev and production |
+| Database | Firebase Realtime Database **or** libSQL | Two backends behind one interface, chosen by environment variables — see below |
 | Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
 | Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
 | Email | Resend over `fetch`, with a logged fallback | No SDK, and both mail flows work before a provider exists |
@@ -200,6 +200,73 @@ Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
 buyers charge back when they find the original. Owning the inventory removes
 the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
 
+## Choosing a database
+
+The app runs on either **Firebase Realtime Database** or **libSQL**, picked at
+startup from the environment. Nothing else in the codebase changes.
+
+| Set this | Backend used |
+|---|---|
+| `FIREBASE_SERVICE_ACCOUNT` + `FIREBASE_DATABASE_URL` | Firebase Realtime Database |
+| `DATABASE_URL` (+ `DATABASE_AUTH_TOKEN`) | libSQL / Turso |
+| neither | local file — development only, and read-only on a serverless host |
+
+`lib/backend.js` picks one; `lib/backends/rtdb/ops.js` and
+`lib/backends/sql/ops.js` implement the same interface. Every module above
+them — accounts, cart, orders, reviews, mail, metrics — is backend-agnostic.
+
+### Connecting Firebase
+
+1. Firebase console → Project settings → **Service accounts** → *Generate new
+   private key*. This file is a real secret; never commit it.
+2. In Vercel → Settings → Environment Variables:
+   - `FIREBASE_SERVICE_ACCOUNT` — the **entire** JSON file, pasted as one value
+   - `FIREBASE_DATABASE_URL` — `https://your-project-default-rtdb.firebaseio.com`
+3. Lock the database down. Server access goes through the service account,
+   which bypasses rules, so no client needs direct access:
+   ```json
+   { "rules": { ".read": false, ".write": false } }
+   ```
+4. Redeploy and check `/api/health` — it names the active backend.
+
+### How the data is shaped
+
+RTDB has no joins and no unique constraints, so two indexes do that work:
+`emailToUid` gives the unique-email lookup SQL provided for free, and
+`userOrders` gives the per-user order index. Writes that must not half-apply —
+creating a user, granting a purchase, consuming a reset — use a single
+multi-location update on the root, which RTDB applies atomically.
+
+```
+users/{uid}                 email, password, createdAt
+emailToUid/{base64url}      uid
+sessions/{tokenHash}        userId, createdAt, expiresAt
+carts/{uid}/{slug}          addedAt
+entitlements/{uid}/{slug}   orderId, createdAt
+orders/{orderId}            userId, totalCents, status, provider, items{}
+userOrders/{uid}/{orderId}  createdAt
+reviews/{slug}/{uid}        rating, title, body, email, createdAt
+resets/{tokenHash}          userId, expiresAt, usedAt
+attempts/{base64url}        count, firstAt
+mail/{id}                   toEmail, subject, kind, provider, status
+```
+
+Email addresses can't be RTDB keys — `. # $ [ ] /` are all illegal — so they're
+base64url encoded, which round-trips any address.
+
+### What's verified, and what isn't
+
+Both backends run **the same behaviour suite**: 62 tests, 36 against libSQL and
+26 against Realtime Database. A difference between them fails a test rather
+than surprising you in production.
+
+The RTDB emulator can't start in the environment this was built in, so those 26
+run against a faithful in-memory double (`tests/helpers/fake-rtdb.js`) that
+matches the semantics the backend relies on — null removes a node, empty
+parents vanish, multi-location updates apply together. **That proves the
+backend's own logic, not the Firebase SDK's behaviour.** The first real
+round-trip happens on your project, which is what `/api/health` is for.
+
 ## Diagnosing a deployment
 
 `GET /api/health` answers "why can't anyone sign up?" in one call. It reports
@@ -213,9 +280,13 @@ every *write* fails, so account creation is the first thing anyone notices.
 Health says so in as many words, and the sign-up form now shows the real cause
 instead of "Something went wrong".
 
-**Firebase env vars do not configure the database.** `NEXT_PUBLIC_FIREBASE_*`
-is analytics only. The data store is libSQL and needs `DATABASE_URL` plus
-`DATABASE_AUTH_TOKEN`.
+`NEXT_PUBLIC_FIREBASE_*` is **analytics only** and does not configure the
+database. The database needs either `FIREBASE_SERVICE_ACCOUNT` +
+`FIREBASE_DATABASE_URL`, or `DATABASE_URL` + `DATABASE_AUTH_TOKEN`.
+
+Health names the failure precisely, including the two setup mistakes that
+actually happen: service-account JSON mangled on paste (`bad_service_account`)
+and a missing or malformed database URL (`bad_database_url`).
 
 ## When the database is down
 
@@ -234,7 +305,7 @@ whole site down, and now it costs only accounts and orders.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm test         # 36 tests, no framework needed
+npm test         # 62 tests across both backends, no framework needed
 npm run previews # rebuild the live template previews only
 npm run build    # zips the templates, then builds
 ```
@@ -296,6 +367,9 @@ lib/
   admin.js                   ADMIN_EMAILS allowlist
   guest-cart.js              signed-out cart, cookie only
   tour.js                    the first-visit walkthrough
+  backend.js                 picks the backend from the environment
+  backends/rtdb/             Firebase Realtime Database implementation
+  backends/sql/              libSQL implementation
   db.js                      libSQL client, schema, seeding
   password.js                scrypt helpers (no Next import — unit tested)
   auth.js                    sessions, rate limiting, origin checks
@@ -306,13 +380,6 @@ scripts/
 templates/                   the products
 tests/{store,accounts}.test.js
 ```
-
-## Still to do
-
-- **Firebase.** Not started. The data layer is SQL through libSQL, so moving to
-  Firestore is a rewrite of every query rather than a config change, and it
-  wants to be its own commit rather than riding along on top of a fix you were
-  waiting to deploy. Say the word and it's next.
 
 ## Honest notes
 

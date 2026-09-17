@@ -203,7 +203,7 @@ export default async function AdminPage() {
                 {emails.map((e, i) => (
                   <li key={i} className="flex items-center justify-between gap-3 text-[12.5px]">
                     <span className="truncate text-muted">
-                      {e.kind} → {e.to_email}
+                      {e.kind} → {e.toEmail}
                     </span>
                     <span
                       className={

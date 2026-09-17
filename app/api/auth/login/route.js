@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { mergeGuestCart } from "@/lib/store";
 import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
+import { guardWrite } from "@/lib/db-errors";
 import {
   findUserByEmail,
   verifyPassword,
@@ -23,6 +24,7 @@ export async function POST(request) {
 
   const normalised = email.trim().toLowerCase();
 
+  return guardWrite(async () => {
   if (await tooManyAttempts(normalised)) {
     return NextResponse.json(
       { error: "Too many attempts. Try again in 15 minutes." },
@@ -53,4 +55,5 @@ export async function POST(request) {
   }
 
   return NextResponse.json({ ok: true, email: user.email, merged: guest.length });
+  }, NextResponse.json);
 }

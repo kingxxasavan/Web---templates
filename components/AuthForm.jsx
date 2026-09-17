@@ -9,6 +9,7 @@ export default function AuthForm({ mode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [configProblem, setConfigProblem] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function AuthForm({ mode }) {
 
     if (!res.ok) {
       setError(data.error || "Something went wrong.");
+      setConfigProblem(data.reason === "not_configured");
       setBusy(false);
       return;
     }
@@ -86,12 +88,25 @@ export default function AuthForm({ mode }) {
         </label>
 
         {error && (
-          <p
+          <div
             role="alert"
             className="rounded-xl border border-red-500/25 bg-red-500/10 px-3.5 py-2.5 text-[13px] text-red-300"
           >
-            {error}
-          </p>
+            <p>{error}</p>
+            {configProblem && (
+              <p className="mt-1.5 text-[12px] text-red-300/70">
+                Diagnostics:{" "}
+                <a
+                  href="/api/health"
+                  className="underline underline-offset-2"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  /api/health
+                </a>
+              </p>
+            )}
+          </div>
         )}
 
         <button

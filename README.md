@@ -72,10 +72,12 @@ the guide catches up rather than fighting you.
 they want it. When they're done it shrinks away and reveals that everything
 they just used is a product, followed by a rotating showcase of the rest.
 
+- **Opt-in.** It is launched from "Try a template live" in the hero and
+  nowhere else. It used to open itself on a first visit, which interrupted
+  every arrival before they had seen anything — and interrupted them again
+  whenever site data was cleared.
 - Mounts *over* the storefront rather than redirecting, so crawlers and
-  returning visitors still get the store. It is never a gate.
-- Shows once per browser, with "Skip tour" always visible and a "Take the
-  tour" button in the hero.
+  visitors who never press it still just get the store. Escape closes it.
 - Steps come from the catalogue's per-page metadata, so adding a template adds
   it to the tour pool automatically.
 
@@ -197,6 +199,23 @@ decision, not a point of pride:
 Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
 buyers charge back when they find the original. Owning the inventory removes
 the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
+
+## Diagnosing a deployment
+
+`GET /api/health` answers "why can't anyone sign up?" in one call. It reports
+whether the database, payments, email, analytics and the admin allowlist are
+configured and reachable, and **never returns a credential, host or token**, so
+it is safe to leave reachable and safe to paste into a bug report.
+
+The common failure on a fresh deploy is that `DATABASE_URL` was never set.
+Browsing still works — the storefront is served from the static catalogue — but
+every *write* fails, so account creation is the first thing anyone notices.
+Health says so in as many words, and the sign-up form now shows the real cause
+instead of "Something went wrong".
+
+**Firebase env vars do not configure the database.** `NEXT_PUBLIC_FIREBASE_*`
+is analytics only. The data store is libSQL and needs `DATABASE_URL` plus
+`DATABASE_AUTH_TOKEN`.
 
 ## When the database is down
 

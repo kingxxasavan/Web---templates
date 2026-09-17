@@ -68,7 +68,6 @@ export default async function Home() {
 
   return (
     <>
-      <TourLauncher pool={pool} showcase={proof} variant="auto" />
       <Masthead />
 
       {/* hero */}
@@ -100,7 +99,7 @@ export default async function Home() {
               >
                 Browse all {TEMPLATES.length}
               </a>
-              <TourLauncher pool={pool} showcase={proof} variant="button" />
+              <TourLauncher pool={pool} showcase={proof} />
             </div>
           </Reveal>
         </div>

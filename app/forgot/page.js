@@ -8,7 +8,7 @@ export default function ForgotPage() {
   return (
     <>
       <Masthead />
-      <main className="px-6 py-20">
+      <main className="shell py-16 md:py-24">
         <ForgotForm />
       </main>
       <Footer />

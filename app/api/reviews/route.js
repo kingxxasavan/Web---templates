@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { upsertReview, reviewsFor } from "@/lib/reviews";
+import { upsertReview, reviewsFor, ReviewError } from "@/lib/reviews";
 import { isSellableSlug } from "@/lib/catalog";
 
 export async function GET(request) {
@@ -22,19 +22,15 @@ export async function POST(request) {
   }
 
   const { slug, rating, title, body } = await request.json().catch(() => ({}));
-  if (!isSellableSlug(slug)) {
-    return NextResponse.json({ error: "Unknown product." }, { status: 400 });
-  }
 
   try {
-    await upsertReview(user.id, slug, { rating, title, body });
+    await upsertReview(user, slug, { rating, title, body });
   } catch (err) {
-    // canReview failing is a 403; a validation message is a 400.
-    const forbidden = err.message.includes("Only buyers");
-    return NextResponse.json(
-      { error: err.message },
-      { status: forbidden ? 403 : 400 }
-    );
+    if (err instanceof ReviewError) {
+      return NextResponse.json({ error: err.message }, { status: err.status });
+    }
+    console.error("[reviews] save failed:", err);
+    return NextResponse.json({ error: "Your review couldn't be saved. Please try again." }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true, reviews: await reviewsFor(slug) });

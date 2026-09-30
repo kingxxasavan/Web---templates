@@ -1,99 +1,147 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Icon, Logo } from "./icons";
+
+export const NAV = [
+  { href: "/templates", label: "Templates" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function MastheadBar({ user, cartCount }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => setOpen(false), [pathname]);
+
   async function signOut() {
-    await fetch("/api/auth/logout", { method: "POST" });
+    await fetch("/api/auth/session", { method: "DELETE" });
     router.push("/");
     router.refresh();
   }
 
+  const isActive = (href) => pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled
-          ? "border-b border-line bg-base/85 backdrop-blur-xl"
-          : "border-b border-transparent"
+      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled || open
+          ? "border-line bg-paper/90 backdrop-blur-xl"
+          : "border-transparent bg-paper"
       }`}
     >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-6">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink">
-            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-              <path d="M2 11.5L8 2l6 9.5H2z" fill="#0a0a0b" />
-            </svg>
-          </span>
-          <span className="text-[15px] font-semibold tracking-[-0.01em]">
-            Foundry
-          </span>
+      <div className="shell flex h-16 items-center justify-between gap-4">
+        <Link href="/" aria-label="Foundry home">
+          <Logo />
         </Link>
 
-        <nav className="flex items-center gap-1">
-          <Link
-            href="/#templates"
-            className="hidden rounded-full px-3 py-2 text-[13.5px] text-muted transition-colors hover:text-ink sm:block"
-          >
-            Templates
-          </Link>
+        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+          {NAV.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              aria-current={isActive(n.href) ? "page" : undefined}
+              className={`rounded-full px-3.5 py-2 text-[14px] transition-colors ${
+                isActive(n.href) ? "text-ink font-medium" : "text-muted hover:text-ink"
+              }`}
+            >
+              {n.label}
+            </Link>
+          ))}
+        </nav>
 
+        <div className="flex items-center gap-1.5">
           <Link
             href="/cart"
-            className="relative rounded-full px-3 py-2 text-[13.5px] text-muted transition-colors hover:text-ink"
+            aria-label={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
+            className="relative flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-sunk"
           >
-            Cart
+            <Icon name="cart" size={20} />
             {cartCount > 0 && (
-              <span className="ml-1.5 inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[11px] font-semibold text-base">
+              <span className="absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10.5px] font-semibold text-white">
                 {cartCount}
               </span>
             )}
           </Link>
 
-          {user ? (
-            <>
-              <Link
-                href="/account"
-                className="rounded-full px-3 py-2 text-[13.5px] text-muted transition-colors hover:text-ink"
-              >
-                Library
-              </Link>
-              <button
-                onClick={signOut}
-                className="rounded-full px-3 py-2 text-[13.5px] text-faint transition-colors hover:text-ink"
-              >
-                Sign out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="rounded-full px-3 py-2 text-[13.5px] text-muted transition-colors hover:text-ink"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/register"
-                className="ml-1 rounded-full bg-ink px-4 py-2 text-[13.5px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                Create account
-              </Link>
-            </>
-          )}
-        </nav>
+          <div className="hidden items-center gap-1.5 sm:flex">
+            {user ? (
+              <>
+                <Link href="/account" className="btn btn-sm btn-secondary">
+                  My library
+                </Link>
+                <button onClick={signOut} className="px-3 text-[13.5px] text-muted hover:text-ink">
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="px-3 text-[14px] text-muted transition-colors hover:text-ink">
+                  Sign in
+                </Link>
+                <Link href="/templates" className="btn btn-sm btn-primary">
+                  Browse templates
+                </Link>
+              </>
+            )}
+          </div>
+
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-sunk lg:hidden"
+          >
+            <Icon name={open ? "close" : "menu"} size={20} />
+          </button>
+        </div>
       </div>
+
+      {open && (
+        <nav id="mobile-menu" aria-label="Mobile" className="border-t border-line bg-paper lg:hidden">
+          <div className="shell flex flex-col py-3">
+            {NAV.map((n) => (
+              <Link
+                key={n.href}
+                href={n.href}
+                aria-current={isActive(n.href) ? "page" : undefined}
+                className="border-b border-line py-3.5 text-[16px] font-medium last:border-0"
+              >
+                {n.label}
+              </Link>
+            ))}
+            <div className="mt-3 flex gap-2 pb-2">
+              {user ? (
+                <>
+                  <Link href="/account" className="btn btn-primary flex-1">My library</Link>
+                  <button onClick={signOut} className="btn btn-secondary flex-1">Sign out</button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="btn btn-secondary flex-1">Sign in</Link>
+                  <Link href="/register" className="btn btn-primary flex-1">Create account</Link>
+                </>
+              )}
+            </div>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

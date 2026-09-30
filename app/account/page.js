@@ -1,12 +1,19 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
+import AddToCart from "@/components/AddToCart";
+import { Icon } from "@/components/icons";
 import { currentUser } from "@/lib/auth";
-import { ownedSlugs, ordersFor } from "@/lib/store";
-import { TEMPLATES, BUNDLE, bySlug, money } from "@/lib/catalog";
+import { ownedSlugs, ordersFor, itemName } from "@/lib/store";
+import { bundlePriceFor } from "@/lib/pricing";
+import { TEMPLATES, BUNDLE, money } from "@/lib/catalog";
 
-export const metadata = { title: "Your library" };
+export const metadata = { title: "Your library", robots: { index: false } };
+
+const date = (ts) =>
+  new Date(ts).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
 
 export default async function AccountPage({ searchParams }) {
   const user = await currentUser();
@@ -15,91 +22,86 @@ export default async function AccountPage({ searchParams }) {
   const { order: justOrdered } = await searchParams;
   const [owned, orders] = await Promise.all([
     ownedSlugs(user.id),
-    ordersFor(user.id),
+    ordersFor(user.id).catch(() => []),
   ]);
 
   const library = TEMPLATES.filter((t) => owned.has(t.slug));
   const hasAll = library.length === TEMPLATES.length;
+  const bundlePrice = bundlePriceFor(owned);
 
   return (
     <>
       <Masthead />
-      <main className="mx-auto w-full max-w-5xl px-6 py-14">
+      <main className="shell py-12 md:py-16">
         {justOrdered && (
-          <div className="mb-8 rounded-2xl border border-accent/25 bg-accent/10 px-5 py-4">
-            <p className="text-[14px] font-medium text-accent">
-              Payment complete — your downloads are ready below.
-            </p>
-            <p className="mt-1 text-[12.5px] text-accent/80">
-              Order {String(justOrdered).slice(0, 8)}
-            </p>
+          <div role="status" className="mb-8 flex items-start gap-3 rounded-2xl border border-good/20 bg-good-soft px-5 py-4">
+            <Icon name="check" size={20} strokeWidth={2.2} className="mt-0.5 text-good" />
+            <div>
+              <p className="text-[15px] font-semibold text-good">Payment complete. Your downloads are ready.</p>
+              <p className="mt-0.5 text-[13px] text-good/80">
+                Order {String(justOrdered).slice(0, 8)} · a receipt is on its way to {user.email}
+              </p>
+            </div>
           </div>
         )}
 
-        <header className="flex flex-wrap items-end justify-between gap-3">
+        <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-[30px] tracking-[-0.02em]">Your library</h1>
-            <p className="mt-1.5 text-[13.5px] text-muted">
-              Signed in as {user.email}
-            </p>
+            <h1 className="text-[34px] font-semibold tracking-[-0.025em]">Your library</h1>
+            <p className="mt-1.5 text-[14px] text-muted">Signed in as {user.email}</p>
           </div>
-          <p className="text-[13px] text-faint">
+          <p className="text-[13.5px] text-muted">
             {library.length} of {TEMPLATES.length} templates
           </p>
         </header>
 
-        {/* downloads */}
         <section className="mt-9">
           {library.length === 0 ? (
-            <div className="card rounded-2xl p-10 text-center">
-              <p className="text-[15px] text-muted">
-                You haven&rsquo;t bought anything yet.
-              </p>
-              <Link
-                href="/#templates"
-                className="mt-5 inline-block rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-medium text-base"
-              >
-                Browse templates
-              </Link>
+            <div className="card rounded-2xl p-12 text-center">
+              <p className="text-[16px] font-medium">Nothing here yet</p>
+              <p className="mt-1 text-[14px] text-muted">Templates you buy appear here, ready to download.</p>
+              <Link href="/templates" className="btn btn-primary mt-6">Browse templates</Link>
             </div>
           ) : (
             <>
               {hasAll && (
                 <a
                   href={`/api/download/${BUNDLE.slug}`}
-                  className="card mb-3 flex items-center justify-between gap-4 rounded-2xl p-5 transition-colors hover:border-accent/40"
+                  className="mb-4 flex items-center justify-between gap-4 rounded-2xl bg-night p-6 text-white"
                 >
                   <div>
-                    <p className="text-[15px] font-medium text-accent">
-                      Everything — single download
-                    </p>
-                    <p className="mt-0.5 text-[13px] text-muted">
-                      All {TEMPLATES.length} templates in one zip
+                    <p className="text-[16px] font-semibold">Everything in one download</p>
+                    <p className="mt-0.5 text-[13.5px] text-night-muted">
+                      All {TEMPLATES.length} templates in a single zip. New releases appear here automatically.
                     </p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-accent px-4 py-2 text-[13px] font-medium text-base">
-                    Download all
+                  <span className="btn btn-sm btn-on-dark">
+                    <Icon name="download" size={15} /> Download all
                   </span>
                 </a>
               )}
 
-              <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {library.map((t) => (
-                  <li key={t.slug}>
-                    <a
-                      href={`/api/download/${t.slug}`}
-                      className="card flex h-full items-center justify-between gap-4 rounded-2xl p-5"
-                    >
-                      <div>
-                        <p className="text-[14.5px] font-medium">{t.name}</p>
-                        <p className="mt-0.5 text-[12.5px] text-muted">
-                          {t.tagline}
-                        </p>
+                  <li key={t.slug} className="card overflow-hidden rounded-2xl">
+                    <Link href={`/t/${t.slug}`} className="relative block aspect-[16/9] border-b border-line bg-sunk">
+                      <Image
+                        src={`/thumbs/${t.slug}.webp`}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                        className="object-cover object-top"
+                      />
+                    </Link>
+                    <div className="flex items-center justify-between gap-3 p-4">
+                      <div className="min-w-0">
+                        <p className="truncate text-[15px] font-semibold">{t.name}</p>
+                        <p className="truncate text-[13px] text-muted">{t.tagline}</p>
                       </div>
-                      <span className="shrink-0 text-[12.5px] text-faint">
-                        Download ↓
-                      </span>
-                    </a>
+                      <a href={`/api/download/${t.slug}`} className="btn btn-sm btn-primary">
+                        <Icon name="download" size={15} /> Zip
+                      </a>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -107,13 +109,28 @@ export default async function AccountPage({ searchParams }) {
           )}
         </section>
 
-        {/* receipts */}
+        {bundlePrice !== null && library.length > 0 && (
+          <section className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-accent/20 bg-accent-soft p-6 md:flex-row md:items-center">
+            <div>
+              <p className="text-[16px] font-semibold text-accent-deep">
+                Complete your collection for {money(bundlePrice)}
+              </p>
+              <p className="mt-1 text-[14px] text-accent-deep/80">
+                The {TEMPLATES.length - library.length} templates you don&rsquo;t have yet, plus
+                every future release. What you&rsquo;ve bought already is taken off the{" "}
+                {money(BUNDLE.priceCents)} price.
+              </p>
+            </div>
+            <AddToCart slug={BUNDLE.slug} label={`Upgrade — ${money(bundlePrice)}`} size="sm" />
+          </section>
+        )}
+
         {orders.length > 0 && (
           <section className="mt-14">
-            <h2 className="text-[18px] tracking-[-0.015em]">Order history</h2>
-            <div className="mt-5 overflow-hidden rounded-2xl border border-line">
-              <table className="w-full text-left text-[13px]">
-                <thead className="bg-raise text-faint">
+            <h2 className="text-[20px] font-semibold tracking-[-0.015em]">Order history</h2>
+            <div className="card mt-5 overflow-x-auto rounded-2xl">
+              <table className="w-full min-w-[560px] text-left text-[14px]">
+                <thead className="bg-sunk text-[12.5px] text-muted">
                   <tr>
                     <th className="px-5 py-3 font-medium">Order</th>
                     <th className="px-5 py-3 font-medium">Date</th>
@@ -124,39 +141,25 @@ export default async function AccountPage({ searchParams }) {
                 <tbody className="divide-y divide-line">
                   {orders.map((o) => (
                     <tr key={o.id}>
-                      <td className="px-5 py-3.5 font-mono text-[12px] text-muted">
-                        {o.id.slice(0, 8)}
-                      </td>
-                      <td className="px-5 py-3.5 text-muted">
-                        {new Date(o.createdAt).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td className="px-5 py-3.5 text-muted">
-                        {o.items
-                          .map((i) =>
-                            i.slug === BUNDLE.slug
-                              ? BUNDLE.name
-                              : (bySlug(i.slug)?.name ?? i.slug)
-                          )
-                          .join(", ")}
-                      </td>
-                      <td className="px-5 py-3.5 text-right text-ink">
-                        {money(o.totalCents)}
-                      </td>
+                      <td className="px-5 py-3.5 font-mono text-[12.5px] text-muted">{o.id.slice(0, 8)}</td>
+                      <td className="px-5 py-3.5 text-muted">{date(o.createdAt)}</td>
+                      <td className="px-5 py-3.5">{o.items.map((i) => itemName(i.slug)).join(", ")}</td>
+                      <td className="px-5 py-3.5 text-right font-medium">{money(o.totalCents)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             {orders.some((o) => o.provider === "simulated") && (
-              <p className="mt-3 text-[12px] text-faint">
-                Orders marked as simulated were placed without Stripe keys
-                configured. See the README to connect live payments.
+              <p className="mt-3 text-[12.5px] text-faint">
+                Orders placed while Stripe isn&rsquo;t connected are completed
+                without payment, as a test. See the README to take real payments.
               </p>
             )}
+            <p className="mt-3 text-[13px] text-muted">
+              Need a refund?{" "}
+              <Link href="/contact?topic=support" className="font-medium text-accent hover:underline">Contact us</Link>.
+            </p>
           </section>
         )}
       </main>

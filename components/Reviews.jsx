@@ -44,7 +44,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
   return (
     <section className="mt-14">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-[20px] tracking-[-0.015em]">
+        <h2 className="text-[22px] font-semibold tracking-[-0.02em]">
           Reviews{" "}
           {reviews.length > 0 && (
             <span className="text-muted">({reviews.length})</span>
@@ -54,7 +54,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
         {canReview && !open && (
           <button
             onClick={() => setOpen(true)}
-            className="rounded-full border border-line px-4 py-2 text-[13px] text-ink transition-colors hover:border-ink/25"
+            className="btn btn-sm btn-secondary"
           >
             {mine ? "Edit your review" : "Write a review"}
           </button>
@@ -69,7 +69,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
         >
           <fieldset className="flex items-center gap-3">
             <legend className="sr-only">Rating</legend>
-            <span className="text-[13px] text-muted">Rating</span>
+            <span className="text-[13px] font-medium">Rating</span>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
@@ -84,7 +84,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
                     width="22"
                     height="22"
                     viewBox="0 0 20 20"
-                    className={n <= rating ? "text-accent" : "text-line"}
+                    className={n <= rating ? "text-amber-500" : "text-line-strong"}
                     aria-hidden
                   >
                     <path
@@ -98,30 +98,30 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
           </fieldset>
 
           <label className="mt-4 flex flex-col gap-1.5">
-            <span className="text-[12.5px] text-muted">Title (optional)</span>
+            <span className="text-[13px] font-medium">Title (optional)</span>
             <input
               value={title}
               maxLength={80}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Shipped my site in an evening"
-              className="h-10 rounded-xl border border-line bg-base px-3 text-[14px] text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+              className="input"
             />
           </label>
 
           <label className="mt-3 flex flex-col gap-1.5">
-            <span className="text-[12.5px] text-muted">Your review</span>
+            <span className="text-[13px] font-medium">Your review</span>
             <textarea
               value={body}
               rows={4}
               maxLength={1500}
               onChange={(e) => setBody(e.target.value)}
               placeholder="What did you build with it? What would you tell someone considering it?"
-              className="resize-y rounded-xl border border-line bg-base px-3 py-2.5 text-[14px] leading-relaxed text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+              className="input resize-y"
             />
           </label>
 
           {error && (
-            <p role="alert" className="mt-3 rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-2 text-[12.5px] text-red-300">
+            <p role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-[13px] text-red-700">
               {error}
             </p>
           )}
@@ -130,14 +130,14 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
             <button
               type="submit"
               disabled={busy}
-              className="rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-medium text-base disabled:opacity-60"
+              className="btn btn-sm btn-primary"
             >
               {busy ? "Posting…" : mine ? "Update review" : "Post review"}
             </button>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="rounded-full px-4 py-2.5 text-[13px] text-muted transition-colors hover:text-ink"
+              className="btn btn-sm text-muted hover:text-ink"
             >
               Cancel
             </button>
@@ -146,7 +146,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
       )}
 
       {reviews.length === 0 ? (
-        <p className="mt-5 text-[13.5px] text-faint">
+        <p className="mt-5 text-[14px] text-muted">
           No reviews yet.{" "}
           {canReview
             ? "You own this — be the first."
@@ -158,17 +158,17 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
             <li key={i} className="card rounded-2xl p-5">
               <div className="flex flex-wrap items-center gap-3">
                 <Stars value={r.rating} />
-                <span className="rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 text-[10.5px] font-medium text-accent">
+                <span className="rounded-full border border-good/20 bg-good-soft px-2 py-0.5 text-[11px] font-semibold text-good">
                   Verified purchase
                 </span>
-                <span className="text-[12px] text-faint">
+                <span className="text-[12.5px] text-faint">
                   {r.author} · {since(r.createdAt)}
                 </span>
               </div>
               {r.title && (
-                <p className="mt-2.5 text-[14.5px] font-medium">{r.title}</p>
+                <p className="mt-2.5 text-[15px] font-semibold">{r.title}</p>
               )}
-              <p className="mt-1.5 whitespace-pre-line text-[13.5px] leading-relaxed text-muted">
+              <p className="mt-1.5 whitespace-pre-line text-[14.5px] leading-relaxed text-muted">
                 {r.body}
               </p>
             </li>

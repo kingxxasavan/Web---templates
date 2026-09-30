@@ -1,78 +1,158 @@
-# Foundry — a full-stack template store
+# Foundry — original website templates, $5 to $15
 
-A working storefront that sells nine original website templates as
-downloadable source. Accounts, cart, checkout, order history and
-ownership-gated downloads — not a landing page with a Gumroad link.
+A full-stack template store: a multi-page marketing site, a searchable
+catalogue with live previews, accounts on Firebase, a cart, Stripe checkout,
+a download library, verified-buyer reviews and an admin dashboard.
 
-**One-time pricing: $5 · $10 · $35.** No subscriptions.
+---
+
+## Connecting Firebase
+
+This is what makes "Create account" work. Until it's done the site still
+browses, previews and fills carts, and the sign-in pages show a short
+"accounts are almost ready" notice instead of failing.
+
+1. **Create a project** at [console.firebase.google.com](https://console.firebase.google.com).
+2. **Turn on sign-in.** Authentication → *Get started* → Sign-in method.
+   Enable **Email/Password** and **Google**.
+3. **Authorise your domain.** Authentication → Settings → *Authorized domains*
+   → add your Vercel address (e.g. `your-store.vercel.app`) and any custom
+   domain. Missing this is the most common cause of a failed sign-in.
+4. **Create the database.** Firestore Database → *Create database* →
+   production mode, any region. Then open the *Rules* tab and paste in
+   `firestore.rules` from this repo (it denies all browser access — the
+   server does every read and write).
+5. **Get the web config.** Project settings → General → *Your apps* → add a
+   Web app. Copy `apiKey`, `authDomain`, `projectId` and `appId` into the
+   four `NEXT_PUBLIC_FIREBASE_*` variables.
+6. **Get the service account.** Project settings → Service accounts →
+   *Generate new private key*. Paste the whole JSON file's contents into
+   `FIREBASE_SERVICE_ACCOUNT` (one line is fine). This one is secret.
+7. **Add the variables in Vercel** (Project → Settings → Environment
+   Variables) and **redeploy** — `NEXT_PUBLIC_*` values are built into the
+   page, so they only take effect on a new deployment.
+
+No indexes need creating: every query is either a single-field filter or
+sorted in memory.
+
+### How sign-in works
+
+The browser signs in with the Firebase Auth SDK (email and password, or
+Google), then posts the fresh ID token to `/api/auth/session`. The server
+verifies it with the Admin SDK and swaps it for a **Firebase session cookie**
+— httpOnly, SameSite=Lax, two weeks — then clears the browser's own Firebase
+state. From then on every page and route identifies the buyer from that
+cookie alone.
+
+- Only a token from a sign-in in the last five minutes can become a session,
+  so an old, leaked ID token can't be upgraded.
+- Firebase handles password storage, brute-force protection, password-reset
+  emails and email verification. No mail provider is needed for any of them.
+- Firebase error codes are translated into messages a buyer can act on, and
+  the two usual setup mistakes (provider not enabled, domain not authorised)
+  say exactly which console switch to flip.
+
+### Data model
+
+```
+users/{uid}                       email, provider, allAccess
+users/{uid}/entitlements/{slug}   one document per owned template
+orders/{orderId}                  items, totals, credit, status, provider
+reviews/{slug}__{uid}             one per buyer per template
+messages/{id}                     contact form and template requests
+subscribers/{hash}                new-release alerts
+emails/{id}                       every receipt sent, and whether it failed
+```
 
 ---
 
 ## Pricing
 
-| Tier | Price | What's in it |
+| Tier | Price | Templates |
 |---|---|---|
-| **Starter** | **$5** | 6 single-purpose templates, no build step |
-| **Pro** | **$10** | 3 multi-page / app-grade templates |
-| **Bundle** | **$35** | All 9 — saves $25 against $60 separately |
+| **Starter** | **$5** | Vertex Launch, Monolith, Atelier, Quill, Ember Table, Pulse |
+| **Pro** | **$10** | Aurora Commerce, Sable Studio |
+| **Premium** | **$15** | Helix |
+| **All-access bundle** | **$29** | Everything, plus every future template |
 
-Prices live in `lib/catalog.js` and are re-synced into the database on every
-boot. The client never sends an amount: totals are always recomputed
-server-side from the catalogue at checkout.
+Prices live in `lib/catalog.js`. The client never sends an amount: carts
+are priced server-side by `lib/pricing.js`, which is pure and fully tested.
 
-## The stack
+The bundle is the one item above $15 — it's nine templates. Change
+`BUNDLE.priceCents` if you'd rather it sat inside the range.
 
-| Layer | Choice | Why |
-|---|---|---|
-| Framework | Next.js 16, App Router | Route handlers give a real API beside the pages |
-| Database | libSQL (`@libsql/client`) | One client speaks to a local file *and* hosted Turso, so the data layer is identical in dev and production |
-| Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
-| Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
-| Email | Resend over `fetch`, with a logged fallback | No SDK, and both mail flows work before a provider exists |
-| Analytics | Vercel Analytics + a first-party sales dashboard | Traffic from Vercel, revenue from your own database |
-| Tests | `node --test` | No test framework to install |
+### What makes the store different
+
+These are live features, not just copy. The wording lives in `lib/content.js`.
+
+- **Never pay twice.** The price of everything a buyer already owns is taken
+  off the bundle automatically, so upgrading later never costs more than
+  buying everything on day one. The cart shows the credit as a line item.
+- **Smart upsell.** When the bundle would add templates, the cart says how
+  much more it costs (or that it's cheaper) and switches in one click.
+- **Future templates included.** Bundle buyers get an `allAccess` flag rather
+  than a fixed list, so templates added later appear in their library.
+- **Try before you buy.** Live, clickable previews on phone, tablet and
+  desktop widths, plus the guided tour.
+- **Help from the developer and template requests.** `/contact` stores
+  questions, support requests and "build this next" ideas in Firestore; they
+  appear on `/admin`.
+- **New-release alerts.** Email sign-up in the footer and closing banner.
+- **Money-back guarantee.** 14 days, set by `SITE.refundDays` in
+  `lib/site.js`. Refunds are issued by hand from the Stripe dashboard. **This
+  is a promise to customers — change or remove it before launch if you
+  won't honour it.**
+- **Search and filters.** `/templates` filters by category and price and
+  sorts by price or size.
+
+## Site map
+
+| Page | What it's for |
+|---|---|
+| `/` | What we are, what we do and how, the promises, featured templates, pricing, FAQ |
+| `/templates` | The full catalogue with search, filters and sorting |
+| `/t/[slug]` | Live preview, what's included, reviews, bundle offer |
+| `/pricing` | Tiers, the bundle, "never pay twice" worked example, comparison table |
+| `/how-it-works` | How we build, how buying works, what's in the zip, hosting guides |
+| `/about` | Story, principles, who it's for |
+| `/licence` | The licence in plain English and the refund policy |
+| `/faq` | Every question, with FAQ structured data for search |
+| `/contact` | Questions, template requests, support |
+| `/cart`, `/account` | Cart, library, order history, upgrade offer |
+| `/login`, `/register`, `/forgot` | Firebase sign-in, sign-up (email or Google), password reset |
+| `/admin` | Revenue, best sellers, orders, messages, subscribers, mail log |
+
+`sitemap.xml` and `robots.txt` are generated from the catalogue.
 
 ## How a purchase works
 
-1. **Register** — `POST /api/auth/register`. Password hashed with scrypt and a
-   per-user salt; the session token is random 32 bytes, stored in the database
-   only as a SHA-256 hash, so a leaked dump cannot be replayed as a login.
-2. **Add to cart** — `POST /api/cart`. The slug is validated against the
-   catalogue before it touches anything.
-3. **Checkout** — `POST /api/checkout` prices the cart server-side and writes a
-   pending order.
-4. **Fulfilment** — grants one `entitlements` row per template. A bundle fans
-   out to all nine, so the download check stays a single indexed lookup.
-5. **Download** — `GET /api/download/[slug]` verifies ownership, then streams
-   the zip.
-
-The zips live in `private/downloads/`, **outside `public/`**, so there is no
-URL that serves them directly — every download passes the ownership check.
-`next.config.mjs` uses `outputFileTracingIncludes` to ship them with the
-download function, since nothing imports them.
-
-### Cart rules worth knowing
-
-- Anything already in your library is dropped from the cart.
-- If the bundle is present, individual items fold into it — nobody is charged
-  twice for the same file.
-- `fulfillOrder` is idempotent, so a replayed Stripe webhook cannot
-  double-grant or corrupt the order.
+1. **Add to cart** — `POST /api/cart`. The cart is a cookie of slugs, the same
+   for signed-in and signed-out visitors, so nothing needs merging at sign-up.
+2. **Checkout** — `POST /api/checkout`. Signed out, the buyer is sent to
+   create an account and comes back to the same cart. Signed in, the cart is
+   priced server-side and a pending order is written.
+3. **Payment** — Stripe Checkout, or instant simulation with no Stripe keys.
+   If credit covers the whole total, no card is asked for.
+4. **Fulfilment** — in one Firestore transaction: mark the order paid, write
+   an entitlement per template, set `allAccess` for the bundle. A paid order
+   is returned untouched, so a replayed webhook can't double-grant or
+   re-send the receipt.
+5. **Download** — `GET /api/download/[slug]` checks ownership and streams the
+   zip from `private/downloads/`, which has no public URL.
 
 ## The tour
 
-A first-time visitor lands *inside* a real, working template — Aurora Commerce,
-running live in a frame — and is walked through its pages as though it were
-simply the site. Only at the end does it shrink away and reveal that everything
-they just used is a $10 product, followed by a rotating showcase of the rest.
+"Take the 60-second tour" on the homepage opens a real, working template —
+Aurora Commerce, running live in a frame — and walks the visitor through its
+pages as though it were simply the site. Only at the end does it shrink away
+and reveal that everything they just used is a $10 product, followed by a
+rotating showcase of the rest.
 
 It argues for the build quality far better than a screenshot grid does, because
 the visitor has actually used it.
 
-- Mounts *over* the storefront rather than redirecting, so crawlers and
-  returning visitors still get the store. The tour is an addition, never a gate.
-- Shows once per browser (`localStorage`), with "Skip tour" always visible and
-  a "Take the tour" button in the hero for anyone who wants it again.
+- Mounts *over* the page rather than navigating, so closing it returns the
+  visitor exactly where they were. It never opens on its own.
 - Steps live in `lib/tour.js`; arrow keys and Escape work.
 
 ## Live previews instead of screenshots
@@ -89,81 +169,6 @@ through the authorised download route. Previews carry `X-Robots-Tag: noindex`
 so they never compete with the store in search.
 
 Helix needs a build step, so it keeps a still and lists its sections instead.
-
-## Carts without an account
-
-Browsing, adding to the cart and seeing a full total need no account and no
-database — a signed-out cart lives in a cookie. Only checkout requires signing
-up, and the cookie cart is merged into the account on registration, sign in and
-at checkout, so nothing picked out beforehand is lost.
-
-Only slugs are stored. Prices are always recomputed server-side from the
-catalogue, so editing the cookie changes which items are in the cart and
-nothing else; an injected value is dropped on read.
-
-## Password reset
-
-`/forgot` issues a single-use token, stored only as a SHA-256 hash and valid
-for one hour. Requesting a new link invalidates the previous one, and
-completing a reset **destroys every existing session** for that account — if
-the reset happened because someone else had access, that access ends there.
-
-The response to a reset request is identical whether or not the address is
-registered, so the endpoint cannot be used to discover who has an account.
-
-## Receipts and email
-
-`lib/email.js` sends through Resend when `RESEND_API_KEY` is set and otherwise
-logs the message. Either way **every send is recorded in the `emails` table**,
-so there is a delivery record and the admin mail log shows failures.
-
-Receipts go out after fulfilment from both the simulated path and the Stripe
-webhook — and only on first fulfilment, so a replayed webhook cannot re-send.
-A mail failure never fails a purchase: the entitlement is already granted by
-that point, so errors are swallowed and recorded rather than surfaced.
-
-## Reviews
-
-Reviews are restricted to **verified buyers**: writing one requires an
-entitlement row, which only exists after a fulfilled order. Buying the bundle
-entitles you to review any template. The unique key on `(user_id, slug)` means
-one review per buyer per template — editable, not repeatable.
-
-Author emails are masked (`jo***@example.com`) and ratings are constrained to
-1–5 integers in both the application and a `CHECK` constraint. Averages appear
-on the listing cards and in the buy rail.
-
-## Analytics
-
-Two halves, deliberately:
-
-- **Traffic** — `@vercel/analytics` and `@vercel/speed-insights` are mounted in
-  the root layout. Cookie-less, and they no-op outside a Vercel deployment.
-  Enable Analytics in your Vercel project to see visitors, referrers and pages.
-- **Money** — `/admin` reads your own database: all-time and 30-day revenue,
-  average order value, signup→purchase conversion, a daily revenue chart, best
-  sellers by revenue, recent orders, review average and the mail log.
-
-Admin access is an allowlist in `ADMIN_EMAILS`, not a database flag, so a
-compromised account cannot promote itself. A non-admin gets a 404 rather than
-a 403 — the page should not announce that it exists.
-
-## Security
-
-- Passwords: scrypt, 64-byte key, per-user salt, `timingSafeEqual` comparison.
-- Sessions: httpOnly + SameSite=Lax + Secure in production; 30-day expiry
-  checked server-side.
-- CSRF: SameSite=Lax blocks cross-site form POSTs, and every mutating route
-  additionally checks `Origin` against `Host`.
-- Login: identical response whether the email is unknown or the password is
-  wrong, so the endpoint cannot be used to enumerate accounts. Rate-limited to
-  8 attempts per 15 minutes.
-- Path traversal: slugs are checked against the catalogue before being used in
-  a path.
-- Reset tokens: 32 random bytes, stored hashed, single use, one-hour expiry,
-  and superseded by any newer request.
-- Reviews: write access requires a purchase; ratings are bounded in code and by
-  a database `CHECK`.
 
 ## Why the inventory is original
 
@@ -182,113 +187,104 @@ Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
 buyers charge back when they find the original. Owning the inventory removes
 the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
 
-## When the database is down
+## Reviews
 
-The storefront is built entirely from the static catalogue, so a browsing
-visitor never sees an error because the data layer is unreachable or not yet
-configured. Reads behind the storefront degrade through `readOrFallback` —
-ratings, ownership and the session lookup fall back to empty. **Writes never
-do**: a purchase that silently does nothing is worse than an error.
+Only buyers can review: writing one requires owning the template. The
+document id is `slug__uid`, so there is one review per buyer per template —
+editable, not repeatable. The author's email is stored already masked
+(`jo***@example.com`).
 
-This is what fixes the blank-page deploy. With `DATABASE_URL` unset on Vercel,
-the `file:` fallback lands on a read-only filesystem; previously that took the
-whole site down, and now it costs only accounts and orders.
+## Admin dashboard
+
+`/admin` reads Firestore: all-time and 30-day revenue, average order,
+signup→purchase conversion, a daily revenue chart, best sellers, recent
+orders, messages and template requests, subscriber count, review average and
+the mail log. Traffic comes from Vercel Analytics, mounted in the layout.
+
+Access needs **both** an address in `ADMIN_EMAILS` **and** a verified email.
+Anyone can register an unverified account with any address, so the
+allowlist alone would not be enough. Google sign-in counts as verified;
+email sign-ups are sent a verification link. Non-admins get a 404.
+
+## Security
+
+- Passwords never touch this server — Firebase Authentication holds them.
+- Sessions are Firebase session cookies: httpOnly, SameSite=Lax, Secure in
+  production, verified on every request.
+- CSRF: SameSite=Lax plus an `Origin`/`Host` check on every mutating route.
+- `?next=` redirects only accept same-site paths.
+- Firestore rules deny all client access; only the server's service account
+  reads or writes.
+- Slugs are checked against the catalogue before they reach a path or query.
+- Forms carry a honeypot field; bots that fill it get a silent "ok".
+
+## When Firebase isn't configured or is down
+
+The storefront is built from the static catalogue, so browsing never fails.
+Reads for the personal extras (ratings, ownership, the signed-in user)
+fall back to empty through `readOrFallback`. **Writes never do** — a purchase
+that silently does nothing is worse than an error — and every API route
+returns a readable JSON error instead of a blank 500.
+
 
 ## Running it
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm test         # 36 tests, no framework needed
-npm run previews # rebuild the live template previews only
-npm run build    # zips the templates, then builds
+npm run dev            # http://localhost:3000
+npm test               # unit tests, no setup needed
+npm run build          # zips the templates, builds previews, then builds
 ```
 
-No configuration is needed to run locally. The database is created at
-`./data/store.db` on first boot and checkout runs in simulation mode, so you
-can register, buy and download immediately.
+### Against the Firebase emulators
+
+No Firebase project needed; requires Java and `npm i -g firebase-tools`.
+
+```bash
+npm run test:emulator  # all tests, including the Firestore integration suite
+
+npm run emulators      # terminal 1
+FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 \
+FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 \
+NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 \
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=demo-foundry \
+npm run dev            # terminal 2: sign up, buy and download locally
+```
 
 ## Deploying
 
-1. **Database.** Vercel's filesystem is ephemeral, so create a hosted database
-   — Turso has a free tier and needs no code change:
-   ```bash
-   npx turso db create foundry
-   npx turso db show foundry --url      # → DATABASE_URL
-   npx turso db tokens create foundry   # → DATABASE_AUTH_TOKEN
-   ```
-2. **Import** the repo at [vercel.com/new](https://vercel.com/new).
-   `vercel.json` pins the framework and build command.
-3. **Set env vars** from `.env.example`.
-4. **Stripe**, when you're ready to take real money: set `STRIPE_SECRET_KEY`,
+1. Import the repo at [vercel.com/new](https://vercel.com/new). `vercel.json`
+   pins the framework and build command.
+2. Follow **Connecting Firebase** above and add the variables from
+   `.env.example`.
+3. **Stripe**, when you're ready to take real money: set `STRIPE_SECRET_KEY`,
    add a webhook to `https://yourdomain/api/webhook/stripe` for
-   `checkout.session.completed`, and set `STRIPE_WEBHOOK_SECRET`.
-
-Until Stripe keys are set, checkout completes instantly and orders are
-labelled "simulated" in the order history.
+   `checkout.session.completed`, and set `STRIPE_WEBHOOK_SECRET`. Until then
+   orders complete instantly and are labelled "simulated".
+4. Set `NEXT_PUBLIC_SITE_URL` to your real address for the sitemap and
+   social previews.
 
 ## Adding a template
 
-1. Drop the folder into `templates/<slug>/`.
-2. Add an entry to `TEMPLATES` in `lib/catalog.js` with a `tier`.
+1. Drop the folder into `templates/<slug>/` with a `README.md` and a
+   `LICENSE.txt` (copy one from any existing template).
+2. Add an entry to `TEMPLATES` in `lib/catalog.js` with a `tier` and a
+   `category`.
 3. Save a preview to `public/thumbs/<slug>.webp` (1100×825).
-4. Copy a `LICENSE.txt` in from any existing template.
 
-The zip, the listing, `/t/<slug>`, the footer and the bundle all pick it up.
-
-## Structure
-
-```
-app/
-  page.js                    storefront
-  t/[slug]/page.js           template detail
-  cart/, account/            cart and library
-  login/, register/, forgot/, reset/
-  admin/                     sales dashboard
-  api/
-    auth/{register,login,logout,forgot,reset}/
-    cart/                    server-priced cart
-    checkout/                Stripe or simulation
-    download/[slug]/         ownership-gated zip delivery
-    reviews/                 verified-buyer reviews
-    webhook/stripe/          signature-verified fulfilment
-lib/
-  catalog.js                 products, tiers, prices
-  accounts.js                user records and reset tokens (unit tested)
-  email.js                   Resend or logged, always recorded
-  reviews.js                 verified-purchase reviews
-  metrics.js                 sales figures for the dashboard
-  admin.js                   ADMIN_EMAILS allowlist
-  guest-cart.js              signed-out cart, cookie only
-  tour.js                    the first-visit walkthrough
-  db.js                      libSQL client, schema, seeding
-  password.js                scrypt helpers (no Next import — unit tested)
-  auth.js                    sessions, rate limiting, origin checks
-  store.js                   cart, orders, entitlements
-scripts/
-  build-zips.mjs             templates/ → private/downloads/ (paid, gated)
-  build-previews.mjs         templates/ → public/preview/ (live demos)
-templates/                   the products
-tests/{store,accounts}.test.js
-```
-
-## Still to do
-
-- **Firebase.** Not started. The data layer is SQL through libSQL, so moving to
-  Firestore is a rewrite of every query rather than a config change, and it
-  wants to be its own commit rather than riding along on top of a fix you were
-  waiting to deploy. Say the word and it's next.
+The zip, listing, product page, filters, footer, sitemap and bundle all pick
+it up, and bundle owners get it automatically. `npm test` checks the folder
+has everything a buyer is promised.
 
 ## Honest notes
 
-- **The store works; the business still needs traffic.** Template sales are a
-  distribution problem. Nine templates on a URL nobody visits earns nothing —
-  budget for SEO, a launch, or an existing audience.
-- **Turn on Analytics in the Vercel dashboard** — the code is wired up, but
-  the project setting still has to be enabled.
-- **Email needs a real provider before launch.** Without `RESEND_API_KEY`,
-  receipts and reset links are only logged — buyers never receive them.
-- **Reviews are published immediately.** There is no moderation queue. Fine at
-  low volume; add one if it gets abused.
-- **Set `ADMIN_EMAILS`** or `/admin` is unreachable, by design.
+- **The store works; the business still needs traffic.** Budget for SEO, a
+  launch, or an existing audience.
+- **Check the promises before launch.** The 14-day refund, "help from the
+  developer" and template requests are commitments to customers. They're
+  easy to edit in `lib/content.js` and `lib/site.js`.
+- **Receipts need a mail provider.** Without `RESEND_API_KEY` they're only
+  logged. (Password resets don't need one — Firebase sends those.)
+- **Reviews publish immediately.** Add moderation if it gets abused.
+- **Turn on Analytics in the Vercel dashboard** — the code is wired up.
 - Prices are a starting point, not a researched position. Test them.

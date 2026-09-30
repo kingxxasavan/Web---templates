@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { createOrder, fulfillOrder, getCart, sendReceipt, mergeGuestCart } from "@/lib/store";
-import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
-import { money } from "@/lib/catalog";
+import { createOrder, fulfillOrder, sendReceipt } from "@/lib/store";
+import { readCart, clearCart } from "@/lib/cart";
+import { bySlug, BUNDLE } from "@/lib/catalog";
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 
 /**
  * With STRIPE_SECRET_KEY set this hands off to Stripe Checkout and waits for
  * the webhook to fulfil. Without it the order is fulfilled immediately and
- * flagged as a simulation, so the whole flow is exercisable before any
- * payment account exists. The total is always computed server-side.
+ * flagged as a simulation, so the whole flow is exercisable before a payment
+ * account exists. The total is always computed server-side.
  */
 export async function POST(request) {
   if (!sameOrigin(request)) {
@@ -19,11 +19,10 @@ export async function POST(request) {
 
   const user = await currentUser();
   if (!user) {
-    // The cart survives in the cookie; the visitor returns here after signing
-    // up, with everything still in it.
+    // The cart survives in its cookie; the visitor returns here after signing up.
     return NextResponse.json(
       {
-        error: "Create an account to complete your purchase — your cart is saved.",
+        error: "Create a free account to complete your purchase — your cart is saved.",
         needsAuth: true,
         redirect: "/register?next=%2Fcart",
       },
@@ -31,35 +30,30 @@ export async function POST(request) {
     );
   }
 
-  // A cart built before signing in may still be sitting in the cookie.
-  const pending = await readGuestCart();
-  if (pending.length) {
-    await mergeGuestCart(user.id, pending);
-    await clearGuestCart();
+  let order;
+  try {
+    order = await createOrder(user, await readCart(), stripeKey ? "stripe" : "simulated");
+  } catch (err) {
+    const empty = err.message === "Your cart is empty.";
+    if (!empty) console.error("[checkout] order failed:", err);
+    return NextResponse.json(
+      { error: empty ? err.message : "We couldn't start checkout. Please try again." },
+      { status: empty ? 400 : 500 }
+    );
   }
 
-  const cart = await getCart(user.id);
-  if (!cart.items.length) {
-    return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
-  }
+  const origin = new URL(request.url).origin;
 
-  if (!stripeKey) {
-    const order = await createOrder(user.id, "simulated");
-    await fulfillOrder(order.id, "simulated-payment");
-    await sendReceipt(order.id, new URL(request.url).origin);
-    return NextResponse.json({
-      ok: true,
-      simulated: true,
-      orderId: order.id,
-      total: money(order.totalCents),
-      redirect: `/account?order=${order.id}`,
-    });
+  // No card needed: simulation mode, or credit already covers the total.
+  if (!stripeKey || order.totalCents === 0) {
+    await fulfillOrder(order.id, stripeKey ? "fully-credited" : "simulated-payment");
+    await sendReceipt(order.id, origin);
+    await clearCart();
+    return NextResponse.json({ ok: true, redirect: `/account?order=${order.id}` });
   }
 
   const { default: Stripe } = await import("stripe");
   const stripe = new Stripe(stripeKey);
-  const order = await createOrder(user.id, "stripe");
-  const origin = new URL(request.url).origin;
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -71,12 +65,16 @@ export async function POST(request) {
       price_data: {
         currency: "usd",
         unit_amount: i.priceCents,
-        product_data: { name: i.name, description: i.tagline },
+        product_data: {
+          name: i.name,
+          description:
+            i.slug === BUNDLE.slug ? BUNDLE.tagline : bySlug(i.slug)?.tagline,
+        },
       },
     })),
-    success_url: `${origin}/account?order=${order.id}`,
+    success_url: `${origin}/api/checkout/success?order=${order.id}`,
     cancel_url: `${origin}/cart`,
   });
 
-  return NextResponse.json({ ok: true, simulated: false, redirect: session.url });
+  return NextResponse.json({ ok: true, redirect: session.url });
 }

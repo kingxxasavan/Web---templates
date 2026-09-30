@@ -5,12 +5,15 @@ import Footer from "@/components/Footer";
 import AddToCart from "@/components/AddToCart";
 import TemplateCard from "@/components/TemplateCard";
 import { Check, Badge } from "@/components/store";
+import { Icon } from "@/components/icons";
 import Reviews from "@/components/Reviews";
 import LivePreview from "@/components/LivePreview";
 import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
-import { TEMPLATES, TIERS, bySlug, money, pageCount } from "@/lib/catalog";
+import { TEMPLATES, TIERS, BUNDLE, bySlug, money, pageCount } from "@/lib/catalog";
+import { bundlePriceFor } from "@/lib/pricing";
+import { SITE } from "@/lib/site";
 import { reviewsFor, ratingFor, myReview } from "@/lib/reviews";
 
 export async function generateMetadata({ params }) {
@@ -42,63 +45,61 @@ export default async function TemplatePage({ params }) {
   const isOwned = owned.has(t.slug);
   const mine = user && isOwned ? await myReview(user.id, t.slug) : null;
   const price = TIERS[t.tier].priceCents;
-  const others = TEMPLATES.filter((o) => o.slug !== t.slug).slice(0, 3);
+  const bundlePrice = bundlePriceFor(owned);
+  // Same category first, then anything else, so "more like this" means it.
+  const others = [
+    ...TEMPLATES.filter((o) => o.slug !== t.slug && o.category === t.category),
+    ...TEMPLATES.filter((o) => o.slug !== t.slug && o.category !== t.category),
+  ].slice(0, 3);
 
   return (
     <>
       <Masthead />
 
-      <article className="px-6 pb-16 pt-10">
-        <div className="mx-auto w-full max-w-6xl">
-          <Link
-            href="/#templates"
-            className="inline-flex items-center gap-1.5 text-[13px] text-muted transition-colors hover:text-ink"
-          >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-              <path
-                d="M13 8H3M7 4L3 8l4 4"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            All templates
-          </Link>
+      <article className="pb-16 pt-8">
+        <div className="shell">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[13px] text-muted">
+            <Link href="/templates" className="inline-flex items-center gap-1.5 hover:text-ink">
+              <Icon name="back" size={14} /> All templates
+            </Link>
+            <span className="text-line-strong">/</span>
+            <span>{t.category}</span>
+          </nav>
 
           <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_340px]">
             <div>
               <LivePreview template={t} />
 
-              <div className="mt-10">
-                <h2 className="text-[20px] tracking-[-0.015em]">
+              <div className="mt-12">
+                <h2 className="text-[22px] font-semibold tracking-[-0.02em]">
                   What&rsquo;s included
                 </h2>
-                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {t.features.map((f) => (
-                    <li key={f} className="flex gap-2.5">
+                    <li key={f} className="flex gap-2.5 text-[14.5px] leading-snug">
                       <Check />
-                      <span className="text-[13.5px] leading-snug text-muted">
-                        {f}
-                      </span>
+                      {f}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-10">
-                <h2 className="text-[20px] tracking-[-0.015em]">
+              <div className="mt-12">
+                <h2 className="text-[22px] font-semibold tracking-[-0.02em]">
                   Getting it running
                 </h2>
-                <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-muted">
+                <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-muted">
                   Unzip the folder and run:
                 </p>
-                <pre className="mt-3 overflow-x-auto rounded-xl border border-line bg-raise px-4 py-3 text-[13px] text-ink">
+                <pre className="mt-3 overflow-x-auto rounded-xl bg-night px-4 py-3.5 text-[13.5px] text-white">
                   <code>{t.build}</code>
                 </pre>
-                <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-faint">
-                  The download contains the complete, unminified source plus a
-                  README and the licence for this template.
+                <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-muted">
+                  The download is the complete, unminified source with a README
+                  and the licence.{" "}
+                  <Link href="/how-it-works#launch" className="font-medium text-accent hover:underline">
+                    Step-by-step launch guides
+                  </Link>
                 </p>
               </div>
             </div>
@@ -107,13 +108,13 @@ export default async function TemplatePage({ params }) {
               <div className="card rounded-2xl p-6">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h1 className="text-[22px] tracking-[-0.015em]">{t.name}</h1>
-                    <p className="mt-1 text-[13.5px] text-muted">{t.tagline}</p>
+                    <h1 className="text-[26px] font-semibold tracking-[-0.02em]">{t.name}</h1>
+                    <p className="mt-1 text-[14px] text-muted">{t.tagline}</p>
                   </div>
                   {isOwned ? (
-                    <Badge tone="accent">Owned</Badge>
+                    <Badge tone="good">Owned</Badge>
                   ) : (
-                    t.tier === "pro" && <Badge>Pro</Badge>
+                    <Badge>{TIERS[t.tier].name}</Badge>
                   )}
                 </div>
 
@@ -127,15 +128,15 @@ export default async function TemplatePage({ params }) {
                   </div>
                 )}
 
-                <p className="mt-4 text-[13.5px] leading-relaxed text-muted">
+                <p className="mt-4 text-[14px] leading-relaxed text-muted">
                   {t.blurb}
                 </p>
 
                 <div className="mt-6 flex items-baseline gap-2 border-t border-line pt-6">
-                  <span className="font-display text-4xl tracking-tight">
+                  <span className="text-[40px] font-semibold leading-none tracking-tight">
                     {money(price)}
                   </span>
-                  <span className="text-[12.5px] text-faint">
+                  <span className="text-[13px] text-faint">
                     one-time payment
                   </span>
                 </div>
@@ -146,6 +147,18 @@ export default async function TemplatePage({ params }) {
                   label={`Add to cart — ${money(price)}`}
                   className="mt-5 w-full"
                 />
+
+                <ul className="mt-5 flex flex-col gap-2 text-[13px] text-muted">
+                  {[
+                    "Instant download",
+                    "Unlimited projects, no attribution",
+                    `${SITE.refundDays}-day money-back guarantee`,
+                  ].map((x) => (
+                    <li key={x} className="flex items-center gap-2">
+                      <Icon name="check" size={14} strokeWidth={2.2} className="text-good" /> {x}
+                    </li>
+                  ))}
+                </ul>
 
                 <dl className="mt-6 flex flex-col gap-3 border-t border-line pt-5 text-[13px]">
                   {[
@@ -162,8 +175,26 @@ export default async function TemplatePage({ params }) {
                 </dl>
               </div>
 
-              <p className="mt-4 px-1 text-[12px] leading-relaxed text-faint">
-                Original work — not a repackaged open-source theme, so there is
+              {!isOwned && bundlePrice !== null && (
+                <div className="mt-4 rounded-2xl border border-accent/20 bg-accent-soft p-5">
+                  <p className="text-[14px] font-semibold text-accent-deep">
+                    Or get all {TEMPLATES.length} for {money(bundlePrice)}
+                  </p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-accent-deep/80">
+                    Includes {t.name} and every future template. Buy this one
+                    now and its price still counts toward the bundle later.
+                  </p>
+                  <AddToCart
+                    slug={BUNDLE.slug}
+                    label={`Add the bundle — ${money(bundlePrice)}`}
+                    size="sm"
+                    className="mt-3 w-full"
+                  />
+                </div>
+              )}
+
+              <p className="mt-4 px-1 text-[12.5px] leading-relaxed text-faint">
+                Original work, not a repackaged open-source theme, so there is
                 no upstream licence to comply with.
               </p>
             </aside>
@@ -177,10 +208,10 @@ export default async function TemplatePage({ params }) {
           />
 
           <div className="mt-20">
-            <h2 className="mb-6 text-[20px] tracking-[-0.015em]">
-              Other templates
+            <h2 className="mb-6 text-[22px] font-semibold tracking-[-0.02em]">
+              You might also like
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((o) => (
                 <TemplateCard key={o.slug} t={o} owned={owned.has(o.slug)} />
               ))}

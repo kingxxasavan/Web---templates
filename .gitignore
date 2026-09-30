@@ -7,3 +7,4 @@ out
 private/downloads
 data/
 public/preview
+*-debug.log

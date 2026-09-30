@@ -1,22 +1,17 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { addToCart, removeFromCart, getCart } from "@/lib/store";
-import {
-  readGuestCart,
-  addGuestItem,
-  removeGuestItem,
-} from "@/lib/guest-cart";
-import { isSellableSlug } from "@/lib/catalog";
+import { getCart } from "@/lib/store";
+import { readCart, addCartItem, removeCartItem, writeCart } from "@/lib/cart";
+import { BUNDLE, isSellableSlug } from "@/lib/catalog";
 
 export async function GET() {
   const user = await currentUser();
-  const guest = user ? [] : await readGuestCart();
-  return NextResponse.json(await getCart(user?.id ?? null, guest));
+  return NextResponse.json(await getCart(user?.id, await readCart()));
 }
 
 /**
- * Works signed out. A visitor builds a cart in a cookie and only needs an
- * account at checkout, at which point the cookie cart is merged in.
+ * Works signed out: the cart is a cookie, and an account is only needed at
+ * checkout. `upgrade` swaps the cart's contents for the bundle.
  */
 export async function POST(request) {
   if (!sameOrigin(request)) {
@@ -24,19 +19,18 @@ export async function POST(request) {
   }
 
   const { slug, action = "add" } = await request.json().catch(() => ({}));
-  if (!isSellableSlug(slug)) {
+
+  let slugs;
+  if (action === "upgrade") {
+    slugs = await writeCart([BUNDLE.slug]);
+  } else if (!isSellableSlug(slug)) {
     return NextResponse.json({ error: "Unknown product." }, { status: 400 });
+  } else if (action === "remove") {
+    slugs = await removeCartItem(slug);
+  } else {
+    slugs = await addCartItem(slug);
   }
 
   const user = await currentUser();
-
-  if (user) {
-    if (action === "remove") await removeFromCart(user.id, slug);
-    else await addToCart(user.id, slug);
-    return NextResponse.json(await getCart(user.id));
-  }
-
-  const guest =
-    action === "remove" ? await removeGuestItem(slug) : await addGuestItem(slug);
-  return NextResponse.json(await getCart(null, guest));
+  return NextResponse.json(await getCart(user?.id, slugs));
 }

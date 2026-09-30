@@ -1,6 +1,7 @@
 import { Inter, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -12,16 +13,14 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const SITE = "https://your-store.vercel.app";
-
 export const metadata = {
-  metadataBase: new URL(SITE),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Foundry — original website templates you can ship today",
+    default: "Foundry — original website templates from $5",
     template: "%s · Foundry",
   },
   description:
-    "Nine original, hand-built website templates. Clean source code, no build step on most, no attribution required. Download the source and ship.",
+    "Original, hand-coded website templates for small businesses, freelancers and founders. Preview the pages live, pay $5 to $15 once, and launch this afternoon.",
   keywords: [
     "website templates",
     "HTML templates",
@@ -30,10 +29,10 @@ export const metadata = {
     "SaaS template",
   ],
   openGraph: {
-    title: "Foundry — original website templates you can ship today",
+    title: "Foundry — original website templates from $5",
     description:
-      "Nine original, hand-built website templates. Clean source, commercial licence, no attribution required.",
-    url: SITE,
+      "Hand-coded website templates you can preview page by page before you buy. $5 to $15, paid once, commercial licence included.",
+    url: SITE.url,
     siteName: "Foundry",
     type: "website",
   },
@@ -41,14 +40,14 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0a0a0b",
+  themeColor: "#fafaf8",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${instrument.variable}`}>
       <body>
         {children}
         {/* Cookie-less visitor and performance data, collected by Vercel.

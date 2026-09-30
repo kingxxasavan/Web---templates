@@ -3,7 +3,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import { currentUser } from "@/lib/auth";
 import { owns } from "@/lib/store";
-import { BUNDLE, TEMPLATES, isSellableSlug } from "@/lib/catalog";
+import { isSellableSlug } from "@/lib/catalog";
 
 const DIR = path.join(process.cwd(), "private", "downloads");
 
@@ -25,12 +25,7 @@ export async function GET(_request, { params }) {
     return NextResponse.json({ error: "Sign in to download." }, { status: 401 });
   }
 
-  const entitled =
-    slug === BUNDLE.slug
-      ? (await Promise.all(TEMPLATES.map((t) => owns(user.id, t.slug)))).every(Boolean)
-      : await owns(user.id, slug);
-
-  if (!entitled) {
+  if (!(await owns(user.id, slug))) {
     return NextResponse.json(
       { error: "You don't own this template." },
       { status: 403 }

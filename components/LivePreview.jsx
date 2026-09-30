@@ -38,7 +38,7 @@ export default function LivePreview({ template }) {
             className="w-full"
           />
         </div>
-        <p className="mt-3 text-[12.5px] text-faint">
+        <p className="mt-3 text-[13.5px] text-muted">
           {template.name} is a Next.js project, so it runs after{" "}
           <code className="text-muted">npm install</code> rather than in a
           preview frame.
@@ -52,7 +52,7 @@ export default function LivePreview({ template }) {
     <div>
       <div className="card overflow-hidden rounded-2xl">
         {/* browser chrome */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-line bg-raise px-3 py-2.5">
+        <div className="flex flex-wrap items-center gap-2 border-b border-line bg-sunk px-3 py-2.5">
           <div className="flex gap-1.5 pr-1">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -67,8 +67,8 @@ export default function LivePreview({ template }) {
                 aria-pressed={page.file === p.file}
                 className={`rounded-md px-2.5 py-1 text-[11.5px] transition-colors ${
                   page.file === p.file
-                    ? "bg-ink text-base"
-                    : "text-muted hover:bg-white/[0.05] hover:text-ink"
+                    ? "bg-ink text-white"
+                    : "text-muted hover:bg-card hover:text-ink"
                 }`}
               >
                 {p.name}
@@ -85,8 +85,8 @@ export default function LivePreview({ template }) {
                 aria-pressed={device === key}
                 className={`rounded-md p-1.5 transition-colors ${
                   device === key
-                    ? "bg-white/[0.08] text-ink"
-                    : "text-faint hover:text-muted"
+                    ? "bg-card text-ink shadow-sm"
+                    : "text-faint hover:text-ink"
                 }`}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -111,9 +111,9 @@ export default function LivePreview({ template }) {
         </div>
 
         {/* the template itself */}
-        <div className="relative bg-white">
+        <div className="relative bg-sunk">
           {loading && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-raise">
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-sunk">
               <span className="text-[12.5px] text-faint">Loading preview…</span>
             </div>
           )}
@@ -135,8 +135,8 @@ export default function LivePreview({ template }) {
         </div>
       </div>
 
-      <p className="mt-3 text-[12.5px] leading-relaxed text-faint">
-        <span className="text-muted">{page.name}</span> — {page.blurb}
+      <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+        <span className="font-medium text-ink">{page.name}</span> — {page.blurb}
       </p>
 
       <PageList pages={pageList} />
@@ -147,16 +147,16 @@ export default function LivePreview({ template }) {
 function PageList({ pages }) {
   return (
     <div className="mt-10">
-      <h2 className="text-[20px] tracking-[-0.015em]">
+      <h2 className="text-[22px] font-semibold tracking-[-0.02em]">
         Every page, and what&rsquo;s in it
       </h2>
       <ul className="mt-4 flex flex-col divide-y divide-line border-y border-line">
         {pages.map((p) => (
           <li key={p.name} className="flex flex-col gap-1 py-3.5 sm:flex-row sm:gap-5">
-            <span className="w-32 shrink-0 text-[13.5px] font-medium">
+            <span className="w-36 shrink-0 text-[14.5px] font-semibold">
               {p.name}
             </span>
-            <span className="text-[13.5px] leading-relaxed text-muted">
+            <span className="text-[14.5px] leading-relaxed text-muted">
               {p.blurb}
             </span>
           </li>

@@ -18,10 +18,13 @@ browses, previews and fills carts, and the sign-in pages show a short
 3. **Authorise your domain.** Authentication → Settings → *Authorized domains*
    → add your Vercel address (e.g. `your-store.vercel.app`) and any custom
    domain. Missing this is the most common cause of a failed sign-in.
-4. **Create the database.** Firestore Database → *Create database* →
-   production mode, any region. Then open the *Rules* tab and paste in
-   `firestore.rules` from this repo (it denies all browser access — the
-   server does every read and write).
+4. **Create the database.** Build → **Firestore Database** → *Create
+   database* → production mode, any region. Then open its *Rules* tab and
+   paste in `firestore.rules` from this repo (it denies all browser access —
+   the server does every read and write). Note this is Firestore, not
+   *Realtime Database*: the store doesn't use Realtime Database, so if one was
+   created by mistake, delete it or set its rules to
+   `{ "rules": { ".read": false, ".write": false } }`.
 5. **Get the web config.** Project settings → General → *Your apps* → add a
    Web app. Copy `apiKey`, `authDomain`, `projectId` and `appId` into the
    four `NEXT_PUBLIC_FIREBASE_*` variables.

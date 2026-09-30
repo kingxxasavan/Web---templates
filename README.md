@@ -226,6 +226,16 @@ fall back to empty through `readOrFallback`. **Writes never do** — a purchase
 that silently does nothing is worse than an error — and every API route
 returns a readable JSON error instead of a blank 500.
 
+The Firebase Admin SDK is loaded on first use rather than imported at the
+top of the module, so even the SDK failing to load at all only costs the
+personal extras, not the whole site.
+
+**Node version.** `package.json` pins `engines.node` to `22.x`, which Vercel
+uses in place of the project setting. Keep `firebase-admin` on v13: v14 pulls
+in ESM-only dependencies that crash on Node 20 releases older than 20.19,
+which is what took every page down with "Failed to load external module
+firebase-admin-…/auth".
+
 
 ## Running it
 

@@ -75,7 +75,7 @@ describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not
     assert.equal(order.totalCents, catalog.BUNDLE.priceCents - catalog.priceOf(pro));
     await store.fulfillOrder(order.id);
     assert.ok(await store.owns(user.id, catalog.BUNDLE.slug));
-    const profile = await db().collection("users").doc(user.id).get();
+    const profile = await (await db()).collection("users").doc(user.id).get();
     assert.equal(profile.get("allAccess"), true);
   });
 
@@ -92,7 +92,7 @@ describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not
 
     const mine = await reviews.myReview(buyer.id, slug);
     assert.equal(mine.rating, 5);
-    const snap = await db().collection("reviews").where("userId", "==", buyer.id).get();
+    const snap = await (await db()).collection("reviews").where("userId", "==", buyer.id).get();
     assert.equal(snap.size, 1, "one review per buyer per template");
     assert.ok(!JSON.stringify(await reviews.reviewsFor(slug)).includes(buyer.email));
   });
@@ -103,7 +103,7 @@ describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not
     await inbox.subscribe("FAN@example.com "); // same person, no duplicate
     const recent = await inbox.recentMessages(5);
     assert.ok(recent.some((m) => m.email === "sam@example.com"));
-    const subs = await db().collection("subscribers").where("email", "==", "fan@example.com").get();
+    const subs = await (await db()).collection("subscribers").where("email", "==", "fan@example.com").get();
     assert.equal(subs.size, 1);
   });
 });

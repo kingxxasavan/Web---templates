@@ -26,7 +26,7 @@ export default function TemplateCard({ t, owned = false, rating = null, priority
           {owned ? <Badge tone="good">Owned</Badge> : <Badge>{tier.name}</Badge>}
         </span>
         {t.livePreview && (
-          <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-ink/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
+          <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-night/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
             <Icon name="eye" size={13} /> Live preview
           </span>
         )}

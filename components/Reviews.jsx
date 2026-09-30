@@ -121,7 +121,7 @@ export default function Reviews({ slug, initialReviews, canReview, mine }) {
           </label>
 
           {error && (
-            <p role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-[13px] text-red-700">
+            <p role="alert" className="mt-3 alert-error">
               {error}
             </p>
           )}

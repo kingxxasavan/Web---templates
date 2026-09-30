@@ -6,7 +6,10 @@ import Footer from "@/components/Footer";
 import AddToCart from "@/components/AddToCart";
 import { Icon } from "@/components/icons";
 import { currentUser } from "@/lib/auth";
-import { ownedSlugs, ordersFor, itemName } from "@/lib/store";
+import { libraryFor, ordersFor, itemName } from "@/lib/store";
+import { buildsFor } from "@/lib/builds";
+import { editorAccess } from "@/lib/editor-core";
+import BuildStatus from "@/components/BuildStatus";
 import { bundlePriceFor } from "@/lib/pricing";
 import { TEMPLATES, BUNDLE, money } from "@/lib/catalog";
 
@@ -20,10 +23,12 @@ export default async function AccountPage({ searchParams }) {
   if (!user) redirect("/login?next=%2Faccount");
 
   const { order: justOrdered } = await searchParams;
-  const [owned, orders] = await Promise.all([
-    ownedSlugs(user.id),
+  const [access, orders, builds] = await Promise.all([
+    libraryFor(user.id),
     ordersFor(user.id).catch(() => []),
+    buildsFor(user.id),
   ]);
+  const { owned } = access;
 
   const library = TEMPLATES.filter((t) => owned.has(t.slug));
   const hasAll = library.length === TEMPLATES.length;
@@ -93,14 +98,23 @@ export default async function AccountPage({ searchParams }) {
                         className="object-cover object-top"
                       />
                     </Link>
-                    <div className="flex items-center justify-between gap-3 p-4">
-                      <div className="min-w-0">
-                        <p className="truncate text-[15px] font-semibold">{t.name}</p>
-                        <p className="truncate text-[13px] text-muted">{t.tagline}</p>
+                    <div className="p-4">
+                      <p className="truncate text-[15px] font-semibold">{t.name}</p>
+                      <p className="truncate text-[13px] text-muted">{t.tagline}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <a href={`/api/download/${t.slug}`} className="btn btn-sm btn-secondary">
+                          <Icon name="download" size={15} /> Download
+                        </a>
+                        {editorAccess(t, access).ok ? (
+                          <Link href={`/editor/${t.slug}`} className="btn btn-sm btn-primary">
+                            <Icon name="pencil" size={15} /> Customise
+                          </Link>
+                        ) : t.livePreview ? (
+                          <Link href={`/editor/${t.slug}`} className="btn btn-sm text-muted hover:text-ink">
+                            <Icon name="lock" size={14} /> Editor with All-access
+                          </Link>
+                        ) : null}
                       </div>
-                      <a href={`/api/download/${t.slug}`} className="btn btn-sm btn-primary">
-                        <Icon name="download" size={15} /> Zip
-                      </a>
                     </div>
                   </li>
                 ))}
@@ -108,6 +122,19 @@ export default async function AccountPage({ searchParams }) {
             </>
           )}
         </section>
+
+        {builds.length > 0 && (
+          <section className="mt-14">
+            <h2 className="text-[20px] font-semibold tracking-[-0.015em]">Made-for-you builds</h2>
+            <ul className="mt-5 flex flex-col gap-3">
+              {builds.map((b) => (
+                <li key={b.id}>
+                  <BuildStatus build={b} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {bundlePrice !== null && library.length > 0 && (
           <section className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-accent/20 bg-accent-soft p-6 md:flex-row md:items-center">

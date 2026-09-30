@@ -10,7 +10,7 @@ import { ownedSlugs } from "@/lib/store";
 import { bundlePriceFor } from "@/lib/pricing";
 import { EXTRAS, FAQ } from "@/lib/content";
 import { SITE } from "@/lib/site";
-import { TEMPLATES, TIERS, BUNDLE, money, individualTotal, priceOf } from "@/lib/catalog";
+import { TEMPLATES, TIERS, BUNDLE, MADE_FOR_YOU, money, individualTotal, priceOf } from "@/lib/catalog";
 
 export const metadata = {
   title: "Pricing",
@@ -28,6 +28,8 @@ const COMPARISON = [
   ["What you own counts toward a bundle", "Yes", "Rarely"],
   ["Money-back guarantee", `${SITE.refundDays} days`, "Usually only if broken"],
   ["Help from the person who built it", "Yes", "Varies by seller"],
+  ["Online editor to customise it", "Pro and All-access", "Rarely"],
+  ["Set up for your business", `${money(MADE_FOR_YOU.priceCents)}, ${MADE_FOR_YOU.days} days`, "Quoted separately"],
 ];
 
 export default async function PricingPage() {
@@ -100,6 +102,7 @@ export default async function PricingPage() {
                 {[
                   `Every template (${TEMPLATES.length} today)`,
                   "Every future template, free",
+                  "Online editor for every HTML template",
                   "One download with everything",
                   "Same licence, unlimited projects",
                 ].map((f) => (
@@ -117,6 +120,25 @@ export default async function PricingPage() {
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------ made for you */}
+      <section className="shell pb-16 md:pb-20">
+        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-accent/20 bg-accent-soft p-8 md:flex-row md:items-center md:p-10">
+          <div className="max-w-2xl">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-accent">Made for you</p>
+            <h2 className="mt-2 text-[26px] font-semibold tracking-[-0.02em] text-accent-deep">
+              Rather not do it yourself? {money(MADE_FOR_YOU.priceCents)}, set up in {MADE_FOR_YOU.days} days.
+            </h2>
+            <p className="mt-2 text-[15px] leading-relaxed text-accent-deep/80">
+              Send a short brief and we set a template up for your business: your words,
+              colours, pages and links. The template is included, and so is one round of tweaks.
+            </p>
+          </div>
+          <Link href="/made-for-you" className="btn btn-lg btn-accent shrink-0">
+            Start your brief <Icon name="arrow" size={16} />
+          </Link>
         </div>
       </section>
 

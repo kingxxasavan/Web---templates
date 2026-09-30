@@ -1,4 +1,7 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import Link from "next/link";
+import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
@@ -10,11 +13,23 @@ import Reviews from "@/components/Reviews";
 import LivePreview from "@/components/LivePreview";
 import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
-import { ownedSlugs } from "@/lib/store";
-import { TEMPLATES, TIERS, BUNDLE, bySlug, money, pageCount } from "@/lib/catalog";
+import { libraryFor } from "@/lib/store";
+import { editorAccess } from "@/lib/editor-core";
+import { TEMPLATES, TIERS, BUNDLE, MADE_FOR_YOU, bySlug, money, pageCount } from "@/lib/catalog";
 import { bundlePriceFor } from "@/lib/pricing";
 import { SITE } from "@/lib/site";
 import { reviewsFor, ratingFor, myReview } from "@/lib/reviews";
+
+/** The template's README as HTML. Our own files, so safe to render. */
+async function readDocs(slug) {
+  try {
+    const md = await readFile(path.join(process.cwd(), "templates", slug, "README.md"), "utf8");
+    // The README's title repeats the template name shown above it.
+    return marked.parse(md.replace(/^# .*\n/, ""));
+  } catch {
+    return null;
+  }
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -37,12 +52,15 @@ export default async function TemplatePage({ params }) {
   if (!t) notFound();
 
   const user = await currentUser();
-  const [owned, reviews, rating] = await Promise.all([
-    user ? ownedSlugs(user.id) : Promise.resolve(new Set()),
+  const [library, reviews, rating, docs] = await Promise.all([
+    libraryFor(user?.id),
     reviewsFor(t.slug),
     ratingFor(t.slug),
+    readDocs(t.slug),
   ]);
+  const { owned } = library;
   const isOwned = owned.has(t.slug);
+  const canEdit = editorAccess(t, library).ok;
   const mine = user && isOwned ? await myReview(user.id, t.slug) : null;
   const price = TIERS[t.tier].priceCents;
   const bundlePrice = bundlePriceFor(owned);
@@ -97,11 +115,30 @@ export default async function TemplatePage({ params }) {
                 <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-muted">
                   The download is the complete, unminified source with a README
                   and the licence.{" "}
-                  <Link href="/how-it-works#launch" className="font-medium text-accent hover:underline">
-                    Step-by-step launch guides
+                  <Link href="/guides" className="font-medium text-accent hover:underline">
+                    Guides for every host, from Netlify to Shopify
                   </Link>
                 </p>
               </div>
+
+              {docs && (
+                <details className="card group mt-12 rounded-2xl">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 [&::-webkit-details-marker]:hidden">
+                    <span>
+                      <span className="flex items-center gap-2 text-[18px] font-semibold tracking-[-0.015em]">
+                        <Icon name="book" size={19} /> Documentation
+                      </span>
+                      <span className="mt-1 block text-[13.5px] text-muted">
+                        The full README that comes in the download. Read it before you buy.
+                      </span>
+                    </span>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line text-muted transition-transform duration-300 group-open:rotate-45">
+                      <Icon name="plus" size={14} />
+                    </span>
+                  </summary>
+                  <div className="doc-prose border-t border-line p-6" dangerouslySetInnerHTML={{ __html: docs }} />
+                </details>
+              )}
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
@@ -148,6 +185,13 @@ export default async function TemplatePage({ params }) {
                   className="mt-5 w-full"
                 />
 
+                {t.livePreview && (
+                  <Link href={`/editor/${t.slug}`} className="btn btn-secondary mt-3 w-full">
+                    <Icon name="pencil" size={16} />
+                    {canEdit ? "Customise in the editor" : "Try the online editor free"}
+                  </Link>
+                )}
+
                 <ul className="mt-5 flex flex-col gap-2 text-[13px] text-muted">
                   {[
                     "Instant download",
@@ -165,6 +209,10 @@ export default async function TemplatePage({ params }) {
                     ["Built for", t.audience],
                     ["Pages", pageCount(t)],
                     ["Stack", t.stack.join(", ")],
+                    [
+                      "Online editor",
+                      !t.livePreview ? "Edited in code" : t.tier === "starter" ? "With All-access" : "Included",
+                    ],
                     ["Licence", "Commercial, no attribution"],
                   ].map(([k, v]) => (
                     <div key={k} className="flex justify-between gap-4">
@@ -191,6 +239,24 @@ export default async function TemplatePage({ params }) {
                     className="mt-3 w-full"
                   />
                 </div>
+              )}
+
+              {t.livePreview && (
+                <Link
+                  href={`/made-for-you?template=${t.slug}#brief`}
+                  className="card card-hover mt-4 flex items-start gap-3 rounded-2xl p-5"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                    <Icon name="sparkle" size={18} />
+                  </span>
+                  <span>
+                    <span className="block text-[14px] font-semibold">Rather we set it up for you?</span>
+                    <span className="mt-0.5 block text-[13px] leading-relaxed text-muted">
+                      We&rsquo;ll set {t.name} up for your business in {MADE_FOR_YOU.days} days.{" "}
+                      {money(MADE_FOR_YOU.priceCents)}, template included.
+                    </span>
+                  </span>
+                </Link>
               )}
 
               <p className="mt-4 px-1 text-[12.5px] leading-relaxed text-faint">

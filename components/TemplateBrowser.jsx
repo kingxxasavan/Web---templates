@@ -89,11 +89,11 @@ export default function TemplateBrowser({ owned = [], ratings = {} }) {
                 aria-pressed={category === c}
                 className={`rounded-full border px-3.5 py-1.5 text-[13px] transition-colors ${
                   category === c
-                    ? "border-ink bg-ink text-white"
+                    ? "border-ink bg-ink text-on-ink"
                     : "border-line bg-card text-muted hover:border-line-strong hover:text-ink"
                 }`}
               >
-                {c} <span className={category === c ? "text-white/60" : "text-faint"}>{n}</span>
+                {c} <span className={category === c ? "text-on-ink/60" : "text-faint"}>{n}</span>
               </button>
             );
           })}

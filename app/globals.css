@@ -19,6 +19,11 @@
   --color-night-raise: #1b1b20;
   --color-night-line: #2c2c33;
   --color-night-muted: #a6a6b0;
+  --color-on-ink: #ffffff;
+  --color-on-accent: #ffffff;
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fef2f2;
+  --color-danger-line: #fecaca;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-instrument), Georgia, serif;
@@ -26,6 +31,66 @@
   --shadow-card: 0 1px 2px rgb(17 17 20 / 0.04), 0 8px 24px -12px rgb(17 17 20 / 0.12);
   --shadow-lift: 0 2px 4px rgb(17 17 20 / 0.04), 0 24px 48px -20px rgb(17 17 20 / 0.25);
 }
+
+/* Dark theme. Follows the system setting unless the visitor has picked one
+   with the toggle, which sets data-theme on <html> (see app/layout.js). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #0d0d10;
+    --color-card: #15151a;
+    --color-sunk: #1b1b21;
+    --color-ink: #f2f2f4;
+    --color-body: #c9c9d1;
+    --color-muted: #a1a1ab;
+    --color-faint: #8b8b95;
+    --color-line: #26262d;
+    --color-line-strong: #383842;
+    --color-accent: #a5b4fc;
+    --color-accent-deep: #c7d2fe;
+    --color-accent-soft: #1c1a38;
+    --color-good: #4ade80;
+    --color-good-soft: #0d2417;
+    --color-night: #17171c;
+    --color-night-raise: #1f1f26;
+    --color-night-line: #2e2e37;
+    --color-on-ink: #0d0d10;
+    --color-on-accent: #0d0d10;
+    --color-danger: #f87171;
+    --color-danger-soft: #2a1214;
+    --color-danger-line: #5b2126;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.4), 0 24px 48px -20px rgb(0 0 0 / 0.8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --color-paper: #0d0d10;
+  --color-card: #15151a;
+  --color-sunk: #1b1b21;
+  --color-ink: #f2f2f4;
+  --color-body: #c9c9d1;
+  --color-muted: #a1a1ab;
+  --color-faint: #8b8b95;
+  --color-line: #26262d;
+  --color-line-strong: #383842;
+  --color-accent: #a5b4fc;
+  --color-accent-deep: #c7d2fe;
+  --color-accent-soft: #1c1a38;
+  --color-good: #4ade80;
+  --color-good-soft: #0d2417;
+  --color-night: #17171c;
+  --color-night-raise: #1f1f26;
+  --color-night-line: #2e2e37;
+  --color-on-ink: #0d0d10;
+  --color-on-accent: #0d0d10;
+  --color-danger: #f87171;
+  --color-danger-soft: #2a1214;
+  --color-danger-line: #5b2126;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.4), 0 24px 48px -20px rgb(0 0 0 / 0.8);
+  color-scheme: dark;
+}
+:root { color-scheme: light; }
 
 html {
   scroll-behavior: smooth;
@@ -94,9 +159,9 @@ body {
   .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .btn-lg { height: 3rem; padding-inline: 1.5rem; font-size: 15px; }
   .btn-sm { height: 2.25rem; padding-inline: 1rem; font-size: 13px; }
-  .btn-primary { background: var(--color-ink); color: #fff; }
-  .btn-primary:hover:not(:disabled) { background: #2a2a31; }
-  .btn-accent { background: var(--color-accent); color: #fff; }
+  .btn-primary { background: var(--color-ink); color: var(--color-on-ink); }
+  .btn-primary:hover:not(:disabled) { background: color-mix(in oklab, var(--color-ink) 84%, var(--color-paper)); }
+  .btn-accent { background: var(--color-accent); color: var(--color-on-accent); }
   .btn-accent:hover:not(:disabled) { background: var(--color-accent-deep); }
   .btn-secondary {
     background: var(--color-card);
@@ -104,7 +169,8 @@ body {
     border: 1px solid var(--color-line-strong);
   }
   .btn-secondary:hover:not(:disabled) { border-color: var(--color-ink); }
-  .btn-on-dark { background: #fff; color: var(--color-ink); }
+  /* Always on a dark band, whichever theme is active. */
+  .btn-on-dark { background: #fff; color: #111114; }
   .btn-on-dark:hover:not(:disabled) { background: #e9e9ee; }
 
   .eyebrow {
@@ -137,6 +203,16 @@ body {
   }
   textarea.input { height: auto; padding-block: 0.625rem; line-height: 1.6; }
 
+  .alert-error {
+    border: 1px solid var(--color-danger-line);
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+    border-radius: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
   .serif-accent {
     font-family: var(--font-display);
     font-style: italic;
@@ -160,6 +236,25 @@ body {
     line-height: 1.65;
     color: var(--color-muted);
   }
+
+  /* Rendered template READMEs on product pages. */
+  .doc-prose { font-size: 15px; line-height: 1.7; color: var(--color-body); }
+  .doc-prose > * + * { margin-top: 0.9em; }
+  .doc-prose h2 { margin-top: 1.8em; font-size: 19px; font-weight: 600; color: var(--color-ink); letter-spacing: -0.01em; }
+  .doc-prose h3 { margin-top: 1.4em; font-size: 16px; font-weight: 600; color: var(--color-ink); }
+  .doc-prose > h2:first-child, .doc-prose > p:first-child { margin-top: 0; }
+  .doc-prose ul, .doc-prose ol { padding-left: 1.3em; }
+  .doc-prose ul { list-style: disc; }
+  .doc-prose ol { list-style: decimal; }
+  .doc-prose li + li { margin-top: 0.3em; }
+  .doc-prose a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+  .doc-prose strong { color: var(--color-ink); font-weight: 600; }
+  .doc-prose code { font-size: 0.88em; background: var(--color-sunk); border: 1px solid var(--color-line); border-radius: 6px; padding: 0.1em 0.35em; }
+  .doc-prose pre { overflow-x: auto; background: var(--color-night); color: #f2f2f4; border-radius: 12px; padding: 14px 16px; font-size: 13px; line-height: 1.6; }
+  .doc-prose pre code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+  .doc-prose table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .doc-prose th, .doc-prose td { border-bottom: 1px solid var(--color-line); padding: 8px 10px; text-align: left; }
+  .doc-prose th { color: var(--color-ink); font-weight: 600; }
 
   .dot-grid {
     background-image: radial-gradient(color-mix(in oklab, var(--color-ink) 12%, transparent) 1px, transparent 1px);

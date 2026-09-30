@@ -7,7 +7,9 @@ import { isAdmin, adminEmails } from "@/lib/admin";
 import { salesReport } from "@/lib/metrics";
 import { recentEmails } from "@/lib/email";
 import { recentMessages, subscriberCount } from "@/lib/inbox";
-import { money } from "@/lib/catalog";
+import { MADE_FOR_YOU, money } from "@/lib/catalog";
+import { allBuilds, templateName } from "@/lib/builds";
+import AdminBuild from "@/components/AdminBuild";
 
 export const metadata = { title: "Dashboard", robots: { index: false } };
 
@@ -22,8 +24,9 @@ export default async function AdminPage() {
   // A 404 rather than a 403: a non-admin should not learn the page exists.
   if (!isAdmin(user)) notFound();
 
-  const [{ overview, top, daily, recentOrders }, emails, messages, subscribers] =
-    await Promise.all([salesReport(30), recentEmails(8), recentMessages(12), subscriberCount()]);
+  const [{ overview, top, daily, recentOrders }, emails, messages, subscribers, builds] =
+    await Promise.all([salesReport(30), recentEmails(8), recentMessages(12), subscriberCount(), allBuilds()]);
+  const openBuilds = builds.filter((b) => ["queued", "in_progress"].includes(b.status)).length;
 
   const peak = Math.max(...daily.map((d) => d.cents), 1);
 
@@ -89,6 +92,25 @@ export default async function AdminPage() {
                 <span>{daily[0]?.date}</span>
                 <span>{daily.at(-1)?.date}</span>
               </div>
+            </div>
+          )}
+        </section>
+
+        <section className="mt-10">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-[19px] font-semibold">Made-for-you builds</h2>
+            <p className="text-[13px] text-muted">
+              {openBuilds} of {MADE_FOR_YOU.maxOpen} slots in use
+              {openBuilds >= MADE_FOR_YOU.maxOpen ? " · the order form is closed until one is delivered" : ""}
+            </p>
+          </div>
+          {builds.length === 0 ? (
+            <p className="card mt-4 rounded-2xl px-5 py-8 text-center text-[14px] text-muted">No builds ordered yet.</p>
+          ) : (
+            <div className="mt-4 flex flex-col gap-3">
+              {builds.map((b) => (
+                <AdminBuild key={b.id} build={b} templateName={templateName(b.template)} />
+              ))}
             </div>
           )}
         </section>
@@ -165,7 +187,7 @@ export default async function AdminPage() {
                 {emails.map((e, i) => (
                   <li key={i} className="flex items-center justify-between gap-3 text-[13px]">
                     <span className="truncate text-muted">{e.kind} → {e.to}</span>
-                    <span className={e.status === "failed" ? "text-red-600" : "text-faint"}>
+                    <span className={e.status === "failed" ? "text-danger" : "text-faint"}>
                       {e.provider}/{e.status}
                     </span>
                   </li>

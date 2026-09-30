@@ -61,6 +61,8 @@ cookie alone.
 users/{uid}                       email, provider, allAccess
 users/{uid}/entitlements/{slug}   one document per owned template
 orders/{orderId}                  items, totals, credit, status, provider
+users/{uid}/projects/{slug}       saved editor changes (edited pages + theme)
+customBuilds/{id}                 Made-for-you briefs, status, due date, delivery
 reviews/{slug}__{uid}             one per buyer per template
 messages/{id}                     contact form and template requests
 subscribers/{hash}                new-release alerts
@@ -108,13 +110,73 @@ These are live features, not just copy. The wording lives in `lib/content.js`.
 - **Search and filters.** `/templates` filters by category and price and
   sorts by price or size.
 
+## The online editor
+
+`/editor/[slug]` lets a buyer customise a template in the browser: click any
+text on the page to edit it, change colours, fonts and corner radii, set each
+page's title and search description, and find-and-replace across every page.
+Changes save to Firestore and download as a zip.
+
+- **Who gets it:** owners of Pro templates, and All-access for every HTML
+  template. Starter owners see an upgrade offer. Helix is a Next.js project,
+  so it is edited in code instead. The rule lives in `editorAccess()` in
+  `lib/editor-core.js`.
+- **Anyone can try it.** Without access it runs in demo mode: everything
+  works except saving and downloading, with an offer to unlock it.
+- **Downloads stay exact.** Each page is parsed into a source document and
+  every element gets an id; the page is rendered from that source with its
+  scripts running, and edits are copied back to the matching source element.
+  Saving and exporting serialise the source, never the live page, so content
+  a script generates (products, menus, timetables) is never baked into the
+  files twice. The export starts from the original folder in `templates/`
+  and overlays the edits, so the licence, README and assets always ship.
+- **Styles** come from the first `:root { … }` block of each template's
+  `assets/style.css`, which is where every template keeps its theme.
+
+## Made for you
+
+`/made-for-you` sells a done-for-you setup: the buyer sends a brief and pays
+once, and you set a template up for their business.
+
+1. The brief is stored in `customBuilds` and an order is created for it.
+2. Paying moves the build to *Brief received*, sets a due date and adds the
+   chosen template to the buyer's library. The receipt states the due date.
+3. You work through builds on `/admin`: open ones are listed first with their
+   due date (overdue ones are flagged), the full brief and a status control.
+4. Marking a build *Delivered* requires a link to the finished site and emails
+   the buyer. They also see its progress and the link in their library.
+
+Price, turnaround and capacity are `MADE_FOR_YOU` in `lib/catalog.js`
+(**$15, 3 days, 5 open builds**). Once 5 builds are open the form closes and
+offers a waiting list, so every build that is accepted can still ship on
+time. **These are promises to customers, including one round of tweaks —
+change them before launch if they don't match what you can deliver.**
+
+## Guides
+
+`lib/guides.js` holds 12 step-by-step guides: Netlify, Vercel, Cloudflare
+Pages, GitHub Pages, Firebase Hosting, cPanel/shared hosting, Shopify,
+WordPress, Squarespace & Wix, plus domains, forms and payments. Each page
+carries HowTo structured data for search. Hosting dashboards get redesigned,
+so it's worth rereading these every few months.
+
+## Dark mode
+
+The whole site follows the visitor's system setting, and the toggle in the
+header overrides it (remembered in `localStorage`, applied by a tiny script
+in `<head>` before the page paints, so there's no flash). Colours are CSS
+variables in `app/globals.css` with a dark set alongside the light one.
+
 ## Site map
 
 | Page | What it's for |
 |---|---|
-| `/` | What we are, what we do and how, the promises, featured templates, pricing, FAQ |
+| `/` | What we are, what we do and how, the promises, editor vs Made for you, featured templates, pricing, FAQ |
 | `/templates` | The full catalogue with search, filters and sorting |
-| `/t/[slug]` | Live preview, what's included, reviews, bundle offer |
+| `/t/[slug]` | Live preview, what's included, the template's README as documentation, reviews, editor and Made-for-you offers |
+| `/editor/[slug]` | The online editor (demo mode for anyone who doesn't own the template yet) |
+| `/made-for-you` | The 3-day setup service and its brief form |
+| `/guides`, `/guides/[slug]` | 12 hosting and setup guides, from Netlify to Shopify |
 | `/pricing` | Tiers, the bundle, "never pay twice" worked example, comparison table |
 | `/how-it-works` | How we build, how buying works, what's in the zip, hosting guides |
 | `/about` | Story, principles, who it's for |
@@ -123,7 +185,7 @@ These are live features, not just copy. The wording lives in `lib/content.js`.
 | `/contact` | Questions, template requests, support |
 | `/cart`, `/account` | Cart, library, order history, upgrade offer |
 | `/login`, `/register`, `/forgot` | Firebase sign-in, sign-up (email or Google), password reset |
-| `/admin` | Revenue, best sellers, orders, messages, subscribers, mail log |
+| `/admin` | Made-for-you builds to deliver, revenue, best sellers, orders, messages, subscribers, mail log |
 
 `sitemap.xml` and `robots.txt` are generated from the catalogue.
 
@@ -294,8 +356,9 @@ has everything a buyer is promised.
 - **The store works; the business still needs traffic.** Budget for SEO, a
   launch, or an existing audience.
 - **Check the promises before launch.** The 14-day refund, "help from the
-  developer" and template requests are commitments to customers. They're
-  easy to edit in `lib/content.js` and `lib/site.js`.
+  developer", template requests and Made for you ($15, 3 days, one round of
+  tweaks) are commitments to customers. They're easy to edit in
+  `lib/content.js`, `lib/site.js` and `lib/catalog.js`.
 - **Receipts need a mail provider.** Without `RESEND_API_KEY` they're only
   logged. (Password resets don't need one — Firebase sends those.)
 - **Reviews publish immediately.** Add moderation if it gets abused.

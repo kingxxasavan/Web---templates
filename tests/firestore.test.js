@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 const emulator = process.env.FIRESTORE_EMULATOR_HOST;
 
 describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not set" }, () => {
-  let store, reviews, inbox, catalog, db;
+  let store, reviews, inbox, catalog, db, editor, builds, unzipSync, strFromU8;
   let n = 0;
   const newUser = () => {
     const id = `user${Date.now()}x${++n}`;
@@ -23,6 +23,9 @@ describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not
     inbox = await import("../lib/inbox.js");
     catalog = await import("../lib/catalog.js");
     ({ db } = await import("../lib/firebase-admin.js"));
+    editor = await import("../lib/editor.js");
+    builds = await import("../lib/builds.js");
+    ({ unzipSync, strFromU8 } = await import("fflate"));
   });
 
   async function buy(user, slugs) {
@@ -105,5 +108,82 @@ describe("store on Firestore", { skip: !emulator && "FIRESTORE_EMULATOR_HOST not
     assert.ok(recent.some((m) => m.email === "sam@example.com"));
     const subs = await (await db()).collection("subscribers").where("email", "==", "fan@example.com").get();
     assert.equal(subs.size, 1);
+  });
+
+  test("editor projects save, load and export with the edits applied", async () => {
+    const user = newUser();
+    const slug = "sable-studio";
+    const original = (await import("node:fs")).readFileSync(`templates/${slug}/index.html`, "utf8");
+    const edited = original.replace(/<title>[^<]*<\/title>/, "<title>Maple Studio</title>");
+    const playfair = '"Playfair Display", Georgia, serif';
+
+    await editor.saveProject(user.id, slug, {
+      pages: { "index.html": edited },
+      overrides: { "--accent": "#123456", "--font-display": playfair },
+    });
+    const project = await editor.loadProject(user.id, slug);
+    assert.equal(project.overrides["--accent"], "#123456");
+
+    const files = unzipSync(await editor.buildCustomZip(slug, project));
+    const index = strFromU8(files[`${slug}/index.html`]);
+    const about = strFromU8(files[`${slug}/about.html`]);
+    const css = strFromU8(files[`${slug}/assets/style.css`]);
+    assert.match(index, /<title>Maple Studio<\/title>/);
+    assert.match(css, /--accent: #123456;/);
+    assert.match(about, /family=Playfair\+Display/, "chosen font loads on every page");
+    assert.ok(files[`${slug}/LICENSE.txt`] && files[`${slug}/README.md`], "licence and README ship too");
+
+    await assert.rejects(editor.saveProject(user.id, slug, { pages: { "x.html": edited } }), /not part of this template/);
+    await editor.deleteProject(user.id, slug);
+    assert.equal(await editor.loadProject(user.id, slug), null);
+  });
+
+  test("a Made-for-you build is queued on payment and grants its template", async () => {
+    const user = newUser();
+    const brief = {
+      template: "ember-table",
+      business: "Crumb & Co",
+      about: "A family bakery with sourdough and cakes.",
+      email: user.email,
+    };
+    const buildId = await builds.createBuild(user, brief);
+    const order = await store.createServiceOrder(user, { buildId, templateSlug: brief.template }, "test");
+    await builds.linkOrder(buildId, order.id);
+    assert.equal(order.totalCents, catalog.MADE_FOR_YOU.priceCents);
+
+    // Unpaid builds don't show up for the buyer.
+    assert.equal((await builds.buildsFor(user.id)).length, 0);
+
+    await store.fulfillOrder(order.id);
+    const [build] = await builds.buildsFor(user.id);
+    assert.equal(build.status, "queued");
+    assert.equal(build.dueAt - build.paidAt, catalog.MADE_FOR_YOU.days * 86_400_000);
+    assert.ok(await store.owns(user.id, "ember-table"), "template granted");
+    assert.ok((await builds.allBuilds()).some((b) => b.id === buildId));
+  });
+
+  test("delivering a build needs a link and records the delivery", async () => {
+    const user = newUser();
+    const buildId = await builds.createBuild(user, {
+      business: "Lift Club",
+      about: "A small gym with group classes every day.",
+      email: user.email,
+    });
+    const order = await store.createServiceOrder(user, { buildId }, "test");
+    await store.fulfillOrder(order.id);
+
+    await assert.rejects(builds.updateBuild(buildId, { status: "delivered" }, "http://x"), /link/);
+    await assert.rejects(builds.updateBuild(buildId, { status: "delivered", deliveryUrl: "ftp://x" }, "http://x"), /https/);
+    await builds.updateBuild(buildId, { status: "delivered", deliveryUrl: "https://lift.example.com", note: "Enjoy!" }, "http://x");
+
+    const [build] = await builds.buildsFor(user.id);
+    assert.equal(build.status, "delivered");
+    assert.equal(build.deliveryUrl, "https://lift.example.com");
+    assert.ok(build.deliveredAt);
+  });
+
+  test("capacity closes once the open builds reach the limit", async () => {
+    const open = await builds.openBuildCount();
+    assert.equal(await builds.hasCapacity(), open < catalog.MADE_FOR_YOU.maxOpen);
   });
 });

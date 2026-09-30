@@ -11,12 +11,14 @@ const COLUMNS = [
       ["About us", "/about"],
       ["How it works", "/how-it-works"],
       ["Pricing", "/pricing"],
+      ["Made for you", "/made-for-you"],
       ["Contact", "/contact"],
     ],
   },
   {
     title: "Help",
     links: [
+      ["Hosting guides", "/guides"],
       ["FAQ", "/faq"],
       ["Licence", "/licence"],
       ["Refunds", "/licence#refunds"],

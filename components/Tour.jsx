@@ -84,7 +84,7 @@ export default function Tour({ tour, showcase, onClose }) {
       {!atReveal && (
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 z-20 rounded-full bg-ink/85 px-4 py-2 text-[13px] text-white backdrop-blur-xl transition-colors hover:bg-ink"
+          className="absolute right-5 top-5 z-20 rounded-full bg-night/85 px-4 py-2 text-[13px] text-white backdrop-blur-xl transition-colors hover:bg-night"
         >
           Skip tour
         </button>

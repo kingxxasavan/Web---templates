@@ -5,6 +5,8 @@ import path from "node:path";
 import { TEMPLATES, CATEGORIES, TIERS } from "../lib/catalog.js";
 import { validateReview, maskEmail } from "../lib/reviews.js";
 import { validateMessage } from "../lib/inbox.js";
+import { validateBrief } from "../lib/builds.js";
+import { GUIDES, GUIDE_GROUPS } from "../lib/guides.js";
 
 const root = path.resolve(import.meta.dirname, "..");
 
@@ -52,4 +54,49 @@ describe("contact validation", () => {
   test("needs a known topic", () => assert.ok(validateMessage({ ...ok, kind: "spam" })));
   test("needs some detail", () => assert.ok(validateMessage({ ...ok, message: "hi" })));
   test("needs a name", () => assert.ok(validateMessage({ ...ok, name: "  " })));
+});
+
+describe("Made-for-you briefs", () => {
+  const ok = {
+    template: "ember-table",
+    business: "Crumb & Co",
+    about: "A family bakery: sourdough, pastries and celebration cakes.",
+    email: "owner@example.com",
+  };
+
+  test("accepts a minimal brief, with or without a template", () => {
+    assert.equal(validateBrief(ok), null);
+    assert.equal(validateBrief({ ...ok, template: "" }), null);
+  });
+  test("needs the three required fields", () => {
+    assert.ok(validateBrief({ ...ok, business: " " }));
+    assert.ok(validateBrief({ ...ok, about: "Bakery" }));
+    assert.ok(validateBrief({ ...ok, email: "nope" }));
+  });
+  test("only builds on HTML templates", () => {
+    assert.ok(validateBrief({ ...ok, template: "helix-ai" }));
+    assert.ok(validateBrief({ ...ok, template: "../x" }));
+  });
+  test("checks links and lengths", () => {
+    assert.ok(validateBrief({ ...ok, assetsUrl: "javascript:alert(1)" }));
+    assert.equal(validateBrief({ ...ok, assetsUrl: "https://drive.google.com/x" }), null);
+    assert.ok(validateBrief({ ...ok, content: "x".repeat(7000) }));
+  });
+});
+
+describe("guides", () => {
+  test("every guide has a unique slug, a known group and steps", () => {
+    const slugs = new Set(GUIDES.map((g) => g.slug));
+    assert.equal(slugs.size, GUIDES.length);
+    for (const g of GUIDES) {
+      assert.ok(GUIDE_GROUPS.some((grp) => grp.kind === g.kind), g.slug);
+      assert.ok(g.steps.length >= 3, g.slug);
+      assert.ok(g.time && g.cost && g.difficulty, g.slug);
+    }
+  });
+  test("covers the platforms the store promises", () => {
+    for (const s of ["netlify", "vercel", "cloudflare-pages", "github-pages", "firebase-hosting", "shared-hosting", "shopify", "wordpress"]) {
+      assert.ok(GUIDES.some((g) => g.slug === s), s);
+    }
+  });
 });

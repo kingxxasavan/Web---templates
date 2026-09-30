@@ -153,7 +153,7 @@ export default function AuthForm({ mode }) {
         </div>
 
         {error && (
-          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-red-700">
+          <p role="alert" className="alert-error">
             {error}
           </p>
         )}

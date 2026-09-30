@@ -27,6 +27,7 @@ import {
   money,
   pageCount,
   individualTotal,
+  MADE_FOR_YOU,
 } from "@/lib/catalog";
 
 const FEATURED = ["aurora-commerce", "sable-studio", "ember-table"].map(bySlug);
@@ -89,8 +90,10 @@ export default async function Home() {
             <Reveal delay={0.1}>
               <p className="lede mt-6 max-w-xl text-pretty">
                 Foundry makes original, hand-coded website templates for small
-                businesses, freelancers and founders. Click through the pages
-                before you buy, pay once, and put your business online today.
+                businesses, freelancers and founders. Try one live, customise it
+                in your browser or have us set it up in {MADE_FOR_YOU.days} days, and
+                put your business online for {money(TIERS.starter.priceCents)} to{" "}
+                {money(TIERS.premium.priceCents)}.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
@@ -209,6 +212,62 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ------------------------------------------ two ways to make it yours */}
+      <section className="shell py-20 md:py-28">
+        <SectionHeading eyebrow="Make it yours" title="Do it yourself, or let us do it." center>
+          Either way you end up with a site that looks like your business, not
+          like a template.
+        </SectionHeading>
+        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <Reveal className="h-full">
+            <div className="card flex h-full flex-col rounded-3xl p-8">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <Icon name="pencil" size={22} />
+              </span>
+              <h3 className="mt-5 text-[22px] font-semibold tracking-[-0.02em]">The online editor</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Click any text on the page and type. Pick your colours and fonts, set
+                page titles for Google, then download your finished site.
+              </p>
+              <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
+                {["No code and nothing to install", "Changes save to your account", "Included with Pro templates and All-access"].map((x) => (
+                  <li key={x} className="flex gap-2"><Check /> {x}</li>
+                ))}
+              </ul>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href="/editor/aurora-commerce" className="btn btn-primary">
+                  Try the editor free <Icon name="arrow" size={16} />
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.06} className="h-full">
+            <div className="flex h-full flex-col rounded-3xl bg-night p-8 text-white ring-1 ring-night-line">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-[#a5b4fc]">
+                <Icon name="sparkle" size={22} />
+              </span>
+              <h3 className="mt-5 text-[22px] font-semibold tracking-[-0.02em]">
+                Made for you, in {MADE_FOR_YOU.days} days
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-night-muted">
+                Send a short brief and we set a template up for your business: your
+                words, colours, pages and links. You download it ready to launch.
+              </p>
+              <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
+                {[`${money(MADE_FOR_YOU.priceCents)}, template included`, "One round of tweaks included", "Follow progress in your library"].map((x) => (
+                  <li key={x} className="flex gap-2"><Check className="text-[#a5b4fc]" /> {x}</li>
+                ))}
+              </ul>
+              <div className="mt-7">
+                <Link href="/made-for-you" className="btn btn-on-dark">
+                  Start your brief <Icon name="arrow" size={16} />
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ---------------------------------------------------- featured */}
       <section className="shell py-20 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
@@ -236,9 +295,9 @@ export default async function Home() {
             <Steps steps={BUY_STEPS} />
           </div>
           <p className="mt-8 text-center text-[14px] text-muted">
-            Step-by-step hosting guides for Netlify, Vercel, GitHub Pages and cPanel are on{" "}
-            <Link href="/how-it-works#launch" className="font-medium text-accent underline-offset-4 hover:underline">
-              How it works
+            Step-by-step guides for Netlify, Vercel, Cloudflare, Shopify, WordPress and more are in{" "}
+            <Link href="/guides" className="font-medium text-accent underline-offset-4 hover:underline">
+              Guides
             </Link>
             .
           </p>

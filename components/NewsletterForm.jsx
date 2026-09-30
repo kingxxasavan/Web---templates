@@ -58,7 +58,7 @@ export default function NewsletterForm({ source = "footer", dark = false }) {
         </button>
       </div>
       {state.status === "error" && (
-        <p role="alert" className="mt-2 text-[13px] text-red-600">
+        <p role="alert" className="mt-2 text-[13px] text-danger">
           {state.message}
         </p>
       )}

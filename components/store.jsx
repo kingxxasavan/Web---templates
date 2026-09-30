@@ -22,7 +22,7 @@ export function Badge({ children, tone = "default" }) {
     default: "border-line bg-card text-muted",
     accent: "border-accent/20 bg-accent-soft text-accent",
     good: "border-good/20 bg-good-soft text-good",
-    dark: "border-transparent bg-ink text-white",
+    dark: "border-transparent bg-ink text-on-ink",
   };
   return (
     <span

@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import { Icon } from "@/components/icons";
 import { Reveal } from "@/components/store";
 import { PageHeader, SectionHeading, Steps, ClosingCta } from "@/components/sections";
-import { BUILD_STEPS, BUY_STEPS, HOSTING_GUIDES } from "@/lib/content";
+import { BUILD_STEPS, BUY_STEPS } from "@/lib/content";
+import { GUIDES } from "@/lib/guides";
 
 export const metadata = {
   title: "How it works",
@@ -107,30 +108,26 @@ export default function HowItWorksPage() {
         <div className="shell py-16 md:py-24">
           <SectionHeading eyebrow="Launch guides" title="Put it online in minutes.">
             The HTML templates are plain files, so they&rsquo;ll run on almost
-            any host, most of them free. Pick whichever suits you.
+            any host, most of them free. Here are four favourites.
           </SectionHeading>
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {HOSTING_GUIDES.map((g, i) => (
-              <Reveal key={g.name} delay={(i % 2) * 0.05}>
-                <div className="card h-full rounded-2xl p-7">
-                  <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-[18px] font-semibold">{g.name}</h3>
-                    <span className="rounded-full bg-sunk px-2.5 py-1 text-[12px] text-muted">About {g.time}</span>
-                  </div>
-                  <ol className="mt-5 flex flex-col gap-3">
-                    {g.steps.map((step, n) => (
-                      <li key={step} className="flex gap-3 text-[14.5px] leading-relaxed text-body">
-                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line text-[12px] font-semibold text-muted">
-                          {n + 1}
-                        </span>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {GUIDES.filter((g) => g.kind === "host").slice(0, 4).map((g, i) => (
+              <Reveal key={g.slug} delay={i * 0.04} className="h-full">
+                <Link href={`/guides/${g.slug}`} className="card card-hover flex h-full flex-col rounded-2xl p-6">
+                  <h3 className="text-[17px] font-semibold">{g.name}</h3>
+                  <p className="mt-2 flex-1 text-[14px] leading-relaxed text-muted">{g.bestFor}</p>
+                  <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] text-faint">
+                    <Icon name="clock" size={14} /> {g.time} · {g.cost}
+                  </p>
+                </Link>
               </Reveal>
             ))}
           </div>
+          <p className="mt-8">
+            <Link href="/guides" className="btn btn-secondary">
+              All {GUIDES.length} guides, including Shopify and WordPress <Icon name="arrow" size={16} />
+            </Link>
+          </p>
         </div>
       </section>
 

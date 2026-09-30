@@ -67,7 +67,7 @@ export default function LivePreview({ template }) {
                 aria-pressed={page.file === p.file}
                 className={`rounded-md px-2.5 py-1 text-[11.5px] transition-colors ${
                   page.file === p.file
-                    ? "bg-ink text-white"
+                    ? "bg-ink text-on-ink"
                     : "text-muted hover:bg-card hover:text-ink"
                 }`}
               >

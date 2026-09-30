@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
 import { currentUser, sameOrigin } from "@/lib/auth";
-import { createOrder, fulfillOrder, sendReceipt } from "@/lib/store";
+import { createOrder } from "@/lib/store";
+import { startPayment } from "@/lib/payments";
 import { readCart, clearCart } from "@/lib/cart";
-import { bySlug, BUNDLE } from "@/lib/catalog";
 
-const stripeKey = process.env.STRIPE_SECRET_KEY;
-
-/**
- * With STRIPE_SECRET_KEY set this hands off to Stripe Checkout and waits for
- * the webhook to fulfil. Without it the order is fulfilled immediately and
- * flagged as a simulation, so the whole flow is exercisable before a payment
- * account exists. The total is always computed server-side.
- */
+/** Turns the cart into an order, priced server-side, and takes payment. */
 export async function POST(request) {
   if (!sameOrigin(request)) {
     return NextResponse.json({ error: "Bad origin" }, { status: 403 });
@@ -32,7 +25,7 @@ export async function POST(request) {
 
   let order;
   try {
-    order = await createOrder(user, await readCart(), stripeKey ? "stripe" : "simulated");
+    order = await createOrder(user, await readCart(), process.env.STRIPE_SECRET_KEY ? "stripe" : "simulated");
   } catch (err) {
     const empty = err.message === "Your cart is empty.";
     if (!empty) console.error("[checkout] order failed:", err);
@@ -43,38 +36,15 @@ export async function POST(request) {
   }
 
   const origin = new URL(request.url).origin;
-
-  // No card needed: simulation mode, or credit already covers the total.
-  if (!stripeKey || order.totalCents === 0) {
-    await fulfillOrder(order.id, stripeKey ? "fully-credited" : "simulated-payment");
-    await sendReceipt(order.id, origin);
-    await clearCart();
-    return NextResponse.json({ ok: true, redirect: `/account?order=${order.id}` });
+  try {
+    const { redirect, paid } = await startPayment(order, user, origin, {
+      // Stripe returns through a route that clears the cart cookie first.
+      successUrl: `/api/checkout/success?order=${order.id}`,
+    });
+    if (paid) await clearCart();
+    return NextResponse.json({ ok: true, redirect });
+  } catch (err) {
+    console.error("[checkout] payment failed to start:", err);
+    return NextResponse.json({ error: "We couldn't start checkout. Please try again." }, { status: 500 });
   }
-
-  const { default: Stripe } = await import("stripe");
-  const stripe = new Stripe(stripeKey);
-
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: user.email,
-    client_reference_id: order.id,
-    metadata: { orderId: order.id },
-    line_items: order.items.map((i) => ({
-      quantity: 1,
-      price_data: {
-        currency: "usd",
-        unit_amount: i.priceCents,
-        product_data: {
-          name: i.name,
-          description:
-            i.slug === BUNDLE.slug ? BUNDLE.tagline : bySlug(i.slug)?.tagline,
-        },
-      },
-    })),
-    success_url: `${origin}/api/checkout/success?order=${order.id}`,
-    cancel_url: `${origin}/cart`,
-  });
-
-  return NextResponse.json({ ok: true, redirect: session.url });
 }

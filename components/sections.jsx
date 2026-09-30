@@ -64,7 +64,7 @@ export function Steps({ steps, numbered = true }) {
           <Reveal delay={i * 0.05} className="h-full">
             <div className="card h-full rounded-2xl p-6">
               {numbered && (
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13px] font-semibold text-white">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13px] font-semibold text-on-ink">
                   {i + 1}
                 </span>
               )}
@@ -88,7 +88,7 @@ export function ClosingCta({
 }) {
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24">
-      <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl bg-night px-6 py-14 text-white sm:px-12 md:py-16">
+      <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl bg-night ring-1 ring-night-line px-6 py-14 text-white sm:px-12 md:py-16">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <h2 className="h-section text-balance">

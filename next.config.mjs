@@ -6,6 +6,10 @@ const nextConfig = {
   // told to ship them with that function.
   outputFileTracingIncludes: {
     "/api/download/[slug]": ["./private/downloads/**"],
+    // The customised download is built from the template sources, and each
+    // product page shows that template's README.
+    "/api/editor/[slug]/download": ["./templates/*/*.{html,md,txt}", "./templates/*/assets/**"],
+    "/t/[slug]": ["./templates/*/README.md"],
   },
   async headers() {
     return [

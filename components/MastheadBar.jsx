@@ -4,14 +4,19 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon, Logo } from "./icons";
+import ThemeToggle from "./ThemeToggle";
 
 export const NAV = [
   { href: "/templates", label: "Templates" },
+  { href: "/made-for-you", label: "Made for you" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/guides", label: "Guides" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ];
+
+// The mobile menu has room for everything.
+const MOBILE_NAV = [...NAV, { href: "/contact", label: "Contact" }];
 
 export default function MastheadBar({ user, cartCount }) {
   const [scrolled, setScrolled] = useState(false);
@@ -56,7 +61,7 @@ export default function MastheadBar({ user, cartCount }) {
               key={n.href}
               href={n.href}
               aria-current={isActive(n.href) ? "page" : undefined}
-              className={`rounded-full px-3.5 py-2 text-[14px] transition-colors ${
+              className={`rounded-full px-3 py-2 text-[14px] transition-colors ${
                 isActive(n.href) ? "text-ink font-medium" : "text-muted hover:text-ink"
               }`}
             >
@@ -65,7 +70,8 @@ export default function MastheadBar({ user, cartCount }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
           <Link
             href="/cart"
             aria-label={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
@@ -73,7 +79,7 @@ export default function MastheadBar({ user, cartCount }) {
           >
             <Icon name="cart" size={20} />
             {cartCount > 0 && (
-              <span className="absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10.5px] font-semibold text-white">
+              <span className="absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10.5px] font-semibold text-on-accent">
                 {cartCount}
               </span>
             )}
@@ -94,7 +100,7 @@ export default function MastheadBar({ user, cartCount }) {
                 <Link href="/login" className="px-3 text-[14px] text-muted transition-colors hover:text-ink">
                   Sign in
                 </Link>
-                <Link href="/templates" className="btn btn-sm btn-primary">
+                <Link href="/templates" className="btn btn-sm btn-primary hidden xl:inline-flex">
                   Browse templates
                 </Link>
               </>
@@ -116,7 +122,7 @@ export default function MastheadBar({ user, cartCount }) {
       {open && (
         <nav id="mobile-menu" aria-label="Mobile" className="border-t border-line bg-paper lg:hidden">
           <div className="shell flex flex-col py-3">
-            {NAV.map((n) => (
+            {MOBILE_NAV.map((n) => (
               <Link
                 key={n.href}
                 href={n.href}

@@ -38,7 +38,7 @@ export default function LicencePage() {
           <ul className="mt-5 flex flex-col gap-3.5">
             {LICENCE_CANNOT.map((l) => (
               <li key={l} className="flex gap-2.5 text-[15px] leading-snug">
-                <Icon name="close" size={16} strokeWidth={2.2} className="mt-[3px] text-red-600" /> {l}
+                <Icon name="close" size={16} strokeWidth={2.2} className="mt-[3px] text-danger" /> {l}
               </li>
             ))}
           </ul>

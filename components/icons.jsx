@@ -21,6 +21,13 @@ const PATHS = {
   lock: "M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3",
   plus: "M12 5v14 M5 12h14",
   minus: "M5 12h14",
+  contrast: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 3v18 M12 7.5h4.5 M12 12h6 M12 16.5h4.5",
+  pencil: "M4 20h4L19 9l-4-4L4 16v4z M13.5 6.5l4 4",
+  clock: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v5l3 2",
+  book: "M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z M5 17a3 3 0 0 1 3-3h11",
+  globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M3 12h18 M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z",
+  save: "M5 4h11l3 3v13H5z M8 4v5h7V4 M8 20v-6h8v6",
+  undo: "M9 14L4 9l5-5 M4 9h10a6 6 0 0 1 0 12h-3",
   star: "M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z",
 };
 
@@ -48,8 +55,8 @@ export function Logo({ className = "" }) {
     <span className={`flex items-center gap-2.5 ${className}`}>
       <span className="flex h-8 w-8 items-center justify-center rounded-[9px] bg-ink">
         <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden>
-          <path d="M2 12L8 2.5 14 12H2z" fill="#fff" />
-          <path d="M5.2 12L8 7.4 10.8 12H5.2z" fill="#4338ca" />
+          <path d="M2 12L8 2.5 14 12H2z" style={{ fill: "var(--color-on-ink)" }} />
+          <path d="M5.2 12L8 7.4 10.8 12H5.2z" style={{ fill: "var(--color-accent)" }} />
         </svg>
       </span>
       <span className="text-[16px] font-semibold tracking-[-0.02em]">Foundry</span>

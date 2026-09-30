@@ -2,7 +2,7 @@ import { SITE } from "@/lib/site";
 
 export default function robots() {
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/api/", "/admin", "/account", "/cart"] },
+    rules: { userAgent: "*", allow: "/", disallow: ["/api/", "/admin", "/account", "/cart", "/editor/"] },
     sitemap: `${SITE.url}/sitemap.xml`,
   };
 }

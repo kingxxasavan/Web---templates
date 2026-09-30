@@ -69,7 +69,7 @@ export default function ForgotForm() {
         </label>
 
         {error && (
-          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-[13.5px] text-red-700">
+          <p role="alert" className="alert-error">
             {error}
           </p>
         )}

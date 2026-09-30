@@ -139,7 +139,7 @@ export default function CartView({ initialCart, signedIn, refundDays }) {
           <p className="text-right text-[12px] text-faint">One-time payment, USD</p>
 
           {error && (
-            <p role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-[13px] text-red-700">
+            <p role="alert" className="mt-4 alert-error">
               {error}
             </p>
           )}

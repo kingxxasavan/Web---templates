@@ -1,6 +1,6 @@
 # Foundry — a full-stack template store
 
-A working storefront that sells nine original website templates as
+A working storefront that sells original designs and adapted open-source website templates as
 downloadable source. Accounts, cart, checkout, order history and
 ownership-gated downloads — not a landing page with a Gumroad link.
 
@@ -41,7 +41,7 @@ server-side from the catalogue at checkout.
 3. **Checkout** — `POST /api/checkout` prices the cart server-side and writes a
    pending order.
 4. **Fulfilment** — grants one `entitlements` row per template. A bundle fans
-   out to all nine, so the download check stays a single indexed lookup.
+   out to all catalog templates, so the download check stays a single indexed lookup.
 5. **Download** — `GET /api/download/[slug]` verifies ownership, then streams
    the zip.
 
@@ -181,22 +181,13 @@ a 403 — the page should not announce that it exists.
 - Reviews: write access requires a purchase; ratings are bounded in code and by
   a database `CHECK`.
 
-## Why the inventory is original
+## Template sources and licenses
 
-Every template in `templates/` was written from scratch. That is a commercial
-decision, not a point of pride:
+The store includes nine original designs and 50 adapted open-source designs: 36 from HTML5 UP (CC BY 3.0) and 14 from Start Bootstrap (MIT). Each imported folder includes LICENSE.txt, README.md and SOURCE.json. A source index is in templates/SOURCES.json. Product pages link the source and identify attribution requirements.
 
-- **MIT / Apache / BSD** may be resold, but only with the original copyright
-  notice intact — so you are charging for something the buyer can clone free
-  from GitHub, with someone else's name in the folder.
-- **GPL / AGPL** lets every buyer redistribute it onward for free.
-- **CC BY-NC** and "free for personal use" forbid commercial resale outright.
-- Themes bundle fonts, icons and photography under *separate*, stricter
-  licences than the code.
+Paid editions include replacement artwork created for the store, focus and reduced-motion improvements, page metadata, local demo-form feedback and customization instructions. Original versions are available free from their authors. Preserve upstream credits and license terms; the Foundry commercial license applies only to the original Foundry designs. Imported designs do not include working business backends, email delivery or payment processing.
 
-Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
-buyers charge back when they find the original. Owning the inventory removes
-the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
+Individual templates cost $5, $10 or $15. The existing $35 complete bundle remains available and includes the expanded catalog.
 
 ## Choosing a database
 

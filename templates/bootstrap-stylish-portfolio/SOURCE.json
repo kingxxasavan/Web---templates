@@ -1,0 +1,16 @@
+{
+  "provider": "Start Bootstrap",
+  "url": "https://github.com/StartBootstrap/startbootstrap-stylish-portfolio",
+  "license": "MIT",
+  "licenseUrl": "https://opensource.org/license/mit",
+  "revision": "a658eb7",
+  "attributionRequired": false,
+  "importedOn": "2026-10-01",
+  "changes": [
+    "Original raster artwork replacing bundled demo images",
+    "Accessible focus outlines, zoom enabled and reduced-motion styles",
+    "Page titles and descriptions",
+    "Local form validation with explicit demo messaging",
+    "Customization and deployment guide"
+  ]
+}

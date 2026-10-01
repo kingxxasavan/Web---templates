@@ -23,7 +23,7 @@ export default function TemplateCard({ t, owned = false, rating = null, priority
         />
         <span className="absolute left-3 top-3 flex gap-1.5">
           {owned && <Badge tone="accent">Owned</Badge>}
-          {t.tier === "pro" && !owned && <Badge>Pro</Badge>}
+          {t.tier !== "starter" && !owned && <Badge>{TIERS[t.tier].name}</Badge>}
         </span>
       </div>
 
@@ -64,6 +64,7 @@ export default function TemplateCard({ t, owned = false, rating = null, priority
               {s}
             </span>
           ))}
+          {t.source && <span className="text-[11px] text-faint">{t.source.license}</span>}
           {t.stack.length > 3 && (
             <span className="text-[11px] text-faint">+{t.stack.length - 3}</span>
           )}

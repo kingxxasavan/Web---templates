@@ -1,0 +1,352 @@
+[
+  {
+    "slug": "html5up-paradigm-shift",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/paradigm-shift",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-massively",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/massively",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-ethereal",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/ethereal",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-story",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/story",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-dimension",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/dimension",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-editorial",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/editorial",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-forty",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/forty",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-stellar",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/stellar",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-multiverse",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/multiverse",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-phantom",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/phantom",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-hyperspace",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/hyperspace",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-future-imperfect",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/future-imperfect",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-solid-state",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/solid-state",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-lens",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/lens",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-fractal",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/fractal",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-eventually",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/eventually",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-spectral",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/spectral",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-photon",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/photon",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-highlights",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/highlights",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-landed",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/landed",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-strata",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/strata",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-read-only",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/read-only",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-alpha",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/alpha",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-directive",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/directive",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-aerial",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/aerial",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-twenty",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/twenty",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-big-picture",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/big-picture",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-tessellate",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/tessellate",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-prologue",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/prologue",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-helios",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/helios",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-telephasic",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/telephasic",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-strongly-typed",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/strongly-typed",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-parallelism",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/parallelism",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-escape-velocity",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/escape-velocity",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-astral",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/astral",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "html5up-striped",
+    "provider": "HTML5 UP",
+    "url": "https://html5up.net/striped",
+    "license": "CC BY 3.0",
+    "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d"
+  },
+  {
+    "slug": "bootstrap-agency",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-agency",
+    "license": "MIT",
+    "revision": "b2d5d5c"
+  },
+  {
+    "slug": "bootstrap-creative",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-creative",
+    "license": "MIT",
+    "revision": "b1762d8"
+  },
+  {
+    "slug": "bootstrap-freelancer",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-freelancer",
+    "license": "MIT",
+    "revision": "5bc65b4"
+  },
+  {
+    "slug": "bootstrap-grayscale",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-grayscale",
+    "license": "MIT",
+    "revision": "d974402"
+  },
+  {
+    "slug": "bootstrap-landing-page",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-landing-page",
+    "license": "MIT",
+    "revision": "247a46a"
+  },
+  {
+    "slug": "bootstrap-business-casual",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-business-casual",
+    "license": "MIT",
+    "revision": "b6f9289"
+  },
+  {
+    "slug": "bootstrap-clean-blog",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-clean-blog",
+    "license": "MIT",
+    "revision": "1ebc4f8"
+  },
+  {
+    "slug": "bootstrap-new-age",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-new-age",
+    "license": "MIT",
+    "revision": "5f61977"
+  },
+  {
+    "slug": "bootstrap-personal",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-personal",
+    "license": "MIT",
+    "revision": "6a1ebcc"
+  },
+  {
+    "slug": "bootstrap-modern-business",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-modern-business",
+    "license": "MIT",
+    "revision": "7d29710"
+  },
+  {
+    "slug": "bootstrap-business-frontpage",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-business-frontpage",
+    "license": "MIT",
+    "revision": "b330ff6"
+  },
+  {
+    "slug": "bootstrap-stylish-portfolio",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-stylish-portfolio",
+    "license": "MIT",
+    "revision": "a658eb7"
+  },
+  {
+    "slug": "bootstrap-resume",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-resume",
+    "license": "MIT",
+    "revision": "c6fbe5e"
+  },
+  {
+    "slug": "bootstrap-shop-homepage",
+    "provider": "Start Bootstrap",
+    "url": "https://github.com/StartBootstrap/startbootstrap-shop-homepage",
+    "license": "MIT",
+    "revision": "fb3a490"
+  }
+]

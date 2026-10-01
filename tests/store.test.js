@@ -32,9 +32,10 @@ describe("catalogue", () => {
     }
   });
 
-  test("the three advertised price points are $5, $10 and $35", () => {
+  test("individual tiers are $5, $10 and $15, with the $35 bundle", () => {
     assert.equal(TIERS.starter.priceCents, 500);
     assert.equal(TIERS.pro.priceCents, 1000);
+    assert.equal(TIERS.premium.priceCents, 1500);
     assert.equal(BUNDLE.priceCents, 3500);
   });
 

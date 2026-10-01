@@ -1,9 +1,13 @@
-import { readFile, stat } from "node:fs/promises";
+import { stat } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { currentUser } from "@/lib/auth";
-import { owns } from "@/lib/store";
+import { owns, ownedSlugs } from "@/lib/store";
 import { BUNDLE, TEMPLATES, isSellableSlug } from "@/lib/catalog";
+
+import { downloadStream } from "@/lib/download-stream";
+
+export const runtime = "nodejs";
 
 const DIR = path.join(process.cwd(), "private", "downloads");
 
@@ -25,10 +29,10 @@ export async function GET(_request, { params }) {
     return NextResponse.json({ error: "Sign in to download." }, { status: 401 });
   }
 
-  const entitled =
-    slug === BUNDLE.slug
-      ? (await Promise.all(TEMPLATES.map((t) => owns(user.id, t.slug)))).every(Boolean)
-      : await owns(user.id, slug);
+  const library = slug === BUNDLE.slug ? await ownedSlugs(user.id) : null;
+  const entitled = library
+    ? TEMPLATES.every(t => library.has(t.slug))
+    : await owns(user.id, slug);
 
   if (!entitled) {
     return NextResponse.json(
@@ -47,11 +51,10 @@ export async function GET(_request, { params }) {
     );
   }
 
-  const body = await readFile(file);
+  const body = downloadStream(file);
   return new NextResponse(body, {
     headers: {
       "Content-Type": "application/zip",
-      "Content-Length": String(body.length),
       "Content-Disposition": `attachment; filename="${slug}.zip"`,
       "Cache-Control": "private, no-store",
     },

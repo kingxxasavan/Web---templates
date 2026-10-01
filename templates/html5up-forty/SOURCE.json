@@ -1,0 +1,16 @@
+{
+  "provider": "HTML5 UP",
+  "url": "https://html5up.net/forty",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+  "revision": "f32c95cd40e42659857e2318b6deb1f6be43da5d",
+  "attributionRequired": true,
+  "importedOn": "2026-10-01",
+  "changes": [
+    "Original raster artwork replacing bundled demo images",
+    "Accessible focus outlines, zoom enabled and reduced-motion styles",
+    "Page titles and descriptions",
+    "Local form validation with explicit demo messaging",
+    "Customization and deployment guide"
+  ]
+}

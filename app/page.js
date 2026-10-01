@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Masthead from "@/components/Masthead";
-import TemplateCard from "@/components/TemplateCard";
+import Catalogue from "@/components/Catalogue";
 import AddToCart from "@/components/AddToCart";
 import Footer from "@/components/Footer";
 import TourLauncher from "@/components/TourLauncher";
@@ -20,19 +20,19 @@ import {
 const LICENCE_CAN = [
   "Use on unlimited personal and client projects",
   "Modify the source however you like",
-  "No attribution or backlink required",
+  "Keep the attribution required by each template",
   "Sell the finished site to your client",
 ];
 
 const LICENCE_CANNOT = [
-  "Reselling or redistributing the template itself",
-  "Including it in another template or theme pack",
+  "Removing required author credits or license notices",
+  "Claiming exclusive ownership of an open-source design",
 ];
 
 const FAQ = [
   {
-    q: "Are these actually original?",
-    a: "Yes. Every template was written from scratch for this store — none of it is a repackaged open-source theme. That matters to you as a buyer: there is no upstream licence to comply with, no attribution to preserve, and no risk of the same design turning up in five other shops.",
+    q: "What am I buying?",
+    a: "Foundry includes original designs and prepared editions of open-source templates. Imported editions include original artwork, accessibility refinements, setup instructions and source credits. Their original versions are available free from the linked authors. Each listing explains its license.",
   },
   {
     q: "What does one-time mean?",
@@ -40,7 +40,7 @@ const FAQ = [
   },
   {
     q: "Do I need to know how to code?",
-    a: "For the $5 templates, no build step is involved — open the folder, edit the text in index.html, and upload it anywhere. You'll need to be comfortable editing HTML to change copy and images. The Pro templates assume a bit more, and Helix is a Next.js project that expects some React familiarity.",
+    a: "Most templates are static HTML: edit the text and artwork, then upload the folder. Basic HTML knowledge helps. Helix is a Next.js project and expects React familiarity. Each listing includes its setup instructions.",
   },
   {
     q: "Where can I host them?",
@@ -52,7 +52,7 @@ const FAQ = [
   },
   {
     q: "Can I get a refund?",
-    a: "Because the download is the entire product, sales are final once the file has been delivered. Every template is fully previewable before you buy, so you know exactly what you are getting.",
+    a: "Because the download is the entire product, sales are final once the file has been delivered. Most templates have a live preview before you buy, so you know exactly what you are getting.",
   },
 ];
 
@@ -86,7 +86,7 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mx-auto mt-6 max-w-xl text-pretty text-[16px] leading-relaxed text-muted">
-              Hand-built, readable source code for the sites entrepreneurs
+              Curated designs and readable source code for the sites entrepreneurs
               actually need — a storefront, a portfolio, a launch page, a
               booking site. Buy it once, download the folder, go live.
             </p>
@@ -106,7 +106,7 @@ export default async function Home() {
 
         {/* price tiers */}
         <Reveal delay={0.24}>
-          <div className="mx-auto mt-14 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="mx-auto mt-14 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 price: TIERS.starter.priceCents,
@@ -119,6 +119,12 @@ export default async function Home() {
                 label: TIERS.pro.name,
                 note: TIERS.pro.note,
                 count: `${TEMPLATES.filter((t) => t.tier === "pro").length} templates`,
+              },
+              {
+                price: TIERS.premium.priceCents,
+                label: TIERS.premium.name,
+                note: TIERS.premium.note,
+                count: `${TEMPLATES.filter(t => t.tier === "premium").length} templates`,
               },
               {
                 price: BUNDLE.priceCents,
@@ -165,18 +171,7 @@ export default async function Home() {
               {money(total)} separately · {money(BUNDLE.priceCents)} together
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {TEMPLATES.map((t, i) => (
-              <Reveal key={t.slug} delay={(i % 3) * 0.06}>
-                <TemplateCard
-                  t={t}
-                  owned={owned.has(t.slug)}
-                  rating={ratings.get(t.slug)}
-                  priority={i < 3}
-                />
-              </Reveal>
-            ))}
-          </div>
+          <Catalogue templates={TEMPLATES} ownedSlugs={[...owned]} ratings={Object.fromEntries(ratings)} />
         </div>
       </section>
 
@@ -225,8 +220,8 @@ export default async function Home() {
               What the licence lets you do
             </h2>
             <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-muted">
-              One plain-English licence covers every template. No tiers, no
-              per-domain counting, no expiry.
+              Every download includes its license. Imported templates keep their
+              original MIT or CC BY 3.0 terms; HTML5 UP designs require attribution.
             </p>
           </Reveal>
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -259,8 +254,8 @@ export default async function Home() {
                   ))}
                 </ul>
                 <p className="mt-5 border-t border-line pt-4 text-[12.5px] leading-relaxed text-faint">
-                  In short: sell the websites you build with these, not the
-                  templates themselves.
+                  Original Foundry designs use the included commercial license.
+                  Open-source editions retain the redistribution rights in their upstream license.
                 </p>
               </div>
             </Reveal>

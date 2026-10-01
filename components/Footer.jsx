@@ -16,8 +16,8 @@ export default function Footer() {
               <span className="text-[15px] font-semibold">Foundry</span>
             </div>
             <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-muted">
-              Original website templates, written from scratch. Buy once, use
-              forever.
+              Original designs and curated open-source editions. Preview,
+              choose and make them yours.
             </p>
           </div>
 
@@ -26,7 +26,7 @@ export default function Footer() {
               Templates
             </h3>
             <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
-              {TEMPLATES.map((t) => (
+              {TEMPLATES.slice(0, 8).map((t) => (
                 <li key={t.slug}>
                   <Link
                     href={`/t/${t.slug}`}
@@ -45,6 +45,7 @@ export default function Footer() {
             </h3>
             <ul className="mt-4 flex flex-col gap-2">
               {[
+                ["Browse all templates", "/#templates"],
                 ["Licence", "/#licence"],
                 ["Questions", "/#faq"],
                 ["Bundle", "/#bundle"],
@@ -64,8 +65,7 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-line pt-6">
           <p className="text-[12.5px] text-faint">
-            © {new Date().getFullYear()} Foundry. Every template is original
-            work.
+            © {new Date().getFullYear()} Foundry. Original designs and curated open-source editions.
           </p>
         </div>
       </div>

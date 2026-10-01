@@ -1,0 +1,9 @@
+/* Foundry adaptation: focus visibility, touch targets and motion preferences. */
+:root { --foundry-accent: #4b8084; }
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--foundry-accent) !important; outline-offset: 5px; }
+button, input[type=submit], .button, .btn { touch-action: manipulation; }
+img { max-width: 100%; }
+.foundry-demo-status { margin: 1rem 0; padding: 1rem; border: 1px solid currentColor; border-radius: .5rem; font-size: .9rem; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0ms !important; } }

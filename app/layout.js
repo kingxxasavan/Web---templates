@@ -14,7 +14,7 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const SITE = "https://your-store.vercel.app";
+const SITE = "https://web-templates-mu.vercel.app";
 
 export const metadata = {
   metadataBase: new URL(SITE),
@@ -23,7 +23,7 @@ export const metadata = {
     template: "%s · Foundry",
   },
   description:
-    "Nine original, hand-built website templates. Clean source code, no build step on most, no attribution required. Download the source and ship.",
+    "59 website templates for portfolios, businesses and product launches. Original designs and adapted open-source editions, priced from $5 to $15.",
   keywords: [
     "website templates",
     "HTML templates",
@@ -34,7 +34,7 @@ export const metadata = {
   openGraph: {
     title: "Foundry — original website templates you can ship today",
     description:
-      "Nine original, hand-built website templates. Clean source, commercial licence, no attribution required.",
+      "59 website templates with live previews, readable source and clear licenses. Individual designs from $5 to $15.",
     url: SITE,
     siteName: "Foundry",
     type: "website",

@@ -113,7 +113,7 @@ export default async function TemplatePage({ params }) {
                   {isOwned ? (
                     <Badge tone="accent">Owned</Badge>
                   ) : (
-                    t.tier === "pro" && <Badge>Pro</Badge>
+                    t.tier !== "starter" && <Badge>{TIERS[t.tier].name}</Badge>
                   )}
                 </div>
 
@@ -152,7 +152,7 @@ export default async function TemplatePage({ params }) {
                     ["Built for", t.audience],
                     ["Pages", pageCount(t)],
                     ["Stack", t.stack.join(", ")],
-                    ["Licence", "Commercial, no attribution"],
+                    ["Licence", t.source ? t.source.license + (t.source.attributionRequired ? " · attribution required" : " · keep license notice") : "Foundry commercial"],
                   ].map(([k, v]) => (
                     <div key={k} className="flex justify-between gap-4">
                       <dt className="shrink-0 text-faint">{k}</dt>
@@ -163,8 +163,7 @@ export default async function TemplatePage({ params }) {
               </div>
 
               <p className="mt-4 px-1 text-[12px] leading-relaxed text-faint">
-                Original work — not a repackaged open-source theme, so there is
-                no upstream licence to comply with.
+                {t.source ? <>Adapted from <a className="underline" href={t.source.url} target="_blank" rel="noopener noreferrer">{t.source.provider}</a>. The original is available free. This edition includes original artwork, accessibility refinements and a setup guide. <a className="underline" href={t.source.licenseUrl} target="_blank" rel="noopener noreferrer">Read the license</a>{t.source.attributionRequired ? "; keep visible author attribution." : "; keep the copyright notice in the source."}</> : "Original Foundry design. The included commercial license covers personal and client projects."}
               </p>
             </aside>
           </div>

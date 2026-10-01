@@ -54,6 +54,7 @@ export default function ResetForm({ token, valid }) {
     if (password !== confirm) return setError("The two passwords don't match.");
 
     setBusy(true);
+    try {
     const res = await fetch("/api/auth/reset", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,6 +66,8 @@ export default function ResetForm({ token, valid }) {
     if (!res.ok) return setError(data.error || "Something went wrong.");
     setDone(true);
     router.refresh();
+    } catch { setError("Unable to connect. Please try again."); }
+    finally { setBusy(false); }
   }
 
   return (

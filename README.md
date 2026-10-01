@@ -1,294 +1,103 @@
-# Foundry — a full-stack template store
+# Foundry — website template store
 
-A working storefront that sells nine original website templates as
-downloadable source. Accounts, cart, checkout, order history and
-ownership-gated downloads — not a landing page with a Gumroad link.
+A Next.js storefront selling nine templates as paid source downloads.
+Starter templates cost $5, Pro templates $10, and the full bundle $35.
+Prices always come from lib/catalog.js on the server.
 
-**One-time pricing: $5 · $10 · $35.** No subscriptions.
+## Run locally
 
----
+    npm install
+    npm run dev
+    npm test
+    npm run build
 
-## Pricing
+The local database is created at data/store.db. Build scripts create gated
+ZIP downloads in private/downloads and live demos in public/preview.
+Downloads are served only through /api/download/[slug] after ownership checks.
+Static previews intentionally expose demo markup; packaged source and licenses
+are the purchased product. Helix AI has a separate build step.
 
-| Tier | Price | What's in it |
-|---|---|---|
-| **Starter** | **$5** | 6 single-purpose templates, no build step |
-| **Pro** | **$10** | 3 multi-page / app-grade templates |
-| **Bundle** | **$35** | All 9 — saves $25 against $60 separately |
+## Firebase sign-in
 
-Prices live in `lib/catalog.js` and are re-synced into the database on every
-boot. The client never sends an amount: totals are always recomputed
-server-side from the catalogue at checkout.
+The megan-74585 web configuration supplied for this project is in
+lib/firebase.js. The store uses Firebase's HTTPS Authentication API for
+registration, sign-in, token refresh, and password reset. No Firebase Admin
+service-account secret is needed for authentication.
 
-## The stack
+1. Enable Email/Password under Firebase Authentication → Sign-in method.
+2. Add your deployed domain to authorized domains as needed.
+3. Firebase sends password-reset emails itself. Its default hosted reset page
+   works. To use this store's custom page, set the reset email action URL to
+   https://yourdomain/reset. The page accepts Firebase's oobCode parameter.
+4. Optional FIREBASE_API_KEY overrides the supplied public web API key.
 
-| Layer | Choice | Why |
-|---|---|---|
-| Framework | Next.js 16, App Router | Route handlers give a real API beside the pages |
-| Database | libSQL (`@libsql/client`) | One client speaks to a local file *and* hosted Turso, so the data layer is identical in dev and production |
-| Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
-| Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
-| Email | Resend over `fetch`, with a logged fallback | No SDK, and both mail flows work before a provider exists |
-| Analytics | Vercel Analytics + a first-party sales dashboard | Traffic from Vercel, revenue from your own database |
-| Tests | `node --test` | No test framework to install |
+Refresh tokens live only in an httpOnly, SameSite=Lax cookie, Secure in
+production, with a 30-day cookie lifetime. Each server request checks the
+session with Firebase; disabled accounts and revoked credentials fail closed.
+Passwords are not stored by the store for new Firebase users. Analytics
+initialization is not needed for authentication.
 
-## How a purchase works
+Existing SQL accounts are linked only when their previous store password
+matches or their Firebase email has been verified. Their user ID and purchased
+library stay intact. Matching an unverified email alone never transfers
+purchases. Old local session cookies no longer authenticate. Existing buyers
+whose accounts have not been migrated should create a Firebase account with
+their old store email/password, or use a verified Firebase account.
 
-1. **Register** — `POST /api/auth/register`. Password hashed with scrypt and a
-   per-user salt; the session token is random 32 bytes, stored in the database
-   only as a SHA-256 hash, so a leaked dump cannot be replayed as a login.
-2. **Add to cart** — `POST /api/cart`. The slug is validated against the
-   catalogue before it touches anything.
-3. **Checkout** — `POST /api/checkout` prices the cart server-side and writes a
-   pending order.
-4. **Fulfilment** — grants one `entitlements` row per template. A bundle fans
-   out to all nine, so the download check stays a single indexed lookup.
-5. **Download** — `GET /api/download/[slug]` verifies ownership, then streams
-   the zip.
+## Persistent store database
 
-The zips live in `private/downloads/`, **outside `public/`**, so there is no
-URL that serves them directly — every download passes the ownership check.
-`next.config.mjs` uses `outputFileTracingIncludes` to ship them with the
-download function, since nothing imports them.
+Firebase currently manages authentication. The existing libSQL data layer
+continues to hold carts, orders, download permissions, reviews, and receipt
+logs. The public Firebase database URL is not an administrative database
+credential and does not replace this data layer.
 
-### Cart rules worth knowing
+On Vercel, configure DATABASE_URL and DATABASE_AUTH_TOKEN for a hosted libSQL
+or Turso database. The local file fallback is for development only. Import
+the existing store database if retaining previous buyers and orders. On first
+use the schema adds a unique firebase_uid field to existing users.
 
-- Anything already in your library is dropped from the cart.
-- If the bundle is present, individual items fold into it — nobody is charged
-  twice for the same file.
-- `fulfillOrder` is idempotent, so a replayed Stripe webhook cannot
-  double-grant or corrupt the order.
+## Real checkout
 
-## The tour
+Set STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET in hosting environment settings.
+Use sk_test_ credentials for test purchases and sk_live_ for real payments.
+Register https://yourdomain/api/webhook/stripe for both events:
 
-A first-time visitor lands *inside* a real, working template — Aurora Commerce,
-running live in a frame — and is walked through its pages as though it were
-simply the site. Only at the end does it shrink away and reveal that everything
-they just used is a $10 product, followed by a rotating showcase of the rest.
+- checkout.session.completed
+- checkout.session.async_payment_succeeded
 
-It argues for the build quality far better than a screenshot grid does, because
-the visitor has actually used it.
+Checkout sends server-priced items to Stripe's hosted payment page. When
+credentials are missing, it returns a clear unavailable message and retains
+the cart. There is no automatic simulated/free purchase fallback.
 
-- Mounts *over* the storefront rather than redirecting, so crawlers and
-  returning visitors still get the store. The tour is an addition, never a gate.
-- Shows once per browser (`localStorage`), with "Skip tour" always visible and
-  a "Take the tour" button in the hero for anyone who wants it again.
-- Steps live in `lib/tour.js`; arrow keys and Escape work.
+Only a signed Stripe webhook with a paid session matching the order's total,
+USD currency, payment mode, order reference, and provider grants downloads.
+Fulfilment changes the order and entitlements atomically and tolerates repeated
+webhooks. Cart items added while payment is in progress are retained. The
+return page checks the buyer's actual order status rather than declaring a
+payment successful from a URL parameter. If confirmation is pending, refresh
+shortly to see the library update. Cancellation returns to the saved cart.
 
-## Live previews instead of screenshots
+Guest visitors can add/remove items without signing in. Sign-in and
+registration merge their cookie cart into their account. Auth links retain
+/cart as the return destination. The bundle folds individual products into
+one purchase; a full-library owner cannot buy the same bundle again.
 
-Product pages run the real template in a frame with its pages as tabs, a
-device-width switcher and a per-page description, so a buyer can walk every
-page and function before paying. `scripts/build-previews.mjs` copies the static
-templates into `public/preview/<slug>/` at build time.
+## Optional settings
 
-**The trade-off:** a served template's markup is viewable, the same as on any
-template marketplace. That is the price of a demo people trust, and the paid
-artefact is still the packaged source, README and licence, which only come
-through the authorised download route. Previews carry `X-Robots-Tag: noindex`
-so they never compete with the store in search.
+- RESEND_API_KEY and EMAIL_FROM send purchase receipts. Without them receipts
+  are logged in the emails table. Firebase sends reset emails independently.
+- ADMIN_EMAILS is the comma-separated allowlist for /admin.
+- Vercel Analytics and Speed Insights are mounted in the layout. Enable these
+  features in your hosting dashboard if desired.
 
-Helix needs a build step, so it keeps a still and lists its sections instead.
+See .env.example for environment variables. Server secrets belong in hosting
+settings, never in client code or committed files.
 
-## Carts without an account
+## Validation
 
-Browsing, adding to the cart and seeing a full total need no account and no
-database — a signed-out cart lives in a cookie. Only checkout requires signing
-up, and the cookie cart is merged into the account on registration, sign in and
-at checkout, so nothing picked out beforehand is lost.
-
-Only slugs are stored. Prices are always recomputed server-side from the
-catalogue, so editing the cookie changes which items are in the cart and
-nothing else; an injected value is dropped on read.
-
-## Password reset
-
-`/forgot` issues a single-use token, stored only as a SHA-256 hash and valid
-for one hour. Requesting a new link invalidates the previous one, and
-completing a reset **destroys every existing session** for that account — if
-the reset happened because someone else had access, that access ends there.
-
-The response to a reset request is identical whether or not the address is
-registered, so the endpoint cannot be used to discover who has an account.
-
-## Receipts and email
-
-`lib/email.js` sends through Resend when `RESEND_API_KEY` is set and otherwise
-logs the message. Either way **every send is recorded in the `emails` table**,
-so there is a delivery record and the admin mail log shows failures.
-
-Receipts go out after fulfilment from both the simulated path and the Stripe
-webhook — and only on first fulfilment, so a replayed webhook cannot re-send.
-A mail failure never fails a purchase: the entitlement is already granted by
-that point, so errors are swallowed and recorded rather than surfaced.
-
-## Reviews
-
-Reviews are restricted to **verified buyers**: writing one requires an
-entitlement row, which only exists after a fulfilled order. Buying the bundle
-entitles you to review any template. The unique key on `(user_id, slug)` means
-one review per buyer per template — editable, not repeatable.
-
-Author emails are masked (`jo***@example.com`) and ratings are constrained to
-1–5 integers in both the application and a `CHECK` constraint. Averages appear
-on the listing cards and in the buy rail.
-
-## Analytics
-
-Two halves, deliberately:
-
-- **Traffic** — `@vercel/analytics` and `@vercel/speed-insights` are mounted in
-  the root layout. Cookie-less, and they no-op outside a Vercel deployment.
-  Enable Analytics in your Vercel project to see visitors, referrers and pages.
-- **Money** — `/admin` reads your own database: all-time and 30-day revenue,
-  average order value, signup→purchase conversion, a daily revenue chart, best
-  sellers by revenue, recent orders, review average and the mail log.
-
-Admin access is an allowlist in `ADMIN_EMAILS`, not a database flag, so a
-compromised account cannot promote itself. A non-admin gets a 404 rather than
-a 403 — the page should not announce that it exists.
-
-## Security
-
-- Passwords: scrypt, 64-byte key, per-user salt, `timingSafeEqual` comparison.
-- Sessions: httpOnly + SameSite=Lax + Secure in production; 30-day expiry
-  checked server-side.
-- CSRF: SameSite=Lax blocks cross-site form POSTs, and every mutating route
-  additionally checks `Origin` against `Host`.
-- Login: identical response whether the email is unknown or the password is
-  wrong, so the endpoint cannot be used to enumerate accounts. Rate-limited to
-  8 attempts per 15 minutes.
-- Path traversal: slugs are checked against the catalogue before being used in
-  a path.
-- Reset tokens: 32 random bytes, stored hashed, single use, one-hour expiry,
-  and superseded by any newer request.
-- Reviews: write access requires a purchase; ratings are bounded in code and by
-  a database `CHECK`.
-
-## Why the inventory is original
-
-Every template in `templates/` was written from scratch. That is a commercial
-decision, not a point of pride:
-
-- **MIT / Apache / BSD** may be resold, but only with the original copyright
-  notice intact — so you are charging for something the buyer can clone free
-  from GitHub, with someone else's name in the folder.
-- **GPL / AGPL** lets every buyer redistribute it onward for free.
-- **CC BY-NC** and "free for personal use" forbid commercial resale outright.
-- Themes bundle fonts, icons and photography under *separate*, stricter
-  licences than the code.
-
-Gumroad, Lemon Squeezy and ThemeForest delist resold open-source work, and
-buyers charge back when they find the original. Owning the inventory removes
-the whole category of risk. `templates/*/LICENSE.txt` is what each buyer gets.
-
-## When the database is down
-
-The storefront is built entirely from the static catalogue, so a browsing
-visitor never sees an error because the data layer is unreachable or not yet
-configured. Reads behind the storefront degrade through `readOrFallback` —
-ratings, ownership and the session lookup fall back to empty. **Writes never
-do**: a purchase that silently does nothing is worse than an error.
-
-This is what fixes the blank-page deploy. With `DATABASE_URL` unset on Vercel,
-the `file:` fallback lands on a read-only filesystem; previously that took the
-whole site down, and now it costs only accounts and orders.
-
-## Running it
-
-```bash
-npm install
-npm run dev      # http://localhost:3000
-npm test         # 36 tests, no framework needed
-npm run previews # rebuild the live template previews only
-npm run build    # zips the templates, then builds
-```
-
-No configuration is needed to run locally. The database is created at
-`./data/store.db` on first boot and checkout runs in simulation mode, so you
-can register, buy and download immediately.
-
-## Deploying
-
-1. **Database.** Vercel's filesystem is ephemeral, so create a hosted database
-   — Turso has a free tier and needs no code change:
-   ```bash
-   npx turso db create foundry
-   npx turso db show foundry --url      # → DATABASE_URL
-   npx turso db tokens create foundry   # → DATABASE_AUTH_TOKEN
-   ```
-2. **Import** the repo at [vercel.com/new](https://vercel.com/new).
-   `vercel.json` pins the framework and build command.
-3. **Set env vars** from `.env.example`.
-4. **Stripe**, when you're ready to take real money: set `STRIPE_SECRET_KEY`,
-   add a webhook to `https://yourdomain/api/webhook/stripe` for
-   `checkout.session.completed`, and set `STRIPE_WEBHOOK_SECRET`.
-
-Until Stripe keys are set, checkout completes instantly and orders are
-labelled "simulated" in the order history.
-
-## Adding a template
-
-1. Drop the folder into `templates/<slug>/`.
-2. Add an entry to `TEMPLATES` in `lib/catalog.js` with a `tier`.
-3. Save a preview to `public/thumbs/<slug>.webp` (1100×825).
-4. Copy a `LICENSE.txt` in from any existing template.
-
-The zip, the listing, `/t/<slug>`, the footer and the bundle all pick it up.
-
-## Structure
-
-```
-app/
-  page.js                    storefront
-  t/[slug]/page.js           template detail
-  cart/, account/            cart and library
-  login/, register/, forgot/, reset/
-  admin/                     sales dashboard
-  api/
-    auth/{register,login,logout,forgot,reset}/
-    cart/                    server-priced cart
-    checkout/                Stripe or simulation
-    download/[slug]/         ownership-gated zip delivery
-    reviews/                 verified-buyer reviews
-    webhook/stripe/          signature-verified fulfilment
-lib/
-  catalog.js                 products, tiers, prices
-  accounts.js                user records and reset tokens (unit tested)
-  email.js                   Resend or logged, always recorded
-  reviews.js                 verified-purchase reviews
-  metrics.js                 sales figures for the dashboard
-  admin.js                   ADMIN_EMAILS allowlist
-  guest-cart.js              signed-out cart, cookie only
-  tour.js                    the first-visit walkthrough
-  db.js                      libSQL client, schema, seeding
-  password.js                scrypt helpers (no Next import — unit tested)
-  auth.js                    sessions, rate limiting, origin checks
-  store.js                   cart, orders, entitlements
-scripts/
-  build-zips.mjs             templates/ → private/downloads/ (paid, gated)
-  build-previews.mjs         templates/ → public/preview/ (live demos)
-templates/                   the products
-tests/{store,accounts}.test.js
-```
-
-## Still to do
-
-- **Firebase.** Not started. The data layer is SQL through libSQL, so moving to
-  Firestore is a rewrite of every query rather than a config change, and it
-  wants to be its own commit rather than riding along on top of a fix you were
-  waiting to deploy. Say the word and it's next.
-
-## Honest notes
-
-- **The store works; the business still needs traffic.** Template sales are a
-  distribution problem. Nine templates on a URL nobody visits earns nothing —
-  budget for SEO, a launch, or an existing audience.
-- **Turn on Analytics in the Vercel dashboard** — the code is wired up, but
-  the project setting still has to be enabled.
-- **Email needs a real provider before launch.** Without `RESEND_API_KEY`,
-  receipts and reset links are only logged — buyers never receive them.
-- **Reviews are published immediately.** There is no moderation queue. Fine at
-  low volume; add one if it gets abused.
-- **Set `ADMIN_EMAILS`** or `/admin` is unreachable, by design.
-- Prices are a starting point, not a researched position. Test them.
+npm test covers catalogue pricing, ownership, reviews, legacy account helpers,
+Firebase account linking and session API calls, payment validation, repeated
+fulfilment, and cart preservation. Firebase HTTP tests use mocked responses;
+production sign-in and a real payment still require configured external
+services and a deployed smoke test. npm run build packages all templates and
+checks the full Next.js production build.

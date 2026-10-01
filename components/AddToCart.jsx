@@ -20,6 +20,7 @@ export default function AddToCart({ slug, label, owned = false, className = "" }
 
   async function add() {
     setState("loading");
+    try {
     const res = await fetch("/api/cart", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -32,6 +33,7 @@ export default function AddToCart({ slug, label, owned = false, className = "" }
     }
     setState("added");
     router.refresh();
+    } catch { setState("error"); }
   }
 
   const text = {

@@ -1,6 +1,8 @@
 import { Inter, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Suspense } from "react";
+import FirebaseAnalytics from "@/components/FirebaseAnalytics";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -55,6 +57,11 @@ export default function RootLayout({ children }) {
             Both no-op outside a Vercel deployment. */}
         <Analytics />
         <SpeedInsights />
+        {/* Firebase Analytics. Suspense because it reads search params, and
+            it no-ops entirely when the project isn't configured. */}
+        <Suspense fallback={null}>
+          <FirebaseAnalytics />
+        </Suspense>
       </body>
     </html>
   );

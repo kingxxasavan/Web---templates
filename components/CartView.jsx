@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@/lib/firebase-client";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -37,6 +38,7 @@ export default function CartView({ initialCart, signedIn = true }) {
       }
       if (!data.redirect) throw new Error("Checkout did not return a payment page.");
       // Hosted payment pages need a full navigation outside the Next router.
+      track("begin_checkout", {value: cart.subtotalCents / 100, currency: "USD"});
       window.location.assign(data.redirect);
     } catch (error) { setError(error.message || "Unable to connect. Please try again."); }
     finally { setBusy(false); }

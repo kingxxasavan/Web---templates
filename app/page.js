@@ -8,7 +8,7 @@ import { Reveal, Check, Badge } from "@/components/store";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
 import { ratingSummary } from "@/lib/reviews";
-import { tourConfig, showcase } from "@/lib/tour";
+import { tourPool, showcase } from "@/lib/tour";
 import {
   TEMPLATES,
   TIERS,
@@ -63,12 +63,11 @@ export default async function Home() {
     ratingSummary(),
   ]);
   const total = individualTotal();
-  const tour = tourConfig();
+  const pool = tourPool();
   const proof = showcase();
 
   return (
     <>
-      <TourLauncher tour={tour} showcase={proof} variant="auto" />
       <Masthead />
 
       {/* hero */}
@@ -100,7 +99,7 @@ export default async function Home() {
               >
                 Browse all {TEMPLATES.length}
               </a>
-              <TourLauncher tour={tour} showcase={proof} variant="button" />
+              <TourLauncher pool={pool} showcase={proof} />
             </div>
           </Reveal>
         </div>

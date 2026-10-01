@@ -1,3 +1,4 @@
+import { describeDbError } from "@/lib/db-errors";
 import { NextResponse } from "next/server";
 import { sameOrigin, createFirebaseSession, validateCredentials } from "@/lib/auth";
 import { firebaseAuth, authError } from "@/lib/firebase";
@@ -23,6 +24,10 @@ export async function POST(request) {
     return NextResponse.json({ ok: true, email: user.email });
   } catch (error) {
     console.error("register failed", error.code || error.message);
+    if (!error.code && !error.publicMessage) {
+      const {status, message, reason} = describeDbError(error);
+      return NextResponse.json({error: message, reason}, {status});
+    }
     return NextResponse.json({ error: error.publicMessage || authError(error) }, { status: error.code ? 400 : 503 });
   }
 }

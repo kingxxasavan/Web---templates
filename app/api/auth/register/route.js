@@ -1,7 +1,7 @@
-import { describeDbError } from "@/lib/db-errors";
+import { describeAuthRequestError } from "@/lib/auth-errors";
 import { NextResponse } from "next/server";
 import { sameOrigin, createFirebaseSession, validateCredentials } from "@/lib/auth";
-import { firebaseAuth, authError } from "@/lib/firebase";
+import { firebaseAuth } from "@/lib/firebase";
 import { syncFirebaseAccount } from "@/lib/firebase-account";
 import { mergeGuestCart } from "@/lib/store";
 import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
@@ -24,10 +24,7 @@ export async function POST(request) {
     return NextResponse.json({ ok: true, email: user.email });
   } catch (error) {
     console.error("register failed", error.code || error.message);
-    if (!error.code && !error.publicMessage) {
-      const {status, message, reason} = describeDbError(error);
-      return NextResponse.json({error: message, reason}, {status});
-    }
-    return NextResponse.json({ error: error.publicMessage || authError(error) }, { status: error.code ? 400 : 503 });
+    const {status, ...data} = describeAuthRequestError(error);
+    return NextResponse.json(data, {status});
   }
 }

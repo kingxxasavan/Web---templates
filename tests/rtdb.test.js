@@ -136,6 +136,22 @@ describe("rtdb: cart", () => {
 });
 
 describe("rtdb: orders and entitlements", () => {
+  test("older paid bundle buyers receive newly added designs, but pending buyers do not", async () => {
+    const user = await newUser();
+    await store.addToCart(user.id, BUNDLE.slug);
+    const order = await store.createOrder(user.id, "test");
+    const added = TEMPLATES.find(t => t.source).slug;
+    assert.equal(await store.owns(user.id, added), false);
+    await store.fulfillOrder(order.id);
+    // Recreate a legacy bundle: no bundle marker and no new-design entitlement.
+    await fake.ref(`entitlements/${user.id}/${BUNDLE.slug}`).set(null);
+    await fake.ref(`entitlements/${user.id}/${added}`).set(null);
+    assert.equal(await store.owns(user.id, added), true);
+    assert.equal((await store.ownedSlugs(user.id)).size, TEMPLATES.length);
+    await store.addToCart(user.id, added);
+    assert.equal((await store.getCart(user.id)).items.length, 0);
+  });
+
   test("buying one template grants exactly that template", async () => {
     const user = await newUser();
     await buy(user.id, "quill-journal");

@@ -111,6 +111,20 @@ describe("cart pricing", () => {
 });
 
 describe("fulfilment", () => {
+  test("older paid bundle buyers receive newly added designs, but pending buyers do not", async () => {
+    const user = await newUser();
+    await store.addToCart(user, BUNDLE.slug);
+    const order = await store.createOrder(user, "test");
+    const added = TEMPLATES.find(t => t.source).slug;
+    assert.equal(await store.owns(user, added), false);
+    await store.fulfillOrder(order.id);
+    await run("DELETE FROM entitlements WHERE user_id = ? AND slug = ?", [user, added]);
+    assert.equal(await store.owns(user, added), true);
+    assert.equal((await store.ownedSlugs(user)).size, TEMPLATES.length);
+    await store.addToCart(user, added);
+    assert.equal((await store.getCart(user)).items.length, 0);
+  });
+
   test("buying one template grants exactly that template", async () => {
     const user = await newUser();
     await store.addToCart(user, "quill-journal");

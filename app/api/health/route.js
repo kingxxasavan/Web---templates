@@ -1,3 +1,4 @@
+import { withReadTimeout } from "@/lib/read-timeout";
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { backend, backendName } from "@/lib/backend";
@@ -36,8 +37,10 @@ export async function GET() {
   } else {
     try {
       // A read that touches the real store, whichever backend is active.
-      if (backendName() === "rtdb") await backend().countUsers();
-      else await (await getDb()).execute("SELECT 1");
+      await withReadTimeout(async () => {
+        if (backendName() === "rtdb") await backend().countUsers();
+        else await (await getDb()).execute("SELECT 1");
+      }, 6000);
       checks.database = {
         ok: true,
         configured: true,
@@ -63,38 +66,15 @@ export async function GET() {
     }
   }
 
-  const flag = (name, value, detail) => ({
-    ok: Boolean(value),
-    configured: Boolean(value),
-    detail,
-  });
-
-  checks.payments = flag(
-    process.env.STRIPE_SECRET_KEY,
-    null,
-    process.env.STRIPE_SECRET_KEY
-      ? "Stripe configured."
-      : "No Stripe key — checkout completes in simulation mode."
-  );
-  checks.email = flag(
-    process.env.RESEND_API_KEY,
-    null,
-    process.env.RESEND_API_KEY
-      ? "Resend configured."
-      : "No mail provider — receipts and reset links are only logged."
-  );
-  checks.analytics = flag(
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    null,
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-      ? "Firebase Analytics configured."
-      : "Firebase Analytics not configured."
-  );
-  checks.admin = flag(
-    process.env.ADMIN_EMAILS,
-    null,
-    process.env.ADMIN_EMAILS ? "Admin allowlist set." : "No admin configured."
-  );
+  const flag = (value, detail) => ({ok: Boolean(value), configured: Boolean(value), detail});
+  const paymentsReady = Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
+  checks.payments = flag(paymentsReady, paymentsReady
+    ? "Stripe key and webhook secret configured." : "Checkout needs STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET.");
+  checks.email = flag(process.env.RESEND_API_KEY, process.env.RESEND_API_KEY
+    ? "Resend configured for receipts." : "Purchase receipts are logged. Firebase sends password-reset emails.");
+  checks.analytics = flag(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID, process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    ? "Firebase Analytics configured." : "Firebase Analytics not configured.");
+  checks.admin = flag(process.env.ADMIN_EMAILS, process.env.ADMIN_EMAILS ? "Admin allowlist set." : "No admin configured.");
 
   // Only the database stops the store working; the rest degrade by design.
   const healthy = checks.database.ok;

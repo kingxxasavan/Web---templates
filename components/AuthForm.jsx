@@ -13,13 +13,15 @@ export default function AuthForm({ mode }) {
   const [busy, setBusy] = useState(false);
 
   const router = useRouter();
-  const next = useSearchParams().get("next") || "/account";
+  const destination = useSearchParams().get("next");
+  const next = destination?.startsWith("/") && !destination.startsWith("//") && !destination.includes("\\") ? destination : "/account";
 
   async function submit(e) {
     e.preventDefault();
     setBusy(true);
     setError(null);
 
+    try {
     const res = await fetch(`/api/auth/${isRegister ? "register" : "login"}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,6 +38,8 @@ export default function AuthForm({ mode }) {
 
     router.push(next);
     router.refresh();
+    } catch { setError("Unable to connect. Please try again."); }
+    finally { setBusy(false); }
   }
 
   return (
@@ -78,7 +82,8 @@ export default function AuthForm({ mode }) {
           <input
             type="password"
             required
-            minLength={8}
+            minLength={isRegister ? 8 : undefined}
+            maxLength={200}
             autoComplete={isRegister ? "new-password" : "current-password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -121,7 +126,7 @@ export default function AuthForm({ mode }) {
       <p className="mt-6 text-center text-[13px] text-muted">
         {isRegister ? "Already have an account? " : "No account yet? "}
         <Link
-          href={isRegister ? "/login" : "/register"}
+          href={(isRegister ? "/login" : "/register") + "?next=" + encodeURIComponent(next)}
           className="text-ink underline underline-offset-4 hover:text-accent"
         >
           {isRegister ? "Sign in" : "Create one"}

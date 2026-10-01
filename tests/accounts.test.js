@@ -188,5 +188,7 @@ describe("admin allowlist", () => {
 });
 
 test("cleanup", async () => {
-  await rm(dir, { recursive: true, force: true });
+  const { getDb } = await import("../lib/db.js");
+  (await getDb()).close();
+  await rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 });

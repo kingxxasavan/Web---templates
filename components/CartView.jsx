@@ -1,9 +1,9 @@
 "use client";
 
+import { track } from "@/lib/firebase-client";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { track } from "@/lib/firebase-client";
 
 const money = (c) => `$${(c / 100).toFixed(c % 100 === 0 ? 0 : 2)}`;
 
@@ -14,46 +14,34 @@ export default function CartView({ initialCart, signedIn = true }) {
   const router = useRouter();
 
   async function remove(slug) {
-    const res = await fetch("/api/cart", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug, action: "remove" }),
-    });
-    if (res.ok) {
-      setCart(await res.json());
-      router.refresh();
-    }
+    setBusy(true); setError(null);
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, action: "remove" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Unable to remove this item.");
+      setCart(data); router.refresh();
+    } catch (error) { setError(error.message || "Unable to connect. Please try again."); }
+    finally { setBusy(false); }
   }
 
   async function checkout() {
-    setBusy(true);
-    setError(null);
-    track("begin_checkout", {
-      value: cart.subtotalCents / 100,
-      currency: "USD",
-      items: cart.items.map((i) => i.slug),
-    });
-    const res = await fetch("/api/checkout", { method: "POST" });
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      // Signed out: send them to sign up, cart intact in the cookie.
-      if (data.needsAuth && data.redirect) {
-        track("checkout_needs_account");
-        router.push(data.redirect);
-        return;
+    setBusy(true); setError(null);
+    try {
+      const res = await fetch("/api/checkout", { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (data.needsAuth && data.redirect) { router.push(data.redirect); return; }
+        throw new Error(data.error || "Checkout failed.");
       }
-      setError(data.error || "Checkout failed.");
-      setBusy(false);
-      return;
-    }
-    track("purchase", {
-      transaction_id: data.orderId,
-      value: cart.subtotalCents / 100,
-      currency: "USD",
-    });
-    router.push(data.redirect);
-    router.refresh();
+      if (!data.redirect) throw new Error("Checkout did not return a payment page.");
+      // Hosted payment pages need a full navigation outside the Next router.
+      track("begin_checkout", {value: cart.subtotalCents / 100, currency: "USD"});
+      window.location.assign(data.redirect);
+    } catch (error) { setError(error.message || "Unable to connect. Please try again."); }
+    finally { setBusy(false); }
   }
 
   if (!cart.items.length) {
@@ -86,6 +74,7 @@ export default function CartView({ initialCart, signedIn = true }) {
               <span className="font-display text-xl">{money(i.priceCents)}</span>
               <button
                 onClick={() => remove(i.slug)}
+                disabled={busy}
                 aria-label={`Remove ${i.name}`}
                 className="text-[12.5px] text-faint underline underline-offset-4 transition-colors hover:text-ink"
               >
@@ -140,7 +129,7 @@ export default function CartView({ initialCart, signedIn = true }) {
             {busy
               ? "Processing…"
               : signedIn
-                ? "Complete purchase"
+                ? "Pay securely"
                 : "Continue to checkout"}
           </button>
 

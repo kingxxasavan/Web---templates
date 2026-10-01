@@ -182,6 +182,49 @@ describe("fulfilment", () => {
   });
 });
 
+test("payment preserves products added after checkout began", async () => {
+  const user = await newUser();
+  await store.addToCart(user, "quill-journal");
+  const order = await store.createOrder(user, "stripe");
+  await store.addToCart(user, "ember-table");
+  await store.fulfillOrder(order.id);
+  assert.deepEqual((await store.getCart(user)).items.map((i) => i.slug), ["ember-table"]);
+});
+
+test("the full library cannot be charged for its bundle again", async () => {
+  const user = await newUser();
+  await store.addToCart(user, BUNDLE.slug);
+  const order = await store.createOrder(user, "stripe");
+  await store.fulfillOrder(order.id);
+  await store.addToCart(user, BUNDLE.slug);
+  assert.equal((await store.getCart(user)).items.length, 0);
+});
+
+test("Firebase linking protects an existing buyer's library", async () => {
+  const { syncFirebaseAccount } = await import("../lib/firebase-account.js");
+  const { hashPassword } = await import("../lib/password.js");
+  const user = await newUser();
+  await run("UPDATE users SET password = ? WHERE id = ?", [await hashPassword("old-password"), user]);
+  const identity = { localId: "firebase-existing", email: user + "@example.com", emailVerified: false };
+  await assert.rejects(() => syncFirebaseAccount(identity, "wrong-password"));
+  const linked = await syncFirebaseAccount(identity, "old-password");
+  assert.equal(linked.id, user);
+  assert.equal((await syncFirebaseAccount(identity, "new-firebase-password")).id, user);
+  await assert.rejects(() => syncFirebaseAccount({ ...identity, localId: "different-uid", emailVerified: true }, "old-password"));
+});
+
+test("new Firebase users are stored without a password hash", async () => {
+  const { syncFirebaseAccount } = await import("../lib/firebase-account.js");
+  const identity = { localId: "firebase-new", email: "newfirebase@example.com" };
+  const user = await syncFirebaseAccount(identity, "firebase-password");
+  const { queryOne } = await import("../lib/db.js");
+  const stored = await queryOne("SELECT * FROM users WHERE id = ?", [user.id]);
+  assert.equal(stored.password, "firebase-managed");
+  assert.equal(stored.firebase_uid, identity.localId);
+});
+
 test("cleanup", async () => {
-  await rm(dir, { recursive: true, force: true });
+  const { getDb } = await import("../lib/db.js");
+  (await getDb()).close();
+  await rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 });

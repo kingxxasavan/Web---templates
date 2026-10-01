@@ -26,17 +26,16 @@ server-side from the catalogue at checkout.
 |---|---|---|
 | Framework | Next.js 16, App Router | Route handlers give a real API beside the pages |
 | Database | Firebase Realtime Database **or** libSQL | Two backends behind one interface, chosen by environment variables — see below |
-| Auth | scrypt + httpOnly session cookies | No dependency, no third-party identity provider |
-| Payments | Stripe Checkout, with a simulation fallback | The whole flow is exercisable before a Stripe account exists |
+| Auth | Firebase Authentication + httpOnly cookies | Firebase manages credentials and password resets |
+| Payments | Stripe Checkout with verified payment confirmation | The whole flow is exercisable before a Stripe account exists |
 | Email | Resend over `fetch`, with a logged fallback | No SDK, and both mail flows work before a provider exists |
 | Analytics | Vercel Analytics + a first-party sales dashboard | Traffic from Vercel, revenue from your own database |
 | Tests | `node --test` | No test framework to install |
 
 ## How a purchase works
 
-1. **Register** — `POST /api/auth/register`. Password hashed with scrypt and a
-   per-user salt; the session token is random 32 bytes, stored in the database
-   only as a SHA-256 hash, so a leaked dump cannot be replayed as a login.
+1. **Register** — `POST /api/auth/register`. Firebase manages credentials and supplies the verified identity.
+   Existing purchases are linked only after proof of account ownership.
 2. **Add to cart** — `POST /api/cart`. The slug is validated against the
    catalogue before it touches anything.
 3. **Checkout** — `POST /api/checkout` prices the cart server-side and writes a
@@ -123,8 +122,7 @@ registered, so the endpoint cannot be used to discover who has an account.
 logs the message. Either way **every send is recorded in the `emails` table**,
 so there is a delivery record and the admin mail log shows failures.
 
-Receipts go out after fulfilment from both the simulated path and the Stripe
-webhook — and only on first fulfilment, so a replayed webhook cannot re-send.
+Receipts go out after fulfilment from the Stripe webhook — and only on first fulfilment, so a replayed webhook cannot re-send.
 A mail failure never fails a purchase: the entitlement is already granted by
 that point, so errors are swallowed and recorded rather than surfaced.
 
@@ -329,8 +327,8 @@ npm run previews # rebuild the live template previews only
 npm run build    # zips the templates, then builds
 ```
 
-No configuration is needed to run locally. The database is created at
-`./data/store.db` on first boot and checkout runs in simulation mode, so you
+Enable Firebase Email/Password authentication to sign in locally. The database is created at
+`./data/store.db` on first boot and checkout requires configured Stripe keys, so you
 can register, buy and download immediately.
 
 ## Deploying
@@ -349,8 +347,7 @@ can register, buy and download immediately.
    add a webhook to `https://yourdomain/api/webhook/stripe` for
    `checkout.session.completed`, and set `STRIPE_WEBHOOK_SECRET`.
 
-Until Stripe keys are set, checkout completes instantly and orders are
-labelled "simulated" in the order history.
+Checkout is unavailable until both Stripe keys are configured.
 
 ## Adding a template
 
@@ -373,7 +370,7 @@ app/
   api/
     auth/{register,login,logout,forgot,reset}/
     cart/                    server-priced cart
-    checkout/                Stripe or simulation
+    checkout/                verified Stripe payment
     download/[slug]/         ownership-gated zip delivery
     reviews/                 verified-buyer reviews
     webhook/stripe/          signature-verified fulfilment
@@ -413,3 +410,11 @@ tests/{store,accounts}.test.js
   low volume; add one if it gets abused.
 - **Set `ADMIN_EMAILS`** or `/admin` is unreachable, by design.
 - Prices are a starting point, not a researched position. Test them.
+
+## Firebase authentication and verified checkout
+
+Sign-in and password reset now use Firebase Authentication. Enable Email/Password in the Firebase console. FIREBASE_API_KEY or NEXT_PUBLIC_FIREBASE_API_KEY selects the web key; the supplied megan-74585 key is the fallback. Firebase sends reset emails directly. Its hosted reset page works, or configure the email action URL to /reset for the custom page.
+
+The Realtime Database and libSQL backends are both retained. Firebase RTDB still needs FIREBASE_SERVICE_ACCOUNT plus FIREBASE_DATABASE_URL. Firebase Auth alone does not need a service-account key. Existing buyers can link their Firebase account using their old store password or a verified Firebase email, preserving purchases.
+
+Checkout requires STRIPE_SECRET_KEY (including restricted rk_ keys with Checkout Sessions Write access) and STRIPE_WEBHOOK_SECRET. Add /api/webhook/stripe for checkout.session.completed and checkout.session.async_payment_succeeded. Unpaid sessions never grant downloads. The total, currency, and order reference must match. Fulfilment is transactional in both data backends and preserves items added during checkout. The return page checks actual order status. Missing credentials retain the cart and return an unavailable message.

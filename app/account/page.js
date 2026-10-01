@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
 import { currentUser } from "@/lib/auth";
-import { ownedSlugs, ordersFor } from "@/lib/store";
+import { ownedSlugs, ordersFor, orderById } from "@/lib/store";
 import { TEMPLATES, BUNDLE, bySlug, money } from "@/lib/catalog";
 
 export const metadata = { title: "Your library" };
@@ -18,6 +18,8 @@ export default async function AccountPage({ searchParams }) {
     ordersFor(user.id),
   ]);
 
+  const returnedOrder = justOrdered ? await orderById(justOrdered, user.id) : null;
+
   const library = TEMPLATES.filter((t) => owned.has(t.slug));
   const hasAll = library.length === TEMPLATES.length;
 
@@ -25,10 +27,12 @@ export default async function AccountPage({ searchParams }) {
     <>
       <Masthead />
       <main className="mx-auto w-full max-w-5xl px-6 py-14">
-        {justOrdered && (
+        {returnedOrder && (
           <div className="mb-8 rounded-2xl border border-accent/25 bg-accent/10 px-5 py-4">
             <p className="text-[14px] font-medium text-accent">
-              Payment complete — your downloads are ready below.
+              {returnedOrder.status === "paid"
+                ? "Payment complete — your downloads are ready below."
+                : "Waiting for payment confirmation. Refresh shortly to see your downloads."}
             </p>
             <p className="mt-1 text-[12.5px] text-accent/80">
               Order {String(justOrdered).slice(0, 8)}

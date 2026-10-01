@@ -76,7 +76,10 @@ class FakeRef {
 
   async transaction(fn) {
     const next = fn(clone(readAt(this.store.data, this.path)));
-    if (next !== undefined) writeAt(this.store.data, this.path, next);
+    if (next !== undefined) {
+      if (!parts(this.path).length) this.store.data = clone(next) || {};
+      else writeAt(this.store.data, this.path, next);
+    }
     return { committed: next !== undefined };
   }
 }

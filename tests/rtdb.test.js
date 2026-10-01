@@ -292,3 +292,34 @@ describe("rtdb: selection", () => {
     assert.equal(backendMod.backendName(), "rtdb");
   });
 });
+
+
+test("rtdb: payment preserves items added after checkout starts", async () => {
+  const user = await newUser();
+  await store.addToCart(user.id, "quill-journal");
+  const order = await store.createOrder(user.id, "stripe");
+  await store.addToCart(user.id, "ember-table");
+  await store.fulfillOrder(order.id);
+  assert.deepEqual((await store.getCart(user.id)).items.map((i) => i.slug), ["ember-table"]);
+});
+
+test("rtdb: Firebase linking preserves purchases only with account proof", async () => {
+  const {syncFirebaseAccount} = await import("../lib/firebase-account.js");
+  const user = await newUser();
+  await buy(user.id, "helix-ai");
+  const identity = {localId: "auth-uid", email: user.email, emailVerified: false};
+  await assert.rejects(() => syncFirebaseAccount(identity, "wrong-password"));
+  const linked = await syncFirebaseAccount(identity, "initial-password");
+  assert.equal(linked.id, user.id);
+  assert.ok(await store.owns(linked.id, "helix-ai"));
+  assert.equal((await syncFirebaseAccount(identity, "new-password")).id, user.id);
+  await assert.rejects(() => syncFirebaseAccount({...identity, localId: "other-uid", emailVerified: true}, "initial-password"));
+});
+
+test("rtdb: Firebase registration does not store the user's password", async () => {
+  const {syncFirebaseAccount} = await import("../lib/firebase-account.js");
+  const user = await syncFirebaseAccount({localId: "new-auth-uid", email: "newauth@example.com"}, "secret-password");
+  const found = await accounts.findUserByEmail(user.email);
+  assert.equal(found.password, "firebase-managed");
+  assert.equal(found.firebaseUid, "new-auth-uid");
+});

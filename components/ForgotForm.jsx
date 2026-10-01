@@ -14,6 +14,7 @@ export default function ForgotForm() {
     setBusy(true);
     setError(null);
 
+    try {
     const res = await fetch("/api/auth/forgot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -24,6 +25,8 @@ export default function ForgotForm() {
 
     if (!res.ok) return setError(data.error || "Something went wrong.");
     setSent(data.message);
+    } catch { setError("Unable to connect. Please try again."); }
+    finally { setBusy(false); }
   }
 
   if (sent) {
@@ -32,7 +35,7 @@ export default function ForgotForm() {
         <h1 className="text-[26px] tracking-[-0.02em]">Check your inbox</h1>
         <p className="mt-3 text-[14px] leading-relaxed text-muted">{sent}</p>
         <p className="mt-2 text-[13px] text-faint">
-          The link is valid for one hour.
+          Use the link in your Firebase password-reset email.
         </p>
         <Link
           href="/login"

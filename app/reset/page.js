@@ -1,15 +1,20 @@
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
 import ResetForm from "@/components/ResetForm";
-import { checkPasswordReset } from "@/lib/accounts";
+import { firebaseAuth } from "@/lib/firebase";
 
 export const metadata = { title: "Choose a new password" };
 
 export default async function ResetPage({ searchParams }) {
-  const { token } = await searchParams;
+  const { oobCode, token: legacyToken } = await searchParams;
+  const token = oobCode || legacyToken;
   // Validated on the server so an expired link shows the right screen
   // immediately rather than after a failed submit.
-  const valid = Boolean(await checkPasswordReset(token));
+  let valid = false;
+  if (token) {
+    try { await firebaseAuth("resetPassword", { oobCode: token }); valid = true; }
+    catch { /* An invalid or expired code shows the request-new-link screen. */ }
+  }
 
   return (
     <>

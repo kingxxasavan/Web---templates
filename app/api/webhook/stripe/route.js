@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fulfillOrder, sendReceipt } from "@/lib/store";
+import { fulfillStripeSession } from "@/lib/payments";
 
 /**
  * Fulfilment happens here rather than on the success redirect, because a
@@ -33,15 +33,11 @@ export async function POST(request) {
     );
   }
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const orderId = session.metadata?.orderId || session.client_reference_id;
-    if (orderId) {
-      const result = await fulfillOrder(orderId, session.payment_intent ?? session.id);
-      // Only on the first fulfilment, so a replayed webhook cannot re-send.
-      if (!result.alreadyPaid) {
-        await sendReceipt(orderId, new URL(request.url).origin);
-      }
+  if (["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type)) {
+    try { await fulfillStripeSession(event.data.object, new URL(request.url).origin); }
+    catch (error) {
+      console.error("Payment fulfilment failed", error.message);
+      return NextResponse.json({ error: "Payment processing failed; please retry." }, { status: 500 });
     }
   }
 

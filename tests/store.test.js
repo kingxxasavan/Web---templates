@@ -12,8 +12,9 @@ const catalog = await import("../lib/catalog.js");
 const store = await import("../lib/store.js");
 const password = await import("../lib/password.js");
 const { run } = await import("../lib/db.js");
+const { backend } = await import("../lib/backend.js");
 
-const { TEMPLATES, BUNDLE, TIERS, priceOfSlug, isSellableSlug, money } = catalog;
+const { TEMPLATES, CATALOG, BUNDLE, TIERS, MADE_FOR_YOU, priceOfSlug, isSellableSlug, isOwnableSlug, money } = catalog;
 
 let userId = 0;
 async function newUser() {
@@ -25,6 +26,14 @@ async function newUser() {
   return id;
 }
 
+// The all-access bundle is no longer sold, but orders for it still exist and
+// must keep granting everything. Create one the way checkout used to.
+async function legacyBundleOrder(user, provider = "test") {
+  return backend().createOrder(user, provider, BUNDLE.priceCents, [
+    { slug: BUNDLE.slug, name: BUNDLE.name, tagline: "", priceCents: BUNDLE.priceCents },
+  ]);
+}
+
 describe("catalogue", () => {
   test("every template sits in a known tier", () => {
     for (const t of TEMPLATES) {
@@ -32,15 +41,19 @@ describe("catalogue", () => {
     }
   });
 
-  test("individual tiers are $5, $10 and $15, with the $35 bundle", () => {
+  test("templates are $5, $10 or $15, and a custom build is $25", () => {
     assert.equal(TIERS.starter.priceCents, 500);
     assert.equal(TIERS.pro.priceCents, 1000);
     assert.equal(TIERS.premium.priceCents, 1500);
-    assert.equal(BUNDLE.priceCents, 3500);
+    assert.equal(MADE_FOR_YOU.priceCents, 2500);
   });
 
-  test("the bundle undercuts buying everything separately", () => {
-    assert.ok(catalog.individualTotal() > BUNDLE.priceCents);
+  test("retired templates leave the catalogue but stay ownable", () => {
+    for (const t of TEMPLATES.filter((t) => t.retired)) {
+      assert.ok(!CATALOG.includes(t));
+      assert.ok(!isSellableSlug(t.slug));
+      assert.ok(isOwnableSlug(t.slug));
+    }
   });
 
   test("slugs are unique", () => {
@@ -50,14 +63,15 @@ describe("catalogue", () => {
 
   test("only catalogue slugs are sellable", () => {
     assert.ok(isSellableSlug("vertex-launch"));
-    assert.ok(isSellableSlug(BUNDLE.slug));
+    assert.ok(!isSellableSlug(BUNDLE.slug));
+    assert.ok(isOwnableSlug(BUNDLE.slug));
     assert.ok(!isSellableSlug("../../etc/passwd"));
     assert.ok(!isSellableSlug("not-a-template"));
   });
 
   test("money renders whole dollars without decimals", () => {
     assert.equal(money(500), "$5");
-    assert.equal(money(3500), "$35");
+    assert.equal(money(2500), "$25");
     assert.equal(money(1250), "$12.50");
   });
 });
@@ -92,16 +106,9 @@ describe("cart pricing", () => {
     assert.equal(cart.items.length, 2);
   });
 
-  test("the bundle absorbs individual items so nothing is paid for twice", async () => {
+  test("the retired bundle cannot be added to a cart", async () => {
     const user = await newUser();
-    await store.addToCart(user, "ember-table");
-    await store.addToCart(user, "helix-ai");
-    await store.addToCart(user, BUNDLE.slug);
-
-    const cart = await store.getCart(user);
-    assert.equal(cart.items.length, 1);
-    assert.equal(cart.items[0].slug, BUNDLE.slug);
-    assert.equal(cart.subtotalCents, BUNDLE.priceCents);
+    await assert.rejects(() => store.addToCart(user, BUNDLE.slug));
   });
 
   test("an unknown slug cannot enter the cart", async () => {
@@ -113,8 +120,7 @@ describe("cart pricing", () => {
 describe("fulfilment", () => {
   test("older paid bundle buyers receive newly added designs, but pending buyers do not", async () => {
     const user = await newUser();
-    await store.addToCart(user, BUNDLE.slug);
-    const order = await store.createOrder(user, "test");
+    const order = await legacyBundleOrder(user);
     const added = TEMPLATES.find(t => t.source).slug;
     assert.equal(await store.owns(user, added), false);
     await store.fulfillOrder(order.id);
@@ -135,10 +141,9 @@ describe("fulfilment", () => {
     assert.ok(!(await store.owns(user, "ember-table")));
   });
 
-  test("buying the bundle grants every template", async () => {
+  test("a legacy bundle order grants every template", async () => {
     const user = await newUser();
-    await store.addToCart(user, BUNDLE.slug);
-    const order = await store.createOrder(user, "test");
+    const order = await legacyBundleOrder(user);
     await store.fulfillOrder(order.id);
 
     const owned = await store.ownedSlugs(user);
@@ -206,12 +211,11 @@ test("payment preserves products added after checkout began", async () => {
   assert.deepEqual((await store.getCart(user)).items.map((i) => i.slug), ["ember-table"]);
 });
 
-test("the full library cannot be charged for its bundle again", async () => {
+test("a legacy bundle owner is never charged for a template again", async () => {
   const user = await newUser();
-  await store.addToCart(user, BUNDLE.slug);
-  const order = await store.createOrder(user, "stripe");
+  const order = await legacyBundleOrder(user, "stripe");
   await store.fulfillOrder(order.id);
-  await store.addToCart(user, BUNDLE.slug);
+  await store.addToCart(user, CATALOG[0].slug);
   assert.equal((await store.getCart(user)).items.length, 0);
 });
 

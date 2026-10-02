@@ -3,8 +3,14 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 import FirebaseAnalytics from "@/components/FirebaseAnalytics";
+import BriefWizardRoot from "@/components/BriefWizard";
 import { SITE } from "@/lib/site";
-import { TEMPLATES } from "@/lib/catalog";
+import { CATALOG, MADE_FOR_YOU, money } from "@/lib/catalog";
+
+// What the brief wizard needs to recommend templates, kept small.
+const WIZARD_TEMPLATES = CATALOG.map(({ slug, name, tagline, category, tier, audience, keywords, livePreview, featured }) => ({
+  slug, name, tagline, category, tier, audience, keywords, livePreview: Boolean(livePreview), featured: Boolean(featured),
+}));
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -16,7 +22,7 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const DESCRIPTION = `${TEMPLATES.length} website templates for online stores, SaaS products, agencies, restaurants, local businesses and portfolios. Preview every page live, pay $5 to $15 once, and launch this afternoon.`;
+const DESCRIPTION = `${CATALOG.length} website templates for online stores, SaaS products, agencies, restaurants, local businesses and portfolios. Preview every page live, pay $5 to $15 once, and launch this afternoon.`;
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -69,6 +75,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <BriefWizardRoot templates={WIZARD_TEMPLATES} price={money(MADE_FOR_YOU.priceCents)} delivery={MADE_FOR_YOU.delivery} />
         {/* Cookie-less visitor and performance data, collected by Vercel.
             Both no-op outside a Vercel deployment. */}
         <Analytics />

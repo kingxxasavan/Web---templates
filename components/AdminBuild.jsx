@@ -58,7 +58,26 @@ export default function AdminBuild({ build, templateName }) {
 
       <div className="grid grid-cols-1 gap-6 border-t border-line p-5 lg:grid-cols-[1.4fr_1fr]">
         <dl className="flex flex-col gap-3 text-[13.5px]">
-          {FIELDS.filter(([k]) => build[k]).map(([k, label]) => (
+          {build.brief && (
+            <div>
+              <dt className="text-[12px] font-semibold uppercase tracking-[0.08em] text-faint">Brief</dt>
+              <dd className="mt-1 whitespace-pre-wrap rounded-xl bg-sunk p-3 font-mono text-[12.5px] leading-relaxed text-body">{build.brief}</dd>
+            </div>
+          )}
+          {build.palette && (
+            <div>
+              <dt className="text-[12px] font-semibold uppercase tracking-[0.08em] text-faint">Palette</dt>
+              <dd className="mt-1 flex gap-1.5">
+                {build.palette.map((c) => (
+                  <span key={c} className="flex flex-col items-center gap-1 text-[11px] text-muted">
+                    <span className="h-8 w-12 rounded-md border border-line" style={{ background: c }} />
+                    {c}
+                  </span>
+                ))}
+              </dd>
+            </div>
+          )}
+          {!build.brief && FIELDS.filter(([k]) => build[k]).map(([k, label]) => (
             <div key={k}>
               <dt className="text-[12px] font-semibold uppercase tracking-[0.08em] text-faint">{label}</dt>
               <dd className="mt-1 whitespace-pre-line leading-relaxed text-body">{build[k]}</dd>

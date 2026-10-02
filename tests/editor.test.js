@@ -17,23 +17,19 @@ import { TEMPLATES, bySlug, themeFileOf } from "../lib/catalog.js";
 
 const root = path.resolve(import.meta.dirname, "..");
 const pro = TEMPLATES.find((t) => t.tier === "pro" && t.livePreview);
-const starter = TEMPLATES.find((t) => t.tier === "starter");
+const starter = TEMPLATES.find((t) => t.tier === "starter" && t.livePreview);
 const helix = bySlug("helix-ai");
 
 describe("who can use the editor", () => {
-  test("owners of Pro templates", () => {
+  test("owners of a template, at any price", () => {
     assert.ok(editorAccess(pro, { owned: new Set([pro.slug]) }).ok);
+    assert.ok(editorAccess(starter, { owned: new Set([starter.slug]) }).ok);
   });
   test("not people who don't own the template", () => {
     assert.equal(editorAccess(pro, { owned: new Set() }).reason, "not-owned");
   });
-  test("Starter templates need All-access", () => {
-    const owned = new Set([starter.slug]);
-    assert.equal(editorAccess(starter, { owned }).reason, "needs-all-access");
-    assert.ok(editorAccess(starter, { owned, allAccess: true }).ok);
-  });
   test("never Helix, which is edited in code", () => {
-    assert.equal(editorAccess(helix, { owned: new Set([helix.slug]), allAccess: true }).reason, "not-editable");
+    assert.equal(editorAccess(helix, { owned: new Set([helix.slug]) }).reason, "not-editable");
   });
 });
 

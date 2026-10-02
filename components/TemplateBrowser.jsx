@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import TemplateCard from "./TemplateCard";
 import { Icon } from "./icons";
-import { CATEGORIES, TEMPLATES, TIERS, money, priceOf } from "@/lib/catalog";
+import { openBrief } from "./BriefWizard";
+import { CATEGORIES, CATALOG, TIERS, money, priceOf } from "@/lib/catalog";
 
 const SORTS = {
   featured: { label: "Featured", fn: () => 0 },
@@ -22,7 +23,7 @@ export default function TemplateBrowser({ owned = [], ratings = {}, initialCateg
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return TEMPLATES.filter((t) => category === "All" || t.category === category)
+    return CATALOG.filter((t) => category === "All" || t.category === category)
       .filter((t) => tier === "all" || t.tier === tier)
       .filter(
         (t) =>
@@ -81,7 +82,7 @@ export default function TemplateBrowser({ owned = [], ratings = {}, initialCateg
 
         <div className="flex flex-wrap gap-2" role="group" aria-label="Category">
           {["All", ...CATEGORIES].map((c) => {
-            const n = c === "All" ? TEMPLATES.length : TEMPLATES.filter((t) => t.category === c).length;
+            const n = c === "All" ? CATALOG.length : CATALOG.filter((t) => t.category === c).length;
             return (
               <button
                 key={c}
@@ -120,11 +121,11 @@ export default function TemplateBrowser({ owned = [], ratings = {}, initialCateg
         <div className="card mt-4 rounded-2xl p-10 text-center">
           <p className="text-[15px] font-medium">Nothing matches that yet.</p>
           <p className="mt-1 text-[14px] text-muted">
-            Try another search, or tell us what you need and we may build it next.
+            Try another search, or describe what you need and we&rsquo;ll build it for you in under two weeks.
           </p>
           <div className="mt-5 flex justify-center gap-2">
             <button onClick={reset} className="btn btn-secondary btn-sm">Clear filters</button>
-            <a href="/contact?topic=request" className="btn btn-primary btn-sm">Request a template</a>
+            <button type="button" onClick={() => openBrief()} className="btn btn-primary btn-sm">Get one made for you</button>
           </div>
         </div>
       )}

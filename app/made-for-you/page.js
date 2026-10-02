@@ -1,97 +1,156 @@
 import Link from "next/link";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
-import MadeForYouForm from "@/components/MadeForYouForm";
+import { BriefButton } from "@/components/BriefWizard";
 import { Icon } from "@/components/icons";
 import { Reveal, Check } from "@/components/store";
-import { PageHeader, SectionHeading, Steps, Faq } from "@/components/sections";
-import { currentUser } from "@/lib/auth";
-import { openBuildCount, BUILDABLE } from "@/lib/builds";
-import { MADE_FOR_YOU, bySlug, money } from "@/lib/catalog";
+import { PageHeader, SectionHeading, Faq } from "@/components/sections";
+import { openBuildCount } from "@/lib/builds";
+import { MADE_FOR_YOU, money } from "@/lib/catalog";
+import { PALETTES } from "@/lib/brief";
 import { SITE } from "@/lib/site";
 
 const price = money(MADE_FOR_YOU.priceCents);
 
 export const metadata = {
-  title: "Made for you — your website set up in 3 days",
-  description: `Send us a short brief and we'll set up a Foundry template for your business — your words, colours, pages and links — within ${MADE_FOR_YOU.days} days, for ${price}.`,
+  title: `Made for you — a website built to your brief in ${MADE_FOR_YOU.delivery}`,
+  description: `Can't find the right template? Answer a few questions and we'll build a website to your liking in ${MADE_FOR_YOU.delivery}, for ${price}.`,
 };
 
-const INCLUDED = [
-  "The template you choose, in your library to keep",
-  "Your business name, words and contact details on every page",
-  "Your colours and fonts",
-  "Your pages and sections, rearranged to suit you",
-  "Links to your socials, booking or shop",
-  "Page titles and descriptions written for Google",
-  "The contact form ready to send messages to your inbox",
-  "One round of tweaks after delivery",
+const QUESTIONS = [
+  { icon: "layers", title: "Your business", body: "What kind of business it is, its name and what you do in one line." },
+  { icon: "eye", title: "A template you like", body: "We show the five that suit you best. Pick one for inspiration, or let us choose." },
+  { icon: "pencil", title: "What it should say", body: "Describe the business, your customers and how the site should feel." },
+  { icon: "book", title: "Your pages", body: "How many pages, and what goes on each. We suggest the usual ones for your kind of business." },
+  { icon: "sparkle", title: "Your colours", body: "Pick a palette and fine-tune it, with a live preview of how your site will look." },
+  { icon: "check", title: "Your brief", body: "Your answers become one clear brief, like a prompt for your website. Check it, pay, done." },
 ];
 
-const STEPS = [
-  { title: "Send your brief", body: "Tell us about your business and paste in any words you already have. Five minutes is plenty." },
-  { title: `Pay ${price} once`, body: "That's everything, template included. No deposit, no hourly rate, no surprises." },
-  { title: `We build it in ${MADE_FOR_YOU.days} days`, body: "You can follow progress in your library, and we email you the moment it's ready." },
-  { title: "Launch it", body: "Download the finished site and put it online with one of our hosting guides, or ask us to help." },
+const INCLUDED = [
+  "A website built to your brief, not just a reskin",
+  "Your business name, words and contact details on every page",
+  "The pages you asked for, in your colours",
+  "Links to your socials, booking or shop",
+  "Page titles and descriptions written for Google",
+  "Contact forms ready to send to your inbox",
+  "The template it's inspired by, in your library",
+  "One round of changes after delivery",
 ];
 
 const FAQ = [
   {
-    q: "Is this a completely custom design?",
-    a: "It's one of our templates, set up and personalised for your business: your words, colours, fonts, pages and links. That's what keeps it fast and affordable. If you need something designed from scratch, send us a message and we'll talk it through.",
+    q: "How is this different from buying a template?",
+    a: "A template is yours to set up. Made for you is for when nothing fits quite right, or you'd rather not do it yourself: you describe what you need and we build it, using our templates as the starting point so it stays fast and affordable.",
   },
   {
-    q: `What if I don't have any text yet?`,
-    a: "Tell us what your business does and we'll write simple, clear placeholder copy you can change whenever you like.",
+    q: `When does the ${MADE_FOR_YOU.days}-day clock start?`,
+    a: "When your payment goes through. The due date shows in your library straight away, and most sites are delivered sooner.",
   },
   {
-    q: `When do the ${MADE_FOR_YOU.days} days start?`,
-    a: `When your payment goes through. The due date is shown in your library straight away.`,
+    q: "What if I don't have any words or photos yet?",
+    a: "Tell us what your business does and we'll write clear placeholder copy you can change whenever you like. Where you haven't got photos, we use tasteful placeholders that show the size each image should be.",
   },
   {
     q: "Why is there sometimes a waiting list?",
-    a: `We only take on ${MADE_FOR_YOU.maxOpen} builds at a time, so every one we accept can be delivered on time. If we're full, leave a message and we'll tell you as soon as a slot opens.`,
+    a: `We take ${MADE_FOR_YOU.maxOpen} builds at a time, so every one we accept is delivered on time. If we're full, your brief stays saved and you can send it when a slot opens.`,
   },
   {
-    q: "Can I still edit it myself afterwards?",
-    a: "Yes. You get the full source, and the template is added to your library, so you can change anything later, by hand or with the online editor where your plan includes it.",
+    q: "Can I edit it myself afterwards?",
+    a: "Yes. You get the full site files and it works with our online editor, so you can change any words, colours or fonts later.",
   },
   {
     q: "What if I'm not happy?",
-    a: `You get one round of tweaks included, and our ${SITE.refundDays}-day money-back guarantee applies here too.`,
+    a: `One round of changes is included, and our ${SITE.refundDays}-day money-back guarantee applies here too.`,
   },
 ];
 
-export default async function MadeForYouPage({ searchParams }) {
-  const { template } = await searchParams;
-  const [user, open] = await Promise.all([currentUser(), openBuildCount()]);
+export default async function MadeForYouPage() {
+  const open = await openBuildCount();
   const slotsLeft = Math.max(MADE_FOR_YOU.maxOpen - open, 0);
-  const preselect = bySlug(template)?.livePreview ? template : "";
 
   return (
     <>
       <Masthead />
-      <PageHeader eyebrow="Made for you" title="Your website, set up for you" accent={`in ${MADE_FOR_YOU.days} days.`}>
-        Don&rsquo;t want to edit it yourself? Send us a short brief and we&rsquo;ll set a
-        template up for your business, with your words, colours, pages and links, for{" "}
-        <strong className="text-ink">{price}</strong>, template included.
+      <PageHeader eyebrow="Made for you" title="Can't find the right template?" accent="We'll build yours.">
+        Answer six quick questions about your business, the look you like and the pages you
+        need. We turn it into a brief and build your site in{" "}
+        <strong className="text-ink">{MADE_FOR_YOU.delivery}</strong>, for{" "}
+        <strong className="text-ink">{price}</strong>.
         <span className="mt-6 flex flex-wrap gap-3">
-          <a href="#brief" className="btn btn-lg btn-primary">
+          <BriefButton className="btn btn-lg btn-primary">
             Start your brief <Icon name="arrow" size={16} />
-          </a>
+          </BriefButton>
           <span className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 text-[13.5px] text-muted">
             <span className={`h-2 w-2 rounded-full ${slotsLeft ? "bg-good" : "bg-danger"}`} />
-            {slotsLeft
-              ? `${slotsLeft} of ${MADE_FOR_YOU.maxOpen} build slots open`
-              : "Fully booked right now"}
+            {slotsLeft ? `${slotsLeft} of ${MADE_FOR_YOU.maxOpen} build slots open` : "Fully booked right now"}
           </span>
         </span>
       </PageHeader>
 
+      {/* the six questions */}
+      <section className="shell py-16 md:py-20">
+        <SectionHeading eyebrow="How it works" title="Like writing a prompt, but for your website." center>
+          Each answer adds a line to your brief. By the end you&rsquo;ve described exactly what
+          you want, with a preview of your colours.
+        </SectionHeading>
+        <ol className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {QUESTIONS.map((q, i) => (
+            <Reveal key={q.title} delay={(i % 3) * 0.05} className="h-full">
+              <li className="card h-full rounded-2xl p-6">
+                <span className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                    <Icon name={q.icon} size={19} />
+                  </span>
+                  <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-faint">Step {i + 1}</span>
+                </span>
+                <h3 className="mt-4 text-[17px] font-semibold">{q.title}</h3>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-muted">{q.body}</p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </section>
+
+      {/* sample brief */}
+      <section className="border-y border-line bg-card">
+        <div className="shell grid grid-cols-1 items-center gap-10 py-16 md:py-20 lg:grid-cols-2">
+          <SectionHeading eyebrow="What we receive" title="A brief our designers can build from.">
+            No back-and-forth emails to work out what you meant. Everything that matters is
+            in one place before we start.
+          </SectionHeading>
+          <Reveal>
+            <div className="rounded-2xl border border-line bg-paper p-5">
+              <pre className="whitespace-pre-wrap font-mono text-[12.5px] leading-relaxed text-body">{`Build a 5-page website for Ridgeline Coffee, a online store.
+In one line: Small-batch coffee, roasted on Tuesday.
+Take inspiration from the Ridgeline Coffee template.
+
+About the business: We roast single-origin coffee and sell
+it online and at two markets.
+Tone: warm, premium.
+
+Pages:
+1. Home — this week's coffees and a subscription offer
+2. Shop — every coffee with tasting notes
+3. Subscriptions — how it works and prices
+4. Our story — the farms we buy from
+5. Contact — markets, wholesale and questions
+
+Colours: brand #6b3f2a, accent #d9a441,
+background #faf6f0, text #2a1d16.`}</pre>
+              <div className="mt-4 flex h-8 overflow-hidden rounded-lg">
+                {PALETTES.espresso.colors.map((c) => (
+                  <span key={c} className="flex-1" style={{ background: c }} />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="shell grid grid-cols-1 gap-12 py-16 md:py-20 lg:grid-cols-[1fr_1.1fr]">
-        <SectionHeading eyebrow="What you get" title={`Everything set up for ${price}.`}>
-          Agencies often charge hundreds for this. We can do it for the price of a template
-          because we built the templates and know every line.
+        <SectionHeading eyebrow="What you get" title={`Everything built for ${price}.`}>
+          Agencies charge hundreds for a site like this. We start from our own templates, which
+          is how we keep it to {price} and {MADE_FOR_YOU.delivery}.
         </SectionHeading>
         <Reveal>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -101,55 +160,18 @@ export default async function MadeForYouPage({ searchParams }) {
               </li>
             ))}
           </ul>
+          <BriefButton className="btn btn-lg btn-accent mt-6">
+            Start your brief <Icon name="arrow" size={16} />
+          </BriefButton>
         </Reveal>
-      </section>
-
-      <section className="border-y border-line bg-card">
-        <div className="shell py-16 md:py-20">
-          <SectionHeading eyebrow="How it works" title="Four steps, and three of them are ours." center />
-          <div className="mt-12">
-            <Steps steps={STEPS} />
-          </div>
-        </div>
-      </section>
-
-      <section id="brief" className="shell grid grid-cols-1 gap-10 py-16 md:py-20 lg:grid-cols-[1fr_1.6fr]">
-        <div>
-          <SectionHeading eyebrow="Your brief" title="Tell us about your business.">
-            Only three fields are required. The more you give us, the closer the first
-            version will be.
-          </SectionHeading>
-          <div className="mt-8 rounded-2xl border border-line bg-sunk p-5 text-[13.5px] leading-relaxed text-muted">
-            <p className="font-semibold text-ink">Not sure which template?</p>
-            <p className="mt-1">
-              Choose &ldquo;Help me choose&rdquo; and we&rsquo;ll pick the best fit, or{" "}
-              <Link href="/templates" className="font-medium text-accent hover:underline">browse them all</Link> first.
-            </p>
-          </div>
-        </div>
-        {slotsLeft ? (
-          <MadeForYouForm
-            templates={BUILDABLE.map(({ slug, name, tagline }) => ({ slug, name, tagline }))}
-            defaultEmail={user?.email ?? ""}
-            defaultTemplate={preselect}
-            price={price}
-            open
-          />
-        ) : (
-          <div className="card rounded-2xl p-8">
-            <p className="text-[18px] font-semibold">We&rsquo;re fully booked right now.</p>
-            <p className="mt-2 text-[14.5px] leading-relaxed text-muted">
-              We only take {MADE_FOR_YOU.maxOpen} builds at a time so every one ships in{" "}
-              {MADE_FOR_YOU.days} days. Leave your details and we&rsquo;ll email you as soon as a slot opens.
-            </p>
-            <Link href="/contact?topic=question" className="btn btn-primary mt-6">Join the waiting list</Link>
-          </div>
-        )}
       </section>
 
       <section className="border-t border-line bg-card">
         <div className="shell grid grid-cols-1 gap-10 py-16 md:py-20 lg:grid-cols-[1fr_1.6fr]">
-          <SectionHeading eyebrow="Questions" title="About Made for you." />
+          <SectionHeading eyebrow="Questions" title="About Made for you.">
+            Something else?{" "}
+            <Link href="/contact" className="font-medium text-accent hover:underline">Ask us</Link>.
+          </SectionHeading>
           <Faq items={FAQ} />
         </div>
       </section>

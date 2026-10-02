@@ -20,7 +20,7 @@ export async function POST(request) {
       {
         error: "Create a free account to send your brief — what you've written is saved.",
         needsAuth: true,
-        redirect: "/register?next=%2Fmade-for-you%23brief",
+        redirect: "/register?next=%2Fmade-for-you%3Fstart%3D1",
       },
       { status: 401 }
     );
@@ -38,7 +38,7 @@ export async function POST(request) {
 
   if (!(await hasCapacity())) {
     return NextResponse.json(
-      { error: "We're fully booked right now, so we can't promise 3 days. Leave a message on the contact page and we'll tell you the moment a slot opens." },
+      { error: "We're fully booked right now, so we can't promise delivery in under two weeks. Your brief is saved; leave a message on the contact page and we'll tell you the moment a slot opens." },
       { status: 409 }
     );
   }
@@ -49,7 +49,7 @@ export async function POST(request) {
     await linkOrder(buildId, order.id);
     const redirect = await startStripeCheckout(order, user, new URL(request.url).origin, {
       success: "/account?order=" + order.id + "#builds",
-      cancel: "/made-for-you?cancelled=1#brief",
+      cancel: "/made-for-you?cancelled=1&start=1",
     });
     return NextResponse.json({ ok: true, redirect });
   } catch (err) {

@@ -63,8 +63,6 @@ export default function CartView({ initialCart, signedIn, refundDays }) {
     );
   }
 
-  const { upgrade } = cart;
-
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]">
       <div className="flex flex-col gap-3">
@@ -91,23 +89,6 @@ export default function CartView({ initialCart, signedIn, refundDays }) {
           ))}
         </ul>
 
-        {upgrade && (
-          <div className="rounded-2xl border border-accent/25 bg-accent-soft p-5">
-            <p className="text-[15px] font-semibold text-accent-deep">
-              {upgrade.differenceCents <= 0
-                ? `The all-access bundle is cheaper: ${money(upgrade.bundlePriceCents)} for everything.`
-                : `For ${money(upgrade.differenceCents)} more, get every template.`}
-            </p>
-            <p className="mt-1 text-[13.5px] leading-relaxed text-accent-deep/80">
-              The bundle adds {upgrade.extraTemplates} more template
-              {upgrade.extraTemplates === 1 ? "" : "s"}, plus every one we release
-              later, and the online editor on all of them.
-            </p>
-            <button onClick={() => update({ slug: "everything", action: "add" })} className="btn btn-sm btn-accent mt-4">
-              Switch to the bundle — {money(upgrade.bundlePriceCents)}
-            </button>
-          </div>
-        )}
       </div>
 
       <aside className="lg:sticky lg:top-24 lg:self-start">

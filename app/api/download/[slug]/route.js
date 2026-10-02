@@ -3,7 +3,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import { currentUser } from "@/lib/auth";
 import { owns, ownedSlugs } from "@/lib/store";
-import { BUNDLE, TEMPLATES, isSellableSlug } from "@/lib/catalog";
+import { BUNDLE, TEMPLATES, isOwnableSlug } from "@/lib/catalog";
 
 import { downloadStream } from "@/lib/download-stream";
 
@@ -20,7 +20,7 @@ export async function GET(_request, { params }) {
 
   // Validated against the catalogue before it ever touches a path, which
   // rules out traversal via a crafted slug.
-  if (!isSellableSlug(slug)) {
+  if (!isOwnableSlug(slug)) {
     return NextResponse.json({ error: "Unknown product." }, { status: 404 });
   }
 

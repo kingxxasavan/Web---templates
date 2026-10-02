@@ -15,8 +15,7 @@ import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
 import { libraryFor } from "@/lib/store";
 import { editorAccess } from "@/lib/editor-core";
-import { TEMPLATES, TIERS, BUNDLE, MADE_FOR_YOU, bySlug, money, pageCount, isOpenSource } from "@/lib/catalog";
-import { bundlePriceFor } from "@/lib/pricing";
+import { CATALOG, TIERS, MADE_FOR_YOU, bySlug, money, pageCount, isOpenSource } from "@/lib/catalog";
 import { SITE } from "@/lib/site";
 import { reviewsFor, ratingFor, myReview } from "@/lib/reviews";
 
@@ -63,15 +62,14 @@ export default async function TemplatePage({ params }) {
   const canEdit = editorAccess(t, library).ok;
   const mine = user && isOwned ? await myReview(user.id, t.slug) : null;
   const price = TIERS[t.tier].priceCents;
-  const bundlePrice = bundlePriceFor(owned);
   const src = isOpenSource(t) ? t.source : null;
   const licence = src
     ? `${src.license}${src.attributionRequired ? ", credit the author" : ", keep the notice"}`
     : "Commercial, no attribution";
   // Same category first, then anything else, so "more like this" means it.
   const others = [
-    ...TEMPLATES.filter((o) => o.slug !== t.slug && o.category === t.category),
-    ...TEMPLATES.filter((o) => o.slug !== t.slug && o.category !== t.category),
+    ...CATALOG.filter((o) => o.slug !== t.slug && o.category === t.category),
+    ...CATALOG.filter((o) => o.slug !== t.slug && o.category !== t.category),
   ].slice(0, 3);
 
   return (
@@ -215,7 +213,7 @@ export default async function TemplatePage({ params }) {
                     ["Stack", t.stack.join(", ")],
                     [
                       "Online editor",
-                      !t.livePreview ? "Edited in code" : t.tier === "starter" ? "With All-access" : "Included",
+                      !t.livePreview ? "Edited in code" : "Included",
                     ],
                     ["Licence", licence],
                   ].map(([k, v]) => (
@@ -227,37 +225,19 @@ export default async function TemplatePage({ params }) {
                 </dl>
               </div>
 
-              {!isOwned && bundlePrice !== null && (
-                <div className="mt-4 rounded-2xl border border-accent/20 bg-accent-soft p-5">
-                  <p className="text-[14px] font-semibold text-accent-deep">
-                    Or get all {TEMPLATES.length} for {money(bundlePrice)}
-                  </p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-accent-deep/80">
-                    Includes {t.name}, every future template, and the online
-                    editor on all of them.
-                  </p>
-                  <AddToCart
-                    slug={BUNDLE.slug}
-                    label={`Add the bundle — ${money(bundlePrice)}`}
-                    size="sm"
-                    className="mt-3 w-full"
-                  />
-                </div>
-              )}
-
               {t.livePreview && (
                 <Link
-                  href={`/made-for-you?template=${t.slug}#brief`}
+                  href={`/made-for-you?template=${t.slug}&start=1`}
                   className="card card-hover mt-4 flex items-start gap-3 rounded-2xl p-5"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
                     <Icon name="sparkle" size={18} />
                   </span>
                   <span>
-                    <span className="block text-[14px] font-semibold">Rather we set it up for you?</span>
+                    <span className="block text-[14px] font-semibold">Want it built to your brief?</span>
                     <span className="mt-0.5 block text-[13px] leading-relaxed text-muted">
-                      We&rsquo;ll set {t.name} up for your business in {MADE_FOR_YOU.days} days.{" "}
-                      {money(MADE_FOR_YOU.priceCents)}, template included.
+                      We&rsquo;ll build a site inspired by {t.name}, made to your liking, in{" "}
+                      {MADE_FOR_YOU.delivery}. {money(MADE_FOR_YOU.priceCents)}.
                     </span>
                   </span>
                 </Link>

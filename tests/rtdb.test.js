@@ -40,6 +40,20 @@ async function buy(userId, slug) {
   return order;
 }
 
+// The all-access bundle is no longer sold, but older orders for it must keep
+// granting everything.
+async function legacyBundleOrder(userId) {
+  return backendMod.backend().createOrder(userId, "test", BUNDLE.priceCents, [
+    { slug: BUNDLE.slug, priceCents: BUNDLE.priceCents },
+  ]);
+}
+
+async function buyLegacyBundle(userId) {
+  const order = await legacyBundleOrder(userId);
+  await store.fulfillOrder(order.id);
+  return order;
+}
+
 describe("rtdb: keys", () => {
   test("an email survives a round trip through an RTDB-safe key", () => {
     for (const email of [
@@ -110,13 +124,9 @@ describe("rtdb: cart", () => {
     );
   });
 
-  test("the bundle absorbs individual items", async () => {
+  test("the retired bundle cannot be added to a cart", async () => {
     const user = await newUser();
-    await store.addToCart(user.id, "ember-table");
-    await store.addToCart(user.id, BUNDLE.slug);
-    const cart = await store.getCart(user.id);
-    assert.equal(cart.items.length, 1);
-    assert.equal(cart.subtotalCents, BUNDLE.priceCents);
+    await assert.rejects(() => store.addToCart(user.id, BUNDLE.slug));
   });
 
   test("removing an item leaves the rest", async () => {
@@ -138,8 +148,7 @@ describe("rtdb: cart", () => {
 describe("rtdb: orders and entitlements", () => {
   test("older paid bundle buyers receive newly added designs, but pending buyers do not", async () => {
     const user = await newUser();
-    await store.addToCart(user.id, BUNDLE.slug);
-    const order = await store.createOrder(user.id, "test");
+    const order = await legacyBundleOrder(user.id);
     const added = TEMPLATES.find(t => t.source).slug;
     assert.equal(await store.owns(user.id, added), false);
     await store.fulfillOrder(order.id);
@@ -159,9 +168,9 @@ describe("rtdb: orders and entitlements", () => {
     assert.ok(!(await store.owns(user.id, "ember-table")));
   });
 
-  test("buying the bundle grants every template", async () => {
+  test("a legacy bundle order grants every template", async () => {
     const user = await newUser();
-    await buy(user.id, BUNDLE.slug);
+    await buyLegacyBundle(user.id);
     const owned = await store.ownedSlugs(user.id);
     assert.equal(owned.size, TEMPLATES.length);
   });
@@ -287,7 +296,7 @@ describe("rtdb: metrics", () => {
   test("best sellers rank by revenue", async () => {
     const a = await newUser();
     const b = await newUser();
-    await buy(a.id, BUNDLE.slug); // $35
+    await buyLegacyBundle(a.id); // $35
     await buy(b.id, "vertex-launch"); // $5
 
     const top = await metrics.topTemplates();

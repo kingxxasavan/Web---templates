@@ -16,7 +16,7 @@ export default function BuildStatus({ build }) {
         <div>
           <p className="text-[16px] font-semibold">{build.business}</p>
           <p className="mt-0.5 text-[13px] text-muted">
-            Built on {templateName(build.template)}
+            Inspired by {templateName(build.template)}
             {build.dueAt && !cancelled && build.status !== "delivered" && <> · due {date(build.dueAt)}</>}
             {build.deliveredAt && <> · delivered {date(build.deliveredAt)}</>}
           </p>

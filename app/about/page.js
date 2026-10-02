@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Icon } from "@/components/icons";
 import { Reveal } from "@/components/store";
 import { PageHeader, SectionHeading, PromiseGrid, ClosingCta } from "@/components/sections";
-import { TEMPLATES, CATEGORIES, TIERS, money, pageCount } from "@/lib/catalog";
+import { CATALOG, CATEGORIES, TIERS, money, pageCount } from "@/lib/catalog";
 
 export const metadata = {
   title: "About us",
@@ -55,7 +55,7 @@ const AUDIENCES = [
 ];
 
 export default function AboutPage() {
-  const totalPages = TEMPLATES.reduce((n, t) => n + pageCount(t), 0);
+  const totalPages = CATALOG.reduce((n, t) => n + pageCount(t), 0);
 
   return (
     <>
@@ -85,8 +85,8 @@ export default function AboutPage() {
               click through the pages yourself before spending a cent.
             </p>
             <p>
-              So that&rsquo;s what Foundry is. We would rather sell {TEMPLATES.length}{" "}
-              templates we&rsquo;re proud of than {TEMPLATES.length * 100} we
+              So that&rsquo;s what Foundry is. We would rather sell {CATALOG.length}{" "}
+              templates we&rsquo;re proud of than {CATALOG.length * 100} we
               aren&rsquo;t, and we keep prices low because the people who need
               a good website most are usually the ones just getting started.
             </p>
@@ -98,7 +98,7 @@ export default function AboutPage() {
       <section className="border-y border-line bg-card">
         <dl className="shell grid grid-cols-2 gap-8 py-12 md:grid-cols-4">
           {[
-            [TEMPLATES.length, "templates"],
+            [CATALOG.length, "templates"],
             [totalPages, "hand-built pages"],
             [CATEGORIES.length, "kinds of business covered"],
             ["$0", "to preview every page first"],

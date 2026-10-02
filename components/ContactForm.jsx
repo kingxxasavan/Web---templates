@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TEMPLATES } from "@/lib/catalog";
+import { CATALOG } from "@/lib/catalog";
 
 const TOPICS = [
   { id: "question", label: "A question before buying" },
@@ -91,7 +91,7 @@ export default function ContactForm({ defaultTopic = "question", defaultEmail = 
           <span className="text-[13px] font-medium">Which template?</span>
           <select value={form.template} onChange={set("template")} className="input">
             <option value="">Choose one</option>
-            {TEMPLATES.map((t) => (
+            {CATALOG.map((t) => (
               <option key={t.slug} value={t.name}>{t.name}</option>
             ))}
           </select>

@@ -52,7 +52,7 @@ export default function GuidesPage() {
       <ClosingCta
         title="Rather we set it up?"
         accent="Made for you."
-        body="Send us a short brief and we'll set up a template for your business in 3 days, ready to put online."
+        body="Answer six quick questions and we'll build your website in under two weeks, ready to put online."
         primary={{ href: "/made-for-you", label: "See Made for you" }}
         secondary={{ href: "/contact?topic=support", label: "Ask a question" }}
       />

@@ -5,33 +5,17 @@ import { currentUser } from "@/lib/auth";
 import { libraryFor } from "@/lib/store";
 import { loadProject } from "@/lib/editor";
 import { editorAccess } from "@/lib/editor-core";
-import { bundlePriceFor } from "@/lib/pricing";
-import { BUNDLE, TIERS, bySlug, money, themeFileOf } from "@/lib/catalog";
+import { TIERS, bySlug, money, themeFileOf } from "@/lib/catalog";
 
 export async function generateMetadata({ params }) {
   const t = bySlug((await params).slug);
   return { title: t ? `Customise ${t.name}` : "Editor", robots: { index: false } };
 }
 
-/** What the demo banner offers, depending on why the editor is locked. */
-function offerFor(template, reason, library) {
-  const bundle = money(bundlePriceFor(library.owned) ?? BUNDLE.priceCents);
-  if (reason === "needs-all-access") {
-    return {
-      note: `You own ${template.name}. All-access unlocks the editor for every template in the store.`,
-      label: `Upgrade to All-access — ${bundle}`,
-      href: "/pricing",
-    };
-  }
-  if (template.tier === "starter") {
-    return {
-      note: "Starter templates are editable with All-access, which includes every template.",
-      label: `Get All-access — ${bundle}`,
-      href: "/pricing",
-    };
-  }
+/** What the demo banner offers while the editor is locked. */
+function offerFor(template) {
   return {
-    note: `${TIERS[template.tier].name} templates include the editor.`,
+    note: `Every template includes the editor. Buy ${template.name} to save your changes and download your site.`,
     label: `Buy ${template.name} — ${money(TIERS[template.tier].priceCents)}`,
     href: `/t/${template.slug}`,
   };
@@ -71,7 +55,7 @@ export default async function EditorPage({ params }) {
       full={access.ok}
       signedIn={Boolean(user)}
       project={project}
-      offer={access.ok ? null : offerFor(template, access.reason, library)}
+      offer={access.ok ? null : offerFor(template)}
     />
   );
 }

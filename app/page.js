@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import TemplateCard from "@/components/TemplateCard";
 import TourLauncher from "@/components/TourLauncher";
 import HelixField from "@/components/HelixField";
+import { BriefButton } from "@/components/BriefWizard";
 import { Icon } from "@/components/icons";
 import { Reveal, Check } from "@/components/store";
 import {
@@ -21,13 +22,11 @@ import { tourPool, showcase } from "@/lib/tour";
 import { BUY_STEPS, FAQ, CATEGORY_INFO } from "@/lib/content";
 import { SITE } from "@/lib/site";
 import {
-  TEMPLATES,
+  CATALOG,
   TIERS,
-  BUNDLE,
   CATEGORIES,
   bySlug,
   money,
-  individualTotal,
   MADE_FOR_YOU,
 } from "@/lib/catalog";
 
@@ -88,7 +87,7 @@ export default async function Home() {
             <Reveal>
               <p className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[12.5px] font-medium text-muted shadow-[var(--shadow-card)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-good" />
-                {TEMPLATES.length} templates in {CATEGORIES.length} categories · from {money(TIERS.starter.priceCents)}
+                {CATALOG.length} templates in {CATEGORIES.length} categories · from {money(TIERS.starter.priceCents)}
               </p>
             </Reveal>
             <Reveal delay={0.05}>
@@ -101,9 +100,10 @@ export default async function Home() {
               <p className="lede mt-6 max-w-xl text-pretty">
                 Website templates made for specific businesses: online stores,
                 SaaS products, agencies, restaurants, local services and
-                portfolios. Try one live, customise it in your browser or have us
-                set it up in {MADE_FOR_YOU.days} days, for{" "}
+                portfolios. Try one live and customise it in your browser, for{" "}
                 {money(TIERS.starter.priceCents)} to {money(TIERS.premium.priceCents)}.
+                Can&rsquo;t find the right one? We&rsquo;ll build it to your brief for{" "}
+                {money(MADE_FOR_YOU.priceCents)}.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
@@ -174,7 +174,7 @@ export default async function Home() {
         <div className="border-y border-line bg-card">
           <dl className="shell grid grid-cols-2 gap-y-6 py-7 md:grid-cols-4">
             {[
-              [TEMPLATES.length, "templates"],
+              [CATALOG.length, "templates"],
               [CATEGORIES.length, "business categories"],
               [money(TIERS.starter.priceCents), "starting price, paid once"],
               ["0", "subscriptions or per-site fees"],
@@ -197,12 +197,12 @@ export default async function Home() {
             sections and wording that business actually uses.
           </SectionHeading>
           <Link href="/templates" className="btn btn-secondary">
-            Browse all {TEMPLATES.length} <Icon name="arrow" size={16} />
+            Browse all {CATALOG.length} <Icon name="arrow" size={16} />
           </Link>
         </div>
         <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORIES.map((c, i) => {
-            const inCat = TEMPLATES.filter((t) => t.category === c);
+            const inCat = CATALOG.filter((t) => t.category === c);
             const cover = bySlug(CATEGORY_INFO[c].cover) ?? inCat[0];
             return (
               <Reveal key={c} delay={(i % 3) * 0.04} className="h-full">
@@ -329,7 +329,7 @@ export default async function Home() {
                 page titles for Google, then download your finished site.
               </p>
               <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
-                {["No code and nothing to install", "Changes save to your account", "Included with Pro templates and All-access"].map((x) => (
+                {["No code and nothing to install", "Changes save to your account", "Included with every template, at every price"].map((x) => (
                   <li key={x} className="flex gap-2"><Check /> {x}</li>
                 ))}
               </ul>
@@ -346,21 +346,21 @@ export default async function Home() {
                 <Icon name="sparkle" size={22} />
               </span>
               <h3 className="mt-5 text-[22px] font-semibold tracking-[-0.02em]">
-                Made for you, in {MADE_FOR_YOU.days} days
+                Made for you, in {MADE_FOR_YOU.delivery}
               </h3>
               <p className="mt-2 text-[15px] leading-relaxed text-night-muted">
-                Send a short brief and we set a template up for your business: your
-                words, colours, pages and links. You download it ready to launch.
+                Can&rsquo;t find the right template? Answer six questions about your business,
+                the look you like, your pages and colours, and we build it for you.
               </p>
               <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
-                {[`${money(MADE_FOR_YOU.priceCents)}, template included`, "One round of tweaks included", "Follow progress in your library"].map((x) => (
+                {[`${money(MADE_FOR_YOU.priceCents)} per site, built to your brief`, "Live colour preview as you choose", "One round of changes included"].map((x) => (
                   <li key={x} className="flex gap-2"><Check className="text-[#a5b4fc]" /> {x}</li>
                 ))}
               </ul>
               <div className="mt-7">
-                <Link href="/made-for-you" className="btn btn-on-dark">
+                <BriefButton className="btn btn-on-dark">
                   Start your brief <Icon name="arrow" size={16} />
-                </Link>
+                </BriefButton>
               </div>
             </div>
           </Reveal>
@@ -372,7 +372,7 @@ export default async function Home() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading eyebrow="Featured" title="A few good places to start." />
           <Link href="/templates" className="btn btn-secondary">
-            See all {TEMPLATES.length} templates <Icon name="arrow" size={16} />
+            See all {CATALOG.length} templates <Icon name="arrow" size={16} />
           </Link>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -408,8 +408,7 @@ export default async function Home() {
         <SectionHeading eyebrow="Pricing" title="Simple prices. Paid once." center>
           Every template costs {money(TIERS.starter.priceCents)},{" "}
           {money(TIERS.pro.priceCents)} or {money(TIERS.premium.priceCents)}.
-          Or take everything, including future releases, for{" "}
-          {money(BUNDLE.priceCents)}.
+          The online editor is included with all of them.
         </SectionHeading>
         <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-4">
           {tiers.map((tier, i) => (
@@ -419,24 +418,24 @@ export default async function Home() {
                 <p className="mt-3 text-[40px] font-semibold leading-none tracking-tight">{money(tier.priceCents)}</p>
                 <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{tier.note}</p>
                 <p className="mt-4 border-t border-line pt-4 text-[12.5px] text-faint">
-                  {TEMPLATES.filter((t) => t.tier === tier.id).length} template
-                  {TEMPLATES.filter((t) => t.tier === tier.id).length === 1 ? "" : "s"}
+                  {CATALOG.filter((t) => t.tier === tier.id).length} template
+                  {CATALOG.filter((t) => t.tier === tier.id).length === 1 ? "" : "s"}
                 </p>
               </div>
             </Reveal>
           ))}
           <Reveal delay={0.15}>
-            <div className="h-full rounded-2xl bg-night p-6 text-white">
+            <div className="flex h-full flex-col rounded-2xl bg-night p-6 text-white">
               <p className="flex items-center justify-between text-[14px] font-semibold">
-                All-access <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px]">Best value</span>
+                Made for you <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px]">Custom</span>
               </p>
-              <p className="mt-3 text-[40px] font-semibold leading-none tracking-tight">{money(BUNDLE.priceCents)}</p>
-              <p className="mt-3 text-[13.5px] leading-relaxed text-night-muted">
-                Every template, plus every future release.
+              <p className="mt-3 text-[40px] font-semibold leading-none tracking-tight">{money(MADE_FOR_YOU.priceCents)}</p>
+              <p className="mt-3 flex-1 text-[13.5px] leading-relaxed text-night-muted">
+                A site built to your brief in {MADE_FOR_YOU.delivery}.
               </p>
-              <p className="mt-4 border-t border-night-line pt-4 text-[12.5px] text-night-muted">
-                {money(individualTotal())} if bought separately
-              </p>
+              <BriefButton className="mt-4 border-t border-night-line pt-4 text-left text-[12.5px] font-medium text-[#a5b4fc] hover:underline">
+                Start your brief
+              </BriefButton>
             </div>
           </Reveal>
         </div>

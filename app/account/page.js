@@ -3,14 +3,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
-import AddToCart from "@/components/AddToCart";
 import { Icon } from "@/components/icons";
 import { currentUser } from "@/lib/auth";
 import { libraryFor, ordersFor, orderById, itemName } from "@/lib/store";
 import { buildsFor } from "@/lib/builds";
 import { editorAccess } from "@/lib/editor-core";
 import BuildStatus from "@/components/BuildStatus";
-import { bundlePriceFor } from "@/lib/pricing";
 import { TEMPLATES, BUNDLE, money } from "@/lib/catalog";
 
 export const metadata = { title: "Your library", robots: { index: false } };
@@ -34,7 +32,6 @@ export default async function AccountPage({ searchParams }) {
 
   const library = TEMPLATES.filter((t) => owned.has(t.slug));
   const hasAll = library.length === TEMPLATES.length;
-  const bundlePrice = bundlePriceFor(owned);
 
   return (
     <>
@@ -124,10 +121,6 @@ export default async function AccountPage({ searchParams }) {
                           <Link href={`/editor/${t.slug}`} className="btn btn-sm btn-primary">
                             <Icon name="pencil" size={15} /> Customise
                           </Link>
-                        ) : t.livePreview ? (
-                          <Link href={`/editor/${t.slug}`} className="btn btn-sm text-muted hover:text-ink">
-                            <Icon name="lock" size={14} /> Editor with All-access
-                          </Link>
                         ) : null}
                       </div>
                     </div>
@@ -148,21 +141,6 @@ export default async function AccountPage({ searchParams }) {
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-
-        {bundlePrice !== null && library.length > 0 && (
-          <section className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-accent/20 bg-accent-soft p-6 md:flex-row md:items-center">
-            <div>
-              <p className="text-[16px] font-semibold text-accent-deep">
-                Complete your collection for {money(bundlePrice)}
-              </p>
-              <p className="mt-1 text-[14px] text-accent-deep/80">
-                The {TEMPLATES.length - library.length} templates you don&rsquo;t have yet, plus
-                every future release, and the online editor on all of them.
-              </p>
-            </div>
-            <AddToCart slug={BUNDLE.slug} label={`Upgrade — ${money(bundlePrice)}`} size="sm" />
           </section>
         )}
 

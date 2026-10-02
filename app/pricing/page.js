@@ -1,20 +1,17 @@
 import Link from "next/link";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
-import AddToCart from "@/components/AddToCart";
+import { BriefButton } from "@/components/BriefWizard";
 import { Icon } from "@/components/icons";
 import { Reveal, Check } from "@/components/store";
 import { PageHeader, SectionHeading, ClosingCta, Faq } from "@/components/sections";
-import { currentUser } from "@/lib/auth";
-import { ownedSlugs } from "@/lib/store";
-import { bundlePriceFor } from "@/lib/pricing";
 import { EXTRAS, FAQ } from "@/lib/content";
 import { SITE } from "@/lib/site";
-import { TEMPLATES, TIERS, BUNDLE, MADE_FOR_YOU, money, individualTotal, priceOf } from "@/lib/catalog";
+import { CATALOG, TIERS, MADE_FOR_YOU, money } from "@/lib/catalog";
 
 export const metadata = {
   title: "Pricing",
-  description: `Every Foundry template is $5, $10 or $15, paid once. The all-access bundle is ${money(BUNDLE.priceCents)} and includes every future template.`,
+  description: `Every Foundry template is $5, $10 or $15, paid once, with the online editor included. Or have one built to your brief for ${money(MADE_FOR_YOU.priceCents)}.`,
 };
 
 // Kept deliberately general: "typical" describes the big multi-vendor
@@ -26,33 +23,29 @@ const COMPARISON = [
   ["Clickable, multi-device previews", "Yes", "Sometimes one demo"],
   ["Made for a specific kind of business", "Always", "Often generic"],
   ["Original author credited", "Always", "Varies by seller"],
-  ["Future templates in the bundle", "Included", "Rarely"],
   ["Money-back guarantee", `${SITE.refundDays} days`, "Usually only if broken"],
   ["Help from people who know the code", "Yes", "Varies by seller"],
-  ["Online editor to customise it", "Pro and All-access", "Rarely"],
-  ["Set up for your business", `${money(MADE_FOR_YOU.priceCents)}, ${MADE_FOR_YOU.days} days`, "Quoted separately"],
+  ["Online editor to customise it", "Every template", "Rarely"],
+  ["Built to your brief", `${money(MADE_FOR_YOU.priceCents)}, ${MADE_FOR_YOU.delivery}`, "Quoted separately"],
 ];
 
-export default async function PricingPage() {
-  const user = await currentUser();
-  const owned = user ? await ownedSlugs(user.id) : new Set();
-  const bundlePrice = bundlePriceFor(owned);
-
+export default function PricingPage() {
   return (
     <>
       <Masthead />
       <PageHeader eyebrow="Pricing" title="Fair prices," accent="paid once.">
         Every template is {money(TIERS.starter.priceCents)},{" "}
         {money(TIERS.pro.priceCents)} or {money(TIERS.premium.priceCents)}.
-        No subscriptions and no per-site licences. Or take every template,
-        including the ones we add later, for {money(BUNDLE.priceCents)}.
+        No subscriptions and no per-site licences, and every price includes the online
+        editor. Can&rsquo;t find the right one? We&rsquo;ll build it for{" "}
+        {money(MADE_FOR_YOU.priceCents)}.
       </PageHeader>
 
       {/* ------------------------------------------------------------ tiers */}
       <section className="shell py-16 md:py-20">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
           {Object.values(TIERS).map((tier, i) => {
-            const list = TEMPLATES.filter((t) => t.tier === tier.id);
+            const list = CATALOG.filter((t) => t.tier === tier.id);
             return (
               <Reveal key={tier.id} delay={i * 0.05} className="h-full">
                 <div className="card flex h-full flex-col rounded-2xl p-7">
@@ -62,6 +55,11 @@ export default async function PricingPage() {
                     <span className="text-[13px] text-faint">per template</span>
                   </p>
                   <p className="mt-4 text-[14px] leading-relaxed text-muted">{tier.note}</p>
+                  <ul className="mt-5 flex flex-col gap-2 text-[13.5px]">
+                    {["Online editor included", "Unlimited projects", `${SITE.refundDays}-day money-back guarantee`].map((f) => (
+                      <li key={f} className="flex gap-2"><Check /> {f}</li>
+                    ))}
+                  </ul>
                   <ul className="mt-6 flex flex-1 flex-col gap-2 border-t border-line pt-5">
                     {list.slice(0, 6).map((t) => (
                       <li key={t.slug}>
@@ -89,97 +87,30 @@ export default async function PricingPage() {
           <Reveal delay={0.15} className="h-full">
             <div className="flex h-full flex-col rounded-2xl bg-night p-7 text-white ring-1 ring-night">
               <p className="flex items-center justify-between text-[15px] font-semibold">
-                All-access
-                <span className="rounded-full bg-[#a5b4fc] px-2.5 py-0.5 text-[11px] font-semibold text-night">Best value</span>
+                Made for you
+                <span className="rounded-full bg-[#a5b4fc] px-2.5 py-0.5 text-[11px] font-semibold text-night">Custom</span>
               </p>
-              <p className="mt-4 flex items-baseline gap-2">
-                <span className="text-[46px] font-semibold leading-none tracking-tight">
-                  {money(bundlePrice ?? BUNDLE.priceCents)}
-                </span>
-                {bundlePrice !== null && bundlePrice < BUNDLE.priceCents && (
-                  <span className="text-[16px] text-night-muted line-through">{money(BUNDLE.priceCents)}</span>
-                )}
+              <p className="mt-4 flex items-baseline gap-1.5">
+                <span className="text-[46px] font-semibold leading-none tracking-tight">{money(MADE_FOR_YOU.priceCents)}</span>
+                <span className="text-[13px] text-night-muted">per site</span>
               </p>
               <p className="mt-4 text-[14px] leading-relaxed text-night-muted">
-                {`All ${TEMPLATES.length} templates, worth ${money(individualTotal())} separately.`}
+                Can&rsquo;t find it? Describe the site you want and we build it in {MADE_FOR_YOU.delivery}.
               </p>
               <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-night-line pt-5 text-[14px]">
                 {[
-                  `Every template (${TEMPLATES.length} today)`,
-                  "Every future template, free",
-                  "Online editor for every HTML template",
-                  "One download with everything",
-                  "Same licence, unlimited projects",
+                  "Six-question brief with live colour preview",
+                  "Your pages, words and colours",
+                  "Inspired by any template you like",
+                  "That template added to your library",
+                  "One round of changes included",
                 ].map((f) => (
                   <li key={f} className="flex gap-2">
                     <Check className="text-[#a5b4fc]" /> {f}
                   </li>
                 ))}
               </ul>
-              <div className="mt-7">
-                {bundlePrice === null ? (
-                  <Link href="/account" className="btn btn-lg btn-on-dark w-full">You own everything</Link>
-                ) : (
-                  <AddToCart slug={BUNDLE.slug} label="Get all-access" variant="dark" className="w-full" />
-                )}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------ made for you */}
-      <section className="shell pb-16 md:pb-20">
-        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-accent/20 bg-accent-soft p-8 md:flex-row md:items-center md:p-10">
-          <div className="max-w-2xl">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-accent">Made for you</p>
-            <h2 className="mt-2 text-[26px] font-semibold tracking-[-0.02em] text-accent-deep">
-              Rather not do it yourself? {money(MADE_FOR_YOU.priceCents)}, set up in {MADE_FOR_YOU.days} days.
-            </h2>
-            <p className="mt-2 text-[15px] leading-relaxed text-accent-deep/80">
-              Send a short brief and we set a template up for your business: your words,
-              colours, pages and links. The template is included, and so is one round of tweaks.
-            </p>
-          </div>
-          <Link href="/made-for-you" className="btn btn-lg btn-accent shrink-0">
-            Start your brief <Icon name="arrow" size={16} />
-          </Link>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------ bundle maths */}
-      <section className="border-y border-line bg-card">
-        <div className="shell grid grid-cols-1 items-center gap-12 py-16 md:py-24 lg:grid-cols-2">
-          <SectionHeading eyebrow="All-access" title="Building sites for clients? Take everything.">
-            One payment covers every template, every kind of business, and
-            every template we release later, with the online editor unlocked on
-            all of them.
-          </SectionHeading>
-          <Reveal>
-            <div className="card rounded-2xl p-7">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-faint">The maths</p>
-              <dl className="mt-5 flex flex-col gap-3 text-[15px]">
-                {Object.values(TIERS).map((tier) => {
-                  const n = TEMPLATES.filter((t) => t.tier === tier.id).length;
-                  return (
-                    <div key={tier.id} className="flex justify-between">
-                      <dt>{n} {tier.name} templates at {money(tier.priceCents)}</dt>
-                      <dd className="text-muted">{money(n * tier.priceCents)}</dd>
-                    </div>
-                  );
-                })}
-                <div className="flex justify-between text-good">
-                  <dt>All-access instead</dt>
-                  <dd>−{money(individualTotal() - BUNDLE.priceCents)}</dd>
-                </div>
-                <div className="flex justify-between border-t border-line pt-3 text-[18px] font-semibold">
-                  <dt>You pay</dt>
-                  <dd>{money(BUNDLE.priceCents)}</dd>
-                </div>
-              </dl>
-              <p className="mt-5 text-[13px] leading-relaxed text-muted">
-                Templates added after you buy appear in your library automatically.
-              </p>
+              <BriefButton className="btn btn-lg btn-on-dark mt-7 w-full">Start your brief</BriefButton>
             </div>
           </Reveal>
         </div>

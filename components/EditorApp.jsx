@@ -628,7 +628,7 @@ export default function EditorApp({ template, full, signedIn, project, offer }) 
                 <li>
                   Stuck, or want us to do it?{" "}
                   <Link href="/made-for-you" className="font-medium text-accent hover:underline">Made for you</Link>{" "}
-                  sets it up for you in 3 days.
+                  builds it to your brief in under two weeks.
                 </li>
                 <li>
                   <button onClick={startOver} className="font-medium text-danger hover:underline">Start over from the original</button>

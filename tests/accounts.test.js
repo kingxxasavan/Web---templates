@@ -13,6 +13,7 @@ const store = await import("../lib/store.js");
 const admin = await import("../lib/admin.js");
 const { verifyPassword } = await import("../lib/password.js");
 const { queryOne, run } = await import("../lib/db.js");
+const { backend } = await import("../lib/backend.js");
 
 let n = 0;
 const newUser = () =>
@@ -134,9 +135,10 @@ describe("reviews", () => {
     assert.equal(list[0].rating, 5);
   });
 
-  test("bundle buyers can review every template", async () => {
+  test("legacy bundle buyers can review every template", async () => {
     const user = await newUser();
-    await buy(user.id, "everything");
+    const order = await backend().createOrder(user.id, "test", 3500, [{ slug: "everything", priceCents: 3500 }]);
+    await store.fulfillOrder(order.id);
     assert.equal(await reviews.canReview(user.id, "helix-ai"), true);
     assert.equal(await reviews.canReview(user.id, "pulse-fitness"), true);
   });

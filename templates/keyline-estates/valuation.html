@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free property valuation — Keyline, Cotswolds</title>
+<meta name="description" content="Book a free, no-obligation valuation with a Keyline partner. Clear fees, no long contracts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html"><span class="logo__mark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5 8 3l6 5.5M4 7.5V13h8V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><span class="logo__text">Keyline<small>Cotswold homes</small></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="listings.html?mode=buy">Buy</a>
+      <a href="listings.html?mode=rent">Rent</a>
+      <a href="valuation.html" aria-current="page">Sell with us</a>
+      <a class="saved-link" href="listings.html?saved=1">Saved <span class="n" data-saved-count>0</span></a>
+      <a class="btn btn--primary btn--sm" href="valuation.html">Free valuation</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section" style="padding-top:clamp(48px,6vw,80px)">
+    <div class="container split" style="align-items:start">
+      <div class="split__body">
+        <span class="overline">Selling or letting</span>
+        <h1 style="font-size:clamp(2.4rem,5vw,3.8rem)">What’s your home worth?</h1>
+        <p class="lede">A partner will visit, walk round with you and give you an honest figure, with the evidence behind it. It’s free, takes about forty minutes and there’s no obligation.</p>
+        <img src="assets/img/georgian.jpg" alt="A red-brick Georgian house with a columned porch" width="900" height="1125" loading="lazy" style="margin-top:28px">
+      </div>
+      <div>
+        <form class="panel" id="valuation" novalidate style="padding:clamp(24px,3vw,36px)">
+          <div class="steps" aria-hidden="true"><span class="is-on"></span><span></span></div>
+          <div class="form-step">
+            <h2 style="font-size:1.6rem;margin-bottom:18px">About the property</h2>
+            <div class="field"><label for="p-address">Address</label><input class="input" id="p-address" name="address" required data-message="Add the address, or at least the street and village."><span class="error" data-error="address"></span></div>
+            <div class="row"><div class="field"><label for="p-type">Type</label><select class="input" id="p-type" name="type"><option>House</option><option>Cottage</option><option>Barn conversion</option><option>Apartment</option></select></div><div class="field"><label for="p-beds">Bedrooms</label><select class="input" id="p-beds" name="beds"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5+</option></select></div></div>
+            <div class="field"><label for="p-why">Are you thinking of</label><select class="input" id="p-why" name="why"><option>Selling</option><option>Letting</option><option>Not sure yet</option></select></div>
+            <div class="field"><button class="btn btn--primary btn--block" type="button" data-next>Next: your details</button></div>
+          </div>
+          <div class="form-step" hidden>
+            <h2 style="font-size:1.6rem;margin-bottom:18px">Your details</h2>
+            <div class="field"><label for="p-name">Name</label><input class="input" id="p-name" name="name" required data-message="Add your name."><span class="error" data-error="name"></span></div>
+            <div class="row"><div class="field"><label for="p-email">Email</label><input class="input" id="p-email" name="email" type="email" required data-message="Enter an email."><span class="error" data-error="email"></span></div><div class="field"><label for="p-phone">Phone</label><input class="input" id="p-phone" name="phone" type="tel" required data-message="Add a phone number."><span class="error" data-error="phone"></span></div></div>
+            <div class="field"><label for="p-time">Best time to visit</label><select class="input" id="p-time" name="time"><option>Weekday</option><option>Weekday evening</option><option>Saturday</option></select></div>
+            <div class="row"><button class="btn btn--line" type="button" data-back>Back</button><button class="btn btn--primary" type="submit">Book my valuation</button></div>
+          </div>
+        </form>
+        <div class="panel done" id="valuation-done" hidden><h3>Thank you</h3><p>A partner from your nearest office will call within one working day to arrange a visit.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="section section--alt" id="fees">
+    <div class="container">
+      <div class="head"><div><span class="overline">Clear fees</span><h2>No surprises, no tie-in.</h2></div><p class="lede" style="max-width:28em">All fees include VAT. You can end our agreement with two weeks’ notice at any time.</p></div>
+      <table class="fees">
+        <tr><th>Selling</th><td><strong>1.2%</strong><p>No sale, no fee. Includes photography, floorplan, film, portals and accompanied viewings.</p></td></tr>
+        <tr><th>Letting: tenant find</th><td><strong>One month’s rent</strong><p>Marketing, viewings, referencing, the tenancy agreement and deposit registration.</p></td></tr>
+        <tr><th>Letting: fully managed</th><td><strong>12% of rent</strong><p>Everything above, plus rent collection, inspections twice a year and 24-hour maintenance.</p></td></tr>
+      </table>
+    </div>
+  </section>
+  <section class="section" id="faq">
+    <div class="container split" style="align-items:start">
+      <div id="contact"><span class="overline">Questions</span><h2 style="margin-top:14px">Before you sell</h2><p class="lede" style="margin-top:16px">Call either office on <a class="link" href="tel:+441993555210">01993 555 210</a>, or email <a class="link" href="mailto:homes@keyline.example">homes@keyline.example</a>.</p></div>
+      <div class="faq">
+        <details><summary>How do you decide the asking price?</summary><p>From recent sales within a mile, homes currently for sale nearby and what our registered buyers are asking for. We’ll show you all of it.</p></details>
+        <details><summary>How long does a sale take?</summary><p>Our homes go under offer in 31 days on average. From offer to completion is usually twelve to sixteen weeks.</p></details>
+        <details><summary>Do I need an EPC before marketing?</summary><p>Yes. If you don’t have a current one we can arrange an assessor, usually within a week.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="logo" href="index.html"><span class="logo__mark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5 8 3l6 5.5M4 7.5V13h8V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><span class="logo__text">Keyline<small>Cotswold homes</small></span></a>
+      <p>An independent estate agent for the Cotswolds since 2009. Offices in Burford and Cirencester.</p>
+    </div>
+    <div><h4>Property</h4><ul><li><a href="listings.html?mode=buy">Homes for sale</a></li><li><a href="listings.html?mode=rent">Homes to rent</a></li><li><a href="listings.html?saved=1">Saved homes</a></li></ul></div>
+    <div><h4>Selling</h4><ul><li><a href="valuation.html">Free valuation</a></li><li><a href="valuation.html#fees">Our fees</a></li><li><a href="valuation.html#faq">Questions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>12 High Street, Burford OX18 4RG</li><li><a href="tel:+441993555210">01993 555 210</a></li><li><a href="mailto:homes@keyline.example">homes@keyline.example</a></li></ul></div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Keyline Estates Ltd · Member of The Property Ombudsman</span><a href="credits.html">Photo credits</a></div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

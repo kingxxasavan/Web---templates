@@ -3,6 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 
+/**
+ * Firebase sends the reset email; its link comes back to /reset, where the
+ * new password is chosen.
+ */
 export default function ForgotForm() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(null);
@@ -13,34 +17,29 @@ export default function ForgotForm() {
     e.preventDefault();
     setBusy(true);
     setError(null);
-
     try {
-    const res = await fetch("/api/auth/forgot", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const data = await res.json().catch(() => ({}));
+      const res = await fetch("/api/auth/forgot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) setError(data.error || "Something went wrong. Please try again.");
+      else setSent(data.message || `If ${email.trim()} has an account, a reset link is on its way.`);
+    } catch {
+      setError("We couldn't reach the server. Check your connection and try again.");
+    }
     setBusy(false);
-
-    if (!res.ok) return setError(data.error || "Something went wrong.");
-    setSent(data.message);
-    } catch { setError("Unable to connect. Please try again."); }
-    finally { setBusy(false); }
   }
 
   if (sent) {
     return (
-      <div className="mx-auto w-full max-w-sm text-center">
-        <h1 className="text-[26px] tracking-[-0.02em]">Check your inbox</h1>
-        <p className="mt-3 text-[14px] leading-relaxed text-muted">{sent}</p>
-        <p className="mt-2 text-[13px] text-faint">
-          Use the link in your Firebase password-reset email.
+      <div className="card mx-auto w-full max-w-md rounded-3xl p-9 text-center">
+        <h1 className="text-[26px] font-semibold tracking-[-0.02em]">Check your inbox</h1>
+        <p className="mt-3 text-[14.5px] leading-relaxed text-muted">
+          {sent} It may take a minute, and it&rsquo;s worth checking spam.
         </p>
-        <Link
-          href="/login"
-          className="mt-7 inline-block rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-medium text-base"
-        >
+        <Link href="/login" className="btn btn-primary mt-7">
           Back to sign in
         </Link>
       </div>
@@ -48,16 +47,16 @@ export default function ForgotForm() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm">
-      <h1 className="text-[28px] tracking-[-0.02em]">Reset your password</h1>
-      <p className="mt-2 text-[14px] leading-relaxed text-muted">
-        Enter the email you signed up with and we&rsquo;ll send a link to
+    <div className="card mx-auto w-full max-w-md rounded-3xl p-7 sm:p-9">
+      <h1 className="text-[28px] font-semibold tracking-[-0.025em]">Reset your password</h1>
+      <p className="mt-2 text-[14.5px] leading-relaxed text-muted">
+        Enter the email you signed up with and we&rsquo;ll send you a link to
         choose a new password.
       </p>
 
-      <form onSubmit={submit} className="mt-8 flex flex-col gap-3">
+      <form onSubmit={submit} className="mt-7 flex flex-col gap-4">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[12.5px] text-muted">Email</span>
+          <span className="text-[13px] font-medium">Email</span>
           <input
             type="email"
             required
@@ -65,28 +64,24 @@ export default function ForgotForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="h-11 rounded-xl border border-line bg-raise px-3.5 text-[14px] text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+            className="input"
           />
         </label>
 
         {error && (
-          <p role="alert" className="rounded-xl border border-red-500/25 bg-red-500/10 px-3.5 py-2.5 text-[13px] text-red-300">
+          <p role="alert" className="alert-error">
             {error}
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={busy}
-          className="mt-2 h-11 rounded-full bg-ink text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
-        >
+        <button type="submit" disabled={busy} className="btn btn-primary w-full">
           {busy ? "Sending…" : "Send reset link"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-[13px] text-muted">
+      <p className="mt-6 text-center text-[14px] text-muted">
         Remembered it?{" "}
-        <Link href="/login" className="text-ink underline underline-offset-4 hover:text-accent">
+        <Link href="/login" className="font-medium text-ink underline underline-offset-4 hover:text-accent">
           Sign in
         </Link>
       </p>

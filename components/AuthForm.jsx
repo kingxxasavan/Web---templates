@@ -4,6 +4,21 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
+/** Only same-site paths, so ?next= can't bounce a buyer to another site. */
+function safeNext(value) {
+  return typeof value === "string" &&
+    value.startsWith("/") &&
+    !value.startsWith("//") &&
+    !value.includes("\\")
+    ? value
+    : "/account";
+}
+
+/**
+ * Email and password go to our own API, which signs in with Firebase on the
+ * server and sets an httpOnly session cookie. Nothing about the session is
+ * readable from the page.
+ */
 export default function AuthForm({ mode }) {
   const isRegister = mode === "register";
   const [email, setEmail] = useState("");
@@ -13,73 +28,76 @@ export default function AuthForm({ mode }) {
   const [busy, setBusy] = useState(false);
 
   const router = useRouter();
-  const destination = useSearchParams().get("next");
-  const next = destination?.startsWith("/") && !destination.startsWith("//") && !destination.includes("\\") ? destination : "/account";
+  const params = useSearchParams();
+  const next = safeNext(params.get("next"));
+  const carryNext = params.get("next") ? `?next=${encodeURIComponent(next)}` : "";
 
   async function submit(e) {
     e.preventDefault();
-    setBusy(true);
     setError(null);
-
-    try {
-    const res = await fetch(`/api/auth/${isRegister ? "register" : "login"}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      setError(data.error || "Something went wrong.");
-      setConfigProblem(data.reason === "not_configured");
-      setBusy(false);
+    setConfigProblem(false);
+    if (isRegister && password.length < 8) {
+      setError("Choose a password of at least 8 characters.");
       return;
     }
-
-    router.push(next);
-    router.refresh();
-    } catch { setError("Unable to connect. Please try again."); }
-    finally { setBusy(false); }
+    setBusy(true);
+    try {
+      const res = await fetch(`/api/auth/${isRegister ? "register" : "login"}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.");
+        setConfigProblem(data.reason === "not_configured");
+        setBusy(false);
+        return;
+      }
+      router.push(next);
+      router.refresh();
+    } catch {
+      setError("We couldn't reach the server. Check your connection and try again.");
+      setBusy(false);
+    }
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm">
-      <h1 className="text-[28px] tracking-[-0.02em]">
+    <div className="card mx-auto w-full max-w-md rounded-3xl p-7 sm:p-9">
+      <h1 className="text-[28px] font-semibold tracking-[-0.025em]">
         {isRegister ? "Create your account" : "Welcome back"}
       </h1>
-      <p className="mt-2 text-[14px] leading-relaxed text-muted">
+      <p className="mt-2 text-[14.5px] leading-relaxed text-muted">
         {isRegister
-          ? "Your purchases stay in your library, re-downloadable whenever you need them."
+          ? "Free, and it takes a few seconds. Your purchases live in your library for good."
           : "Sign in to reach your library and downloads."}
       </p>
 
-      <form onSubmit={submit} className="mt-8 flex flex-col gap-3">
+      <form onSubmit={submit} className="mt-7 flex flex-col gap-4" noValidate>
         <label className="flex flex-col gap-1.5">
-          <span className="text-[12.5px] text-muted">Email</span>
+          <span className="text-[13px] font-medium">Email</span>
           <input
             type="email"
             required
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-11 rounded-xl border border-line bg-raise px-3.5 text-[14px] text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+            className="input"
             placeholder="you@example.com"
           />
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="flex items-center justify-between text-[12.5px] text-muted">
-            Password
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center justify-between text-[13px]">
+            <label htmlFor="auth-password" className="font-medium">Password</label>
             {!isRegister && (
-              <Link
-                href="/forgot"
-                className="text-faint underline underline-offset-4 transition-colors hover:text-ink"
-              >
-                Forgot?
+              <Link href="/forgot" className="text-muted underline-offset-4 hover:text-ink hover:underline">
+                Forgot password?
               </Link>
             )}
-          </span>
+          </div>
           <input
+            id="auth-password"
             type="password"
             required
             minLength={isRegister ? 8 : undefined}
@@ -87,26 +105,18 @@ export default function AuthForm({ mode }) {
             autoComplete={isRegister ? "new-password" : "current-password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-11 rounded-xl border border-line bg-raise px-3.5 text-[14px] text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
-            placeholder={isRegister ? "At least 8 characters" : "••••••••"}
+            className="input"
+            placeholder={isRegister ? "At least 8 characters" : "Your password"}
           />
-        </label>
+        </div>
 
         {error && (
-          <div
-            role="alert"
-            className="rounded-xl border border-red-500/25 bg-red-500/10 px-3.5 py-2.5 text-[13px] text-red-300"
-          >
+          <div role="alert" className="alert-error">
             <p>{error}</p>
             {configProblem && (
-              <p className="mt-1.5 text-[12px] text-red-300/70">
+              <p className="mt-1.5 text-[12px] opacity-80">
                 Diagnostics:{" "}
-                <a
-                  href="/api/health"
-                  className="underline underline-offset-2"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="/api/health" className="underline underline-offset-2" target="_blank" rel="noreferrer">
                   /api/health
                 </a>
               </p>
@@ -114,24 +124,27 @@ export default function AuthForm({ mode }) {
           </div>
         )}
 
-        <button
-          type="submit"
-          disabled={busy}
-          className="mt-2 h-11 rounded-full bg-ink text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
-        >
+        <button type="submit" disabled={busy} className="btn btn-primary mt-1 w-full">
           {busy ? "One moment…" : isRegister ? "Create account" : "Sign in"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-[13px] text-muted">
-        {isRegister ? "Already have an account? " : "No account yet? "}
+      <p className="mt-6 text-center text-[14px] text-muted">
+        {isRegister ? "Already have an account? " : "New here? "}
         <Link
-          href={(isRegister ? "/login" : "/register") + "?next=" + encodeURIComponent(next)}
-          className="text-ink underline underline-offset-4 hover:text-accent"
+          href={`${isRegister ? "/login" : "/register"}${carryNext}`}
+          className="font-medium text-ink underline underline-offset-4 hover:text-accent"
         >
-          {isRegister ? "Sign in" : "Create one"}
+          {isRegister ? "Sign in" : "Create a free account"}
         </Link>
       </p>
+
+      {isRegister && (
+        <p className="mt-4 text-center text-[12px] leading-relaxed text-faint">
+          By creating an account you agree to the{" "}
+          <Link href="/licence" className="underline underline-offset-2 hover:text-ink">licence terms</Link>.
+        </p>
+      )}
     </div>
   );
 }

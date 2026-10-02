@@ -19,7 +19,7 @@ export default async function ResetPage({ searchParams }) {
   return (
     <>
       <Masthead />
-      <main className="px-6 py-20">
+      <main className="shell py-16 md:py-24">
         <ResetForm token={token ?? ""} valid={valid} />
       </main>
       <Footer />

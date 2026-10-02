@@ -93,7 +93,7 @@ export default function Tour({ pool, showcase, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className="fixed inset-0 z-[100] bg-base"
+      className="fixed inset-0 z-[100] bg-paper"
       role="dialog"
       aria-modal="true"
       aria-label="Template tour"
@@ -109,7 +109,7 @@ export default function Tour({ pool, showcase, onClose }) {
         style={{ borderRadius: revealed ? 24 : 0 }}
       >
         {loading && !revealed && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-base">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-paper">
             <span className="text-[13px] text-faint">Loading…</span>
           </div>
         )}
@@ -128,7 +128,7 @@ export default function Tour({ pool, showcase, onClose }) {
       {!revealed && (
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 z-30 rounded-full bg-base/85 px-4 py-2 text-[13px] text-ink backdrop-blur-xl transition-colors hover:bg-base"
+          className="absolute right-5 top-5 z-30 rounded-full bg-paper/85 px-4 py-2 text-[13px] text-ink backdrop-blur-xl transition-colors hover:bg-paper"
         >
           Skip tour
         </button>
@@ -144,7 +144,7 @@ export default function Tour({ pool, showcase, onClose }) {
             transition={{ duration: 0.5, ease }}
             className="absolute bottom-5 right-5 z-30 w-[min(400px,calc(100%-2.5rem))]"
           >
-            <div className="rounded-2xl border border-line bg-base/94 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+            <div className="rounded-2xl border border-line bg-paper/95 shadow-[var(--shadow-lift)] backdrop-blur-xl">
               <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
                 <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-medium text-accent">
                   {tour.name}
@@ -180,10 +180,10 @@ export default function Tour({ pool, showcase, onClose }) {
                         onClick={() => goto(i)}
                         className={`rounded-md px-2.5 py-1 text-[11.5px] transition-colors ${
                           i === stopIndex
-                            ? "bg-ink text-base"
+                            ? "bg-ink text-on-ink"
                             : visited.has(s.file)
-                              ? "bg-white/[0.07] text-ink"
-                              : "text-muted hover:bg-white/[0.05] hover:text-ink"
+                              ? "bg-sunk text-ink"
+                              : "text-muted hover:bg-sunk hover:text-ink"
                         }`}
                       >
                         {s.name}
@@ -194,7 +194,7 @@ export default function Tour({ pool, showcase, onClose }) {
                   <div className="mt-4 flex items-center gap-2 border-t border-line pt-3.5">
                     <button
                       onClick={nextTemplate}
-                      className="rounded-full border border-line px-3.5 py-2 text-[12.5px] text-ink transition-colors hover:border-ink/25"
+                      className="rounded-full border border-line px-3.5 py-2 text-[12.5px] text-ink transition-colors hover:border-ink/40"
                     >
                       Show me another
                     </button>
@@ -207,7 +207,7 @@ export default function Tour({ pool, showcase, onClose }) {
                         });
                         setRevealed(true);
                       }}
-                      className="ml-auto rounded-full bg-ink px-4 py-2 text-[12.5px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
+                      className="ml-auto rounded-full bg-ink px-4 py-2 text-[12.5px] font-medium text-on-ink transition-transform duration-300 hover:-translate-y-0.5"
                     >
                       {allSeen ? "I've seen enough" : "Done exploring"}
                     </button>
@@ -233,7 +233,7 @@ export default function Tour({ pool, showcase, onClose }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="absolute inset-0 z-30 flex flex-col items-center justify-end overflow-y-auto bg-gradient-to-t from-base via-base/98 via-45% to-transparent px-6 pb-10 pt-[46vh]"
+            className="absolute inset-0 z-30 flex flex-col items-center justify-end overflow-y-auto bg-gradient-to-t from-paper via-paper/98 via-45% to-transparent px-6 pb-10 pt-[46vh]"
           >
             <div className="w-full max-w-3xl text-center">
               <motion.p
@@ -286,13 +286,13 @@ export default function Tour({ pool, showcase, onClose }) {
               >
                 <button
                   onClick={onClose}
-                  className="rounded-full bg-ink px-6 py-3 text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
+                  className="rounded-full bg-ink px-6 py-3 text-[14px] font-medium text-on-ink transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   Welcome — show me the store
                 </button>
                 <a
                   href={`/t/${tour.slug}`}
-                  className="rounded-full border border-line px-6 py-3 text-[14px] text-ink transition-colors hover:border-ink/25"
+                  className="rounded-full border border-line px-6 py-3 text-[14px] text-ink transition-colors hover:border-ink/40"
                 >
                   See {tour.name} — {money(tour.priceCents)}
                 </a>
@@ -331,23 +331,16 @@ function Rotator({ items }) {
             className="absolute inset-0 h-full w-full object-cover object-top"
           />
         </AnimatePresence>
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-base to-transparent p-3.5 pt-10 text-left">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-paper to-transparent p-3.5 pt-10 text-left">
           <p className="text-[13.5px] font-medium">{item.name}</p>
           <p className="text-[12px] text-muted">
             {item.tagline} · {money(item.priceCents)}
           </p>
         </div>
       </div>
-      <div className="mt-2.5 flex justify-center gap-1">
-        {items.map((_, n) => (
-          <span
-            key={n}
-            className={`h-1 w-4 rounded-full transition-colors duration-400 ${
-              n === i ? "bg-accent" : "bg-line"
-            }`}
-          />
-        ))}
-      </div>
+      <p className="mt-2.5 text-center text-[11.5px] text-faint" aria-live="polite">
+        {i + 1} of {items.length}
+      </p>
     </div>
   );
 }

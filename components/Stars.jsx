@@ -13,7 +13,7 @@ export default function Stars({ value, size = 14, className = "" }) {
           height={size}
           viewBox="0 0 20 20"
           aria-hidden
-          className={i <= full ? "text-accent" : "text-line"}
+          className={i <= full ? "text-amber-500" : "text-line-strong"}
         >
           <path
             d="M10 1.8l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L2.2 7.5l5.4-.8z"

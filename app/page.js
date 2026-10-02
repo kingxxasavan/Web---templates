@@ -1,58 +1,70 @@
+import Image from "next/image";
 import Link from "next/link";
 import Masthead from "@/components/Masthead";
-import Catalogue from "@/components/Catalogue";
-import AddToCart from "@/components/AddToCart";
 import Footer from "@/components/Footer";
+import TemplateCard from "@/components/TemplateCard";
 import TourLauncher from "@/components/TourLauncher";
-import { Reveal, Check, Badge } from "@/components/store";
+import HelixField from "@/components/HelixField";
+import { Icon } from "@/components/icons";
+import { Reveal, Check } from "@/components/store";
+import {
+  SectionHeading,
+  PromiseGrid,
+  Steps,
+  ClosingCta,
+  Faq,
+} from "@/components/sections";
 import { currentUser } from "@/lib/auth";
 import { ownedSlugs } from "@/lib/store";
 import { ratingSummary } from "@/lib/reviews";
 import { tourPool, showcase } from "@/lib/tour";
+import { BUY_STEPS, FAQ, CATEGORY_INFO } from "@/lib/content";
+import { SITE } from "@/lib/site";
 import {
   TEMPLATES,
   TIERS,
   BUNDLE,
+  CATEGORIES,
+  bySlug,
   money,
   individualTotal,
+  MADE_FOR_YOU,
 } from "@/lib/catalog";
 
-const LICENCE_CAN = [
-  "Use on unlimited personal and client projects",
-  "Modify the source however you like",
-  "Keep the attribution required by each template",
-  "Sell the finished site to your client",
-];
+// One strong example from each of the busiest categories.
+const FEATURED = [
+  "aurora-commerce",
+  "helix-ai",
+  "ember-table",
+  "sable-studio",
+  "pulse-fitness",
+  "monolith-portfolio",
+].map(bySlug);
 
-const LICENCE_CANNOT = [
-  "Removing required author credits or license notices",
-  "Claiming exclusive ownership of an open-source design",
-];
+const HERO_SHOTS = ["aurora-commerce", "ember-table", "sable-studio"];
+const HELIX = bySlug("helix-ai");
 
-const FAQ = [
+const PILLARS = [
   {
-    q: "What am I buying?",
-    a: "Foundry includes original designs and prepared editions of open-source templates. Imported editions include original artwork, accessibility refinements, setup instructions and source credits. Their original versions are available free from the linked authors. Each listing explains its license.",
+    label: "What we are",
+    title: "A small, independent template studio",
+    body: "We design original templates, and rework the best open-source designs for specific kinds of business: new copy, colours, type and artwork, with the original authors credited.",
+    href: "/about",
+    cta: "About us",
   },
   {
-    q: "What does one-time mean?",
-    a: "You pay once and the template is yours permanently. No subscription, no renewal, no per-domain fee. It stays in your library and you can re-download it whenever you like.",
+    label: "What we do",
+    title: "Websites for businesses that need one now",
+    body: "Online stores, SaaS launches, agencies, restaurants, clinics, gyms, portfolios and blogs. Each template is built around what that kind of business has to show.",
+    href: "/templates",
+    cta: "See the templates",
   },
   {
-    q: "Do I need to know how to code?",
-    a: "Most templates are static HTML: edit the text and artwork, then upload the folder. Basic HTML knowledge helps. Helix is a Next.js project and expects React familiarity. Each listing includes its setup instructions.",
-  },
-  {
-    q: "Where can I host them?",
-    a: "Anywhere that serves static files: Vercel, Netlify, Cloudflare Pages, GitHub Pages, or ordinary shared hosting over FTP. Helix deploys to Vercel with no configuration.",
-  },
-  {
-    q: "Do the forms and carts work?",
-    a: "They are wired up on the front end with validation and state, but they do not ship a backend. Point the form at Formspree or Netlify Forms, and the cart at Stripe Payment Links or Snipcart.",
-  },
-  {
-    q: "Can I get a refund?",
-    a: "Because the download is the entire product, sales are final once the file has been delivered. Most templates have a live preview before you buy, so you know exactly what you are getting.",
+    label: "How we do it",
+    title: "Readable code, live previews, real help",
+    body: "Plain HTML and CSS you can open and change, previewed live before you buy, with a README, an online editor, and a 3-day done-for-you option if you'd rather not.",
+    href: "/how-it-works",
+    cta: "How it works",
   },
 ];
 
@@ -62,234 +74,396 @@ export default async function Home() {
     user ? ownedSlugs(user.id) : Promise.resolve(new Set()),
     ratingSummary(),
   ]);
-  const total = individualTotal();
-  const pool = tourPool();
-  const proof = showcase();
+  const tiers = Object.values(TIERS);
 
   return (
     <>
       <Masthead />
 
-      {/* hero */}
-      <section className="relative overflow-hidden px-6 pb-16 pt-20 md:pt-28">
-        <div className="pointer-events-none absolute inset-0 -z-20 wash" />
-        <div className="pointer-events-none absolute inset-0 -z-10 grid-lines" />
-        <div className="mx-auto w-full max-w-3xl text-center">
-          <Reveal>
-            <Badge>{TEMPLATES.length} templates · pay once, keep forever</Badge>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <h1 className="mt-6 text-balance text-[2.6rem] leading-[1.05] tracking-[-0.03em] sm:text-6xl">
-              Websites from{" "}
-              <span className="serif-accent text-accent">$5.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.12}>
-            <p className="mx-auto mt-6 max-w-xl text-pretty text-[16px] leading-relaxed text-muted">
-              Curated designs and readable source code for the sites entrepreneurs
-              actually need — a storefront, a portfolio, a launch page, a
-              booking site. Buy it once, download the folder, go live.
-            </p>
-          </Reveal>
-          <Reveal delay={0.18}>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href="#templates"
-                className="rounded-full bg-ink px-6 py-3 text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                Browse all {TEMPLATES.length}
-              </a>
-              <TourLauncher pool={pool} showcase={proof} />
-            </div>
-          </Reveal>
-        </div>
-
-        {/* price tiers */}
-        <Reveal delay={0.24}>
-          <div className="mx-auto mt-14 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                price: TIERS.starter.priceCents,
-                label: TIERS.starter.name,
-                note: TIERS.starter.note,
-                count: `${TEMPLATES.filter((t) => t.tier === "starter").length} templates`,
-              },
-              {
-                price: TIERS.pro.priceCents,
-                label: TIERS.pro.name,
-                note: TIERS.pro.note,
-                count: `${TEMPLATES.filter((t) => t.tier === "pro").length} templates`,
-              },
-              {
-                price: TIERS.premium.priceCents,
-                label: TIERS.premium.name,
-                note: TIERS.premium.note,
-                count: `${TEMPLATES.filter(t => t.tier === "premium").length} templates`,
-              },
-              {
-                price: BUNDLE.priceCents,
-                label: "Bundle",
-                note: `Everything — save ${money(total - BUNDLE.priceCents)}`,
-                count: `All ${TEMPLATES.length}`,
-                accent: true,
-              },
-            ].map((tier) => (
-              <div
-                key={tier.label}
-                className={`card rounded-2xl p-5 text-center ${
-                  tier.accent ? "border-accent/30" : ""
-                }`}
-              >
-                <p className="font-display text-4xl tracking-tight">
-                  {money(tier.price)}
-                </p>
-                <p
-                  className={`mt-1.5 text-[13.5px] font-medium ${
-                    tier.accent ? "text-accent" : "text-ink"
-                  }`}
-                >
-                  {tier.label}
-                </p>
-                <p className="mt-1 min-h-[32px] text-[12px] leading-snug text-faint">
-                  {tier.note}
-                </p>
-                <p className="mt-3 border-t border-line pt-3 text-[11.5px] text-muted">
-                  {tier.count}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
-      {/* grid */}
-      <section id="templates" className="px-6 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-[26px] tracking-[-0.02em]">Every template</h2>
-            <p className="text-[13px] text-faint">
-              {money(total)} separately · {money(BUNDLE.priceCents)} together
-            </p>
-          </div>
-          <Catalogue templates={TEMPLATES} ownedSlugs={[...owned]} ratings={Object.fromEntries(ratings)} />
-        </div>
-      </section>
-
-      {/* bundle */}
-      <section id="bundle" className="px-6 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-4xl">
-          <Reveal>
-            <div className="card relative overflow-hidden rounded-3xl p-8 text-center sm:p-12">
-              <div className="pointer-events-none absolute inset-0 -z-10 wash opacity-70" />
-              <Badge tone="accent">Best value</Badge>
-              <h2 className="mt-5 text-balance text-3xl leading-tight tracking-[-0.02em] sm:text-[2.6rem]">
-                Take all {TEMPLATES.length}, keep them{" "}
-                <span className="serif-accent text-accent">forever.</span>
-              </h2>
-              <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-muted">
-                Every current template, plus anything added later, in one
-                download. Bought separately it would be {money(total)}.
-              </p>
-              <div className="mt-7 flex items-center justify-center gap-3">
-                <span className="font-display text-5xl tracking-tight">
-                  {money(BUNDLE.priceCents)}
-                </span>
-                <span className="text-left text-[12.5px] leading-tight text-faint">
-                  one payment
-                  <br />
-                  save {money(total - BUNDLE.priceCents)}
-                </span>
-              </div>
-              <div className="mt-8">
-                <AddToCart
-                  slug={BUNDLE.slug}
-                  label={`Add the bundle — ${money(BUNDLE.priceCents)}`}
-                  owned={owned.size === TEMPLATES.length}
-                />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* licence */}
-      <section id="licence" className="px-6 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-4xl">
-          <Reveal>
-            <h2 className="text-[26px] tracking-[-0.02em]">
-              What the licence lets you do
-            </h2>
-            <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-muted">
-              Every download includes its license. Imported templates keep their
-              original MIT or CC BY 3.0 terms; HTML5 UP designs require attribution.
-            </p>
-          </Reveal>
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+      {/* ------------------------------------------------------------ hero */}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10 dot-grid" />
+        <div className="shell grid grid-cols-1 items-center gap-14 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:pb-24">
+          <div>
             <Reveal>
-              <div className="card h-full rounded-2xl p-6">
-                <h3 className="text-[15px] font-medium">You can</h3>
-                <ul className="mt-4 flex flex-col gap-3">
-                  {LICENCE_CAN.map((l) => (
-                    <li key={l} className="flex gap-2.5">
-                      <Check />
-                      <span className="text-[13.5px] leading-snug text-muted">
-                        {l}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <p className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[12.5px] font-medium text-muted shadow-[var(--shadow-card)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-good" />
+                {TEMPLATES.length} templates in {CATEGORIES.length} categories · from {money(TIERS.starter.priceCents)}
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="h-display mt-6 text-balance">
+                A professional website,{" "}
+                <span className="serif-accent text-accent">ready this afternoon.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="lede mt-6 max-w-xl text-pretty">
+                Website templates made for specific businesses: online stores,
+                SaaS products, agencies, restaurants, local services and
+                portfolios. Try one live, customise it in your browser or have us
+                set it up in {MADE_FOR_YOU.days} days, for{" "}
+                {money(TIERS.starter.priceCents)} to {money(TIERS.premium.priceCents)}.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href="/templates" className="btn btn-lg btn-primary">
+                  Browse templates <Icon name="arrow" size={16} />
+                </Link>
+                <TourLauncher pool={tourPool()} showcase={showcase()} />
               </div>
             </Reveal>
-            <Reveal delay={0.06}>
-              <div className="card h-full rounded-2xl p-6">
-                <h3 className="text-[15px] font-medium">You can&rsquo;t</h3>
-                <ul className="mt-4 flex flex-col gap-3">
-                  {LICENCE_CANNOT.map((l) => (
-                    <li key={l} className="flex gap-2.5">
-                      <span className="mt-[7px] h-px w-3 shrink-0 bg-faint" />
-                      <span className="text-[13.5px] leading-snug text-muted">
-                        {l}
+            <Reveal delay={0.2}>
+              <ul className="mt-9 grid max-w-lg grid-cols-2 gap-x-6 gap-y-2.5 text-[13.5px] text-muted">
+                {[
+                  "Pay once, no subscription",
+                  "Unlimited client projects",
+                  `${SITE.refundDays}-day money-back guarantee`,
+                  "Instant download",
+                ].map((t) => (
+                  <li key={t} className="flex gap-2">
+                    <Check />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          {/* stacked previews of real templates, over the Helix field */}
+          <Reveal delay={0.1} className="relative mx-auto w-full max-w-[560px]">
+            <div className="pointer-events-none absolute -inset-6 overflow-hidden rounded-[2rem] bg-[#07070c] ring-1 ring-white/5 sm:-inset-8">
+              <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_30%_20%,rgba(124,92,255,0.28),transparent_70%),radial-gradient(50%_40%_at_80%_90%,rgba(34,211,238,0.18),transparent_70%)]" />
+              <HelixField />
+            </div>
+            <div className="relative aspect-[5/4]">
+              {HERO_SHOTS.map((slug, i) => {
+                const t = bySlug(slug);
+                const pos = [
+                  "left-0 top-[6%] w-[62%] -rotate-3 z-10",
+                  "right-0 top-0 w-[66%] rotate-2 z-20",
+                  "left-[16%] bottom-0 w-[68%] z-30",
+                ][i];
+                return (
+                  <div key={slug} className={`absolute ${pos} overflow-hidden rounded-xl border border-line bg-card shadow-[var(--shadow-lift)]`}>
+                    <div className="flex items-center gap-1.5 border-b border-line bg-sunk px-3 py-2">
+                      <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
+                      <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
+                      <span className="h-2 w-2 rounded-full bg-[#28c840]" />
+                      <span className="ml-2 truncate text-[10.5px] text-faint">{t.name}</span>
+                    </div>
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={`/thumbs/${slug}.webp`}
+                        alt={`${t.name} template`}
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 70vw, 380px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* facts strip */}
+        <div className="border-y border-line bg-card">
+          <dl className="shell grid grid-cols-2 gap-y-6 py-7 md:grid-cols-4">
+            {[
+              [TEMPLATES.length, "templates"],
+              [CATEGORIES.length, "business categories"],
+              [money(TIERS.starter.priceCents), "starting price, paid once"],
+              ["0", "subscriptions or per-site fees"],
+            ].map(([n, label]) => (
+              <div key={label} className="text-center md:border-r md:border-line md:last:border-0">
+                <dt className="sr-only">{label}</dt>
+                <dd className="text-[28px] font-semibold tracking-tight">{n}</dd>
+                <dd className="mt-0.5 text-[13px] text-muted">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------- categories */}
+      <section className="shell pt-20 md:pt-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow="Shop by business" title="Find the site your business needs.">
+            Every template is built for one kind of business, with the pages,
+            sections and wording that business actually uses.
+          </SectionHeading>
+          <Link href="/templates" className="btn btn-secondary">
+            Browse all {TEMPLATES.length} <Icon name="arrow" size={16} />
+          </Link>
+        </div>
+        <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CATEGORIES.map((c, i) => {
+            const inCat = TEMPLATES.filter((t) => t.category === c);
+            const cover = bySlug(CATEGORY_INFO[c].cover) ?? inCat[0];
+            return (
+              <Reveal key={c} delay={(i % 3) * 0.04} className="h-full">
+                <li className="h-full">
+                  <Link
+                    href={`/templates?category=${encodeURIComponent(c)}`}
+                    className="card card-hover group flex h-full items-center gap-4 overflow-hidden rounded-2xl p-3 pr-5"
+                  >
+                    <span className="relative aspect-[4/3] w-28 shrink-0 overflow-hidden rounded-xl border border-line bg-sunk">
+                      {cover && (
+                        <Image
+                          src={`/thumbs/${cover.slug}.webp`}
+                          alt=""
+                          fill
+                          sizes="112px"
+                          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        />
+                      )}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-baseline justify-between gap-2">
+                        <span className="text-[15.5px] font-semibold tracking-[-0.01em]">{c}</span>
+                        <span className="text-[12.5px] text-faint">{inCat.length}</span>
                       </span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-5 border-t border-line pt-4 text-[12.5px] leading-relaxed text-faint">
-                  Original Foundry designs use the included commercial license.
-                  Open-source editions retain the redistribution rights in their upstream license.
+                      <span className="mt-1 block text-[13px] leading-snug text-muted">{CATEGORY_INFO[c].blurb}</span>
+                    </span>
+                  </Link>
+                </li>
+              </Reveal>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* -------------------------------------------- what / what / how */}
+      <section className="shell py-20 md:py-28">
+        <SectionHeading eyebrow="Who we are" title="Good websites shouldn't cost a fortune.">
+          Most small businesses don&rsquo;t need a $5,000 agency site or a
+          monthly website-builder bill. They need a site that looks
+          professional, works on every phone, and can go live today.
+          That&rsquo;s what we make.
+        </SectionHeading>
+        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {PILLARS.map((p, i) => (
+            <Reveal key={p.label} delay={i * 0.05}>
+              <div className="card flex h-full flex-col rounded-2xl p-7">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-faint">{p.label}</p>
+                <h3 className="mt-3 text-[20px] font-semibold tracking-[-0.015em]">{p.title}</h3>
+                <p className="mt-3 flex-1 text-[14.5px] leading-relaxed text-muted">{p.body}</p>
+                <Link href={p.href} className="group mt-6 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent">
+                  {p.cta} <Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ------------------------------------------------- why different */}
+      <section className="border-y border-line bg-sunk/60">
+        <div className="shell py-20 md:py-28">
+          <SectionHeading eyebrow="Why Foundry" title="What most template shops won't give you.">
+            Plenty of shops sell templates. These are the things we think
+            buyers deserve and rarely get.
+          </SectionHeading>
+          <div className="mt-12">
+            <PromiseGrid />
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------ helix spotlight */}
+      <section className="relative overflow-hidden bg-[#07070c] text-white">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_75%_40%,rgba(124,92,255,0.25),transparent_70%),radial-gradient(40%_50%_at_95%_90%,rgba(255,138,92,0.12),transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-full opacity-70 lg:w-[62%]">
+          <HelixField density={1.3} />
+        </div>
+        <div className="shell relative grid grid-cols-1 gap-10 py-20 md:py-28 lg:grid-cols-[1fr_1fr]">
+          <Reveal>
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#a5b4fc]">Flagship template</p>
+            <h2 className="mt-4 text-[clamp(2rem,4.6vw,3.2rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
+              Helix.{" "}
+              <span className="serif-accent bg-gradient-to-r from-[#c4b5fd] via-[#a5b4fc] to-[#67e8f9] bg-clip-text text-transparent">
+                The AI launch page.
+              </span>
+            </h2>
+            <p className="mt-5 max-w-md text-[16px] leading-relaxed text-white/70">
+              {HELIX.blurb} Built on {HELIX.stack.slice(0, 3).join(", ")}, ready to deploy to Vercel.
+            </p>
+            <ul className="mt-7 grid max-w-md grid-cols-1 gap-2.5 text-[14px] text-white/80 sm:grid-cols-2">
+              {HELIX.features.slice(0, 4).map((f) => (
+                <li key={f} className="flex gap-2">
+                  <Check className="text-[#67e8f9]" /> {f}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href={`/t/${HELIX.slug}`} className="btn btn-on-dark">
+                See Helix — {money(TIERS[HELIX.tier].priceCents)} <Icon name="arrow" size={16} />
+              </Link>
+              <Link href="/templates?category=SaaS%20%26%20apps" className="btn border border-white/20 text-white hover:border-white/50">
+                More SaaS templates
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ------------------------------------------ two ways to make it yours */}
+      <section className="shell py-20 md:py-28">
+        <SectionHeading eyebrow="Make it yours" title="Do it yourself, or let us do it." center>
+          Either way you end up with a site that looks like your business, not
+          like a template.
+        </SectionHeading>
+        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <Reveal className="h-full">
+            <div className="card flex h-full flex-col rounded-3xl p-8">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <Icon name="pencil" size={22} />
+              </span>
+              <h3 className="mt-5 text-[22px] font-semibold tracking-[-0.02em]">The online editor</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Click any text on the page and type. Pick your colours and fonts, set
+                page titles for Google, then download your finished site.
+              </p>
+              <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
+                {["No code and nothing to install", "Changes save to your account", "Included with Pro templates and All-access"].map((x) => (
+                  <li key={x} className="flex gap-2"><Check /> {x}</li>
+                ))}
+              </ul>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href="/editor/aurora-commerce" className="btn btn-primary">
+                  Try the editor free <Icon name="arrow" size={16} />
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.06} className="h-full">
+            <div className="flex h-full flex-col rounded-3xl bg-night p-8 text-white ring-1 ring-night-line">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-[#a5b4fc]">
+                <Icon name="sparkle" size={22} />
+              </span>
+              <h3 className="mt-5 text-[22px] font-semibold tracking-[-0.02em]">
+                Made for you, in {MADE_FOR_YOU.days} days
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-night-muted">
+                Send a short brief and we set a template up for your business: your
+                words, colours, pages and links. You download it ready to launch.
+              </p>
+              <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
+                {[`${money(MADE_FOR_YOU.priceCents)}, template included`, "One round of tweaks included", "Follow progress in your library"].map((x) => (
+                  <li key={x} className="flex gap-2"><Check className="text-[#a5b4fc]" /> {x}</li>
+                ))}
+              </ul>
+              <div className="mt-7">
+                <Link href="/made-for-you" className="btn btn-on-dark">
+                  Start your brief <Icon name="arrow" size={16} />
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------- featured */}
+      <section className="shell py-20 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow="Featured" title="A few good places to start." />
+          <Link href="/templates" className="btn btn-secondary">
+            See all {TEMPLATES.length} templates <Icon name="arrow" size={16} />
+          </Link>
+        </div>
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURED.map((t, i) => (
+            <Reveal key={t.slug} delay={i * 0.05} className="h-full">
+              <TemplateCard t={t} owned={owned.has(t.slug)} rating={ratings.get(t.slug)} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ------------------------------------------------- how it works */}
+      <section className="border-y border-line bg-card">
+        <div className="shell py-20 md:py-28">
+          <SectionHeading eyebrow="How it works" title="From browsing to live in four steps." center>
+            No calls, no quotes, no waiting on a designer.
+          </SectionHeading>
+          <div className="mt-12">
+            <Steps steps={BUY_STEPS} />
+          </div>
+          <p className="mt-8 text-center text-[14px] text-muted">
+            Step-by-step guides for Netlify, Vercel, Cloudflare, Shopify, WordPress and more are in{" "}
+            <Link href="/guides" className="font-medium text-accent underline-offset-4 hover:underline">
+              Guides
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------- pricing */}
+      <section className="shell py-20 md:py-28">
+        <SectionHeading eyebrow="Pricing" title="Simple prices. Paid once." center>
+          Every template costs {money(TIERS.starter.priceCents)},{" "}
+          {money(TIERS.pro.priceCents)} or {money(TIERS.premium.priceCents)}.
+          Or take everything, including future releases, for{" "}
+          {money(BUNDLE.priceCents)}.
+        </SectionHeading>
+        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-4">
+          {tiers.map((tier, i) => (
+            <Reveal key={tier.id} delay={i * 0.05}>
+              <div className="card h-full rounded-2xl p-6">
+                <p className="text-[14px] font-semibold">{tier.name}</p>
+                <p className="mt-3 text-[40px] font-semibold leading-none tracking-tight">{money(tier.priceCents)}</p>
+                <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{tier.note}</p>
+                <p className="mt-4 border-t border-line pt-4 text-[12.5px] text-faint">
+                  {TEMPLATES.filter((t) => t.tier === tier.id).length} template
+                  {TEMPLATES.filter((t) => t.tier === tier.id).length === 1 ? "" : "s"}
                 </p>
               </div>
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* faq */}
-      <section id="faq" className="px-6 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-3xl">
-          <Reveal>
-            <h2 className="text-[26px] tracking-[-0.02em]">Questions</h2>
+          ))}
+          <Reveal delay={0.15}>
+            <div className="h-full rounded-2xl bg-night p-6 text-white">
+              <p className="flex items-center justify-between text-[14px] font-semibold">
+                All-access <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px]">Best value</span>
+              </p>
+              <p className="mt-3 text-[40px] font-semibold leading-none tracking-tight">{money(BUNDLE.priceCents)}</p>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-night-muted">
+                Every template, plus every future release.
+              </p>
+              <p className="mt-4 border-t border-night-line pt-4 text-[12.5px] text-night-muted">
+                {money(individualTotal())} if bought separately
+              </p>
+            </div>
           </Reveal>
-          <div className="mt-8 flex flex-col divide-y divide-line border-y border-line">
-            {FAQ.map((f, i) => (
-              <Reveal key={f.q} delay={i * 0.03}>
-                <details className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-medium [&::-webkit-details-marker]:hidden">
-                    {f.q}
-                    <span className="relative flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line">
-                      <span className="absolute h-[1.5px] w-2 rounded-full bg-ink" />
-                      <span className="absolute h-2 w-[1.5px] rounded-full bg-ink transition-transform duration-300 group-open:rotate-90 group-open:opacity-0" />
-                    </span>
-                  </summary>
-                  <p className="mt-3 max-w-2xl text-[13.5px] leading-relaxed text-muted">
-                    {f.a}
-                  </p>
-                </details>
-              </Reveal>
-            ))}
+        </div>
+        <p className="mt-8 text-center">
+          <Link href="/pricing" className="btn btn-secondary">
+            Compare plans <Icon name="arrow" size={16} />
+          </Link>
+        </p>
+      </section>
+
+      {/* ----------------------------------------------------------- faq */}
+      <section className="border-t border-line bg-card">
+        <div className="shell grid grid-cols-1 gap-10 py-20 md:py-28 lg:grid-cols-[1fr_1.6fr]">
+          <SectionHeading eyebrow="Questions" title="Things people ask before buying.">
+            Something else on your mind?{" "}
+            <Link href="/contact" className="font-medium text-accent hover:underline">Ask us directly</Link>.
+          </SectionHeading>
+          <div>
+            <Faq items={FAQ.flatMap((g) => g.items).slice(0, 5)} />
+            <Link href="/faq" className="group mt-6 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent">
+              All questions <Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
         </div>
       </section>
 
+      <ClosingCta />
       <Footer />
     </>
   );

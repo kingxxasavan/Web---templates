@@ -1,7 +1,7 @@
 import { describeAuthRequestError } from "@/lib/auth-errors";
 import { NextResponse } from "next/server";
 import { sameOrigin, createFirebaseSession, validateCredentials } from "@/lib/auth";
-import { firebaseAuth } from "@/lib/firebase";
+import { firebaseAuth, sendVerificationEmail } from "@/lib/firebase";
 import { syncFirebaseAccount } from "@/lib/firebase-account";
 import { mergeGuestCart } from "@/lib/store";
 import { readGuestCart, clearGuestCart } from "@/lib/guest-cart";
@@ -17,6 +17,10 @@ export async function POST(request) {
     });
     const identity = (await firebaseAuth("lookup", { idToken: credentials.idToken })).users[0];
     const user = await syncFirebaseAccount(identity, password);
+    // Best effort: a missing verification email must not block the sale.
+    await sendVerificationEmail(credentials.idToken).catch((err) =>
+      console.warn("verification email failed", err.code || err.message)
+    );
     const guest = await readGuestCart();
     await mergeGuestCart(user.id, guest);
     await createFirebaseSession(credentials.refreshToken);

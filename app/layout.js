@@ -3,6 +3,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 import FirebaseAnalytics from "@/components/FirebaseAnalytics";
+import { SITE } from "@/lib/site";
+import { TEMPLATES } from "@/lib/catalog";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -14,43 +16,57 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const SITE = "https://web-templates-mu.vercel.app";
+const DESCRIPTION = `${TEMPLATES.length} website templates for online stores, SaaS products, agencies, restaurants, local businesses and portfolios. Preview every page live, pay $5 to $15 once, and launch this afternoon.`;
 
 export const metadata = {
-  metadataBase: new URL(SITE),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Foundry — original website templates you can ship today",
+    default: "Foundry — website templates for real businesses, from $5",
     template: "%s · Foundry",
   },
-  description:
-    "59 website templates for portfolios, businesses and product launches. Original designs and adapted open-source editions, priced from $5 to $15.",
+  description: DESCRIPTION,
   keywords: [
     "website templates",
     "HTML templates",
-    "Next.js templates",
-    "landing page template",
-    "SaaS template",
+    "ecommerce template",
+    "SaaS landing page template",
+    "restaurant website template",
+    "portfolio template",
   ],
   openGraph: {
-    title: "Foundry — original website templates you can ship today",
-    description:
-      "59 website templates with live previews, readable source and clear licenses. Individual designs from $5 to $15.",
-    url: SITE,
+    title: "Foundry — website templates for real businesses, from $5",
+    description: DESCRIPTION,
+    url: SITE.url,
     siteName: "Foundry",
     type: "website",
   },
   robots: { index: true, follow: true },
 };
 
+// Runs before the page paints, so a visitor who chose a theme never sees
+// the other one flash first.
+const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 export const viewport = {
-  themeColor: "#0a0a0b",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0d10" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${instrument.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         {children}
         {/* Cookie-less visitor and performance data, collected by Vercel.

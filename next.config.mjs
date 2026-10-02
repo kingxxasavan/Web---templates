@@ -6,10 +6,18 @@ const nextConfig = {
   // runtime instead of failing inside the bundle.
   serverExternalPackages: ["firebase-admin"],
   // The zips live outside public/ so they can only be fetched through the
-  // authorised download route. Nothing imports them, so tracing has to be
-  // told to ship them with that function.
+  // authorised download routes. Nothing imports them, so tracing has to be
+  // told to ship them with those functions.
   outputFileTracingIncludes: {
     "/api/download/[slug]": ["./private/downloads/**"],
+    // The customised download overlays the buyer's edits on the plain zip.
+    "/api/editor/[slug]/download": ["./private/downloads/*.zip"],
+    // Each product page shows that template's README.
+    "/t/[slug]": ["./templates/*/README.md"],
+  },
+  outputFileTracingExcludes: {
+    // Only single-template zips are ever customised.
+    "/api/editor/[slug]/download": ["./private/downloads/everything.zip"],
   },
   async headers() {
     return [

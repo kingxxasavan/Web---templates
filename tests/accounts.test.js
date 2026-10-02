@@ -179,11 +179,19 @@ describe("admin allowlist", () => {
 
   test("only listed addresses qualify, case-insensitively", () => {
     process.env.ADMIN_EMAILS = "Owner@Example.com, second@example.com";
-    assert.equal(admin.isAdmin({ email: "owner@example.com" }), true);
-    assert.equal(admin.isAdmin({ email: "SECOND@example.com" }), true);
-    assert.equal(admin.isAdmin({ email: "intruder@example.com" }), false);
+    assert.equal(admin.isAdmin({ email: "owner@example.com", emailVerified: true }), true);
+    assert.equal(admin.isAdmin({ email: "SECOND@example.com", emailVerified: true }), true);
+    assert.equal(admin.isAdmin({ email: "intruder@example.com", emailVerified: true }), false);
     assert.equal(admin.isAdmin(null), false);
     assert.equal(admin.isAdmin({}), false);
+  });
+
+  test("a listed address must be verified before it counts", () => {
+    process.env.ADMIN_EMAILS = "owner@example.com";
+    assert.equal(admin.isAdmin({ email: "owner@example.com" }), false);
+    assert.equal(admin.needsVerification({ email: "owner@example.com" }), true);
+    assert.equal(admin.needsVerification({ email: "owner@example.com", emailVerified: true }), false);
+    assert.equal(admin.needsVerification({ email: "someone@example.com" }), false);
   });
 });
 

@@ -15,12 +15,14 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "firebase": "^12.19.0",
-    "firebase-admin": "^14.4.0",
+    "firebase-admin": "^13.10.0",
     "framer-motion": "^12.23.12",
     "next": "16.3.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "stripe": "^22.6.2"
+    "stripe": "^22.6.2",
+    "fflate": "^0.8.3",
+    "marked": "^18.0.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.13",
@@ -29,5 +31,8 @@
     "sharp": "^0.35.4",
     "tailwindcss": "^4.1.13"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  }
 }

@@ -14,14 +14,14 @@ export default function ResetForm({ token, valid }) {
 
   if (!valid) {
     return (
-      <div className="mx-auto w-full max-w-sm text-center">
-        <h1 className="text-[26px] tracking-[-0.02em]">Link no longer valid</h1>
+      <div className="card mx-auto w-full max-w-md rounded-3xl p-9 text-center">
+        <h1 className="text-[26px] font-semibold tracking-[-0.02em]">Link no longer valid</h1>
         <p className="mt-3 text-[14px] leading-relaxed text-muted">
           Reset links expire after an hour and can only be used once.
         </p>
         <Link
           href="/forgot"
-          className="mt-7 inline-block rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-medium text-base"
+          className="btn btn-primary mt-7"
         >
           Request a new link
         </Link>
@@ -31,15 +31,15 @@ export default function ResetForm({ token, valid }) {
 
   if (done) {
     return (
-      <div className="mx-auto w-full max-w-sm text-center">
-        <h1 className="text-[26px] tracking-[-0.02em]">Password updated</h1>
+      <div className="card mx-auto w-full max-w-md rounded-3xl p-9 text-center">
+        <h1 className="text-[26px] font-semibold tracking-[-0.02em]">Password updated</h1>
         <p className="mt-3 text-[14px] leading-relaxed text-muted">
           Every other session has been signed out. Sign in with your new
           password.
         </p>
         <Link
           href="/login"
-          className="mt-7 inline-block rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-medium text-base"
+          className="btn btn-primary mt-7"
         >
           Sign in
         </Link>
@@ -71,15 +71,15 @@ export default function ResetForm({ token, valid }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm">
-      <h1 className="text-[28px] tracking-[-0.02em]">Choose a new password</h1>
+    <div className="card mx-auto w-full max-w-md rounded-3xl p-7 sm:p-9">
+      <h1 className="text-[28px] font-semibold tracking-[-0.025em]">Choose a new password</h1>
       <p className="mt-2 text-[14px] leading-relaxed text-muted">
         At least 8 characters. Setting it will sign out every other session.
       </p>
 
-      <form onSubmit={submit} className="mt-8 flex flex-col gap-3">
+      <form onSubmit={submit} className="mt-7 flex flex-col gap-4">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[12.5px] text-muted">New password</span>
+          <span className="text-[13px] font-medium">New password</span>
           <input
             type="password"
             required
@@ -87,12 +87,12 @@ export default function ResetForm({ token, valid }) {
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-11 rounded-xl border border-line bg-raise px-3.5 text-[14px] text-ink outline-none transition-colors focus:border-accent/60"
+            className="input"
           />
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-[12.5px] text-muted">Confirm password</span>
+          <span className="text-[13px] font-medium">Confirm password</span>
           <input
             type="password"
             required
@@ -100,12 +100,12 @@ export default function ResetForm({ token, valid }) {
             autoComplete="new-password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            className="h-11 rounded-xl border border-line bg-raise px-3.5 text-[14px] text-ink outline-none transition-colors focus:border-accent/60"
+            className="input"
           />
         </label>
 
         {error && (
-          <p role="alert" className="rounded-xl border border-red-500/25 bg-red-500/10 px-3.5 py-2.5 text-[13px] text-red-300">
+          <p role="alert" className="alert-error">
             {error}
           </p>
         )}
@@ -113,7 +113,7 @@ export default function ResetForm({ token, valid }) {
         <button
           type="submit"
           disabled={busy}
-          className="mt-2 h-11 rounded-full bg-ink text-[14px] font-medium text-base transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
+          className="btn btn-primary mt-1 w-full"
         >
           {busy ? "Updating…" : "Update password"}
         </button>

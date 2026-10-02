@@ -16,11 +16,11 @@ export default function TourLauncher({ pool, showcase }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="group inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-[14px] text-ink transition-colors hover:border-ink/25"
+        className="btn btn-lg btn-secondary group"
       >
         <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-good opacity-75" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-good" />
         </span>
         Try a template live
       </button>

@@ -2,8 +2,8 @@ import { stat } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { currentUser } from "@/lib/auth";
-import { owns, ownedSlugs } from "@/lib/store";
-import { BUNDLE, TEMPLATES, isOwnableSlug } from "@/lib/catalog";
+import { owns } from "@/lib/store";
+import { BUNDLE, isOwnableSlug } from "@/lib/catalog";
 
 import { downloadStream } from "@/lib/download-stream";
 
@@ -29,12 +29,16 @@ export async function GET(_request, { params }) {
     return NextResponse.json({ error: "Sign in to download." }, { status: 401 });
   }
 
-  const library = slug === BUNDLE.slug ? await ownedSlugs(user.id) : null;
-  const entitled = library
-    ? TEMPLATES.every(t => library.has(t.slug))
-    : await owns(user.id, slug);
+  // The old bundle no longer has a zip of its own: its owners own every
+  // template individually and download each from their library.
+  if (slug === BUNDLE.slug) {
+    return NextResponse.json(
+      { error: "Download each template from your library." },
+      { status: 410 }
+    );
+  }
 
-  if (!entitled) {
+  if (!(await owns(user.id, slug))) {
     return NextResponse.json(
       { error: "You don't own this template." },
       { status: 403 }

@@ -9,7 +9,7 @@ import { libraryFor, ordersFor, orderById, itemName } from "@/lib/store";
 import { buildsFor } from "@/lib/builds";
 import { editorAccess } from "@/lib/editor-core";
 import BuildStatus from "@/components/BuildStatus";
-import { TEMPLATES, BUNDLE, money } from "@/lib/catalog";
+import { TEMPLATES, money } from "@/lib/catalog";
 
 export const metadata = { title: "Your library", robots: { index: false } };
 
@@ -31,7 +31,6 @@ export default async function AccountPage({ searchParams }) {
   const returned = justOrdered ? await orderById(String(justOrdered), user.id).catch(() => null) : null;
 
   const library = TEMPLATES.filter((t) => owned.has(t.slug));
-  const hasAll = library.length === TEMPLATES.length;
 
   return (
     <>
@@ -81,22 +80,6 @@ export default async function AccountPage({ searchParams }) {
             </div>
           ) : (
             <>
-              {hasAll && (
-                <a
-                  href={`/api/download/${BUNDLE.slug}`}
-                  className="mb-4 flex items-center justify-between gap-4 rounded-2xl bg-night p-6 text-white"
-                >
-                  <div>
-                    <p className="text-[16px] font-semibold">Everything in one download</p>
-                    <p className="mt-0.5 text-[13.5px] text-night-muted">
-                      All {TEMPLATES.length} templates in a single zip. New releases appear here automatically.
-                    </p>
-                  </div>
-                  <span className="btn btn-sm btn-on-dark">
-                    <Icon name="download" size={15} /> Download all
-                  </span>
-                </a>
-              )}
 
               <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {library.map((t) => (

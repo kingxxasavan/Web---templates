@@ -47,7 +47,7 @@ export default async function TemplatesPage({ searchParams }) {
       <CustomRequestNotice price={money(MADE_FOR_YOU.priceCents)} delivery={MADE_FOR_YOU.delivery} />
 
       <ClosingCta
-        title="Every template includes"
+        title="Every HTML template includes"
         accent="the online editor."
         body="Change the words, colours and fonts on every page in your browser, then download your finished site. No code, whichever price you pick."
         primary={{ href: "/editor/aurora-commerce", label: "Try the editor" }}

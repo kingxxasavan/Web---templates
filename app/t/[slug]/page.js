@@ -65,7 +65,9 @@ export default async function TemplatePage({ params }) {
   const src = isOpenSource(t) ? t.source : null;
   const licence = src
     ? `${src.license}${src.attributionRequired ? ", credit the author" : ", keep the notice"}`
-    : "Commercial, no attribution";
+    : t.photos
+      ? "Commercial; photos CC BY 2.0"
+      : "Commercial, no attribution";
   // Same category first, then anything else, so "more like this" means it.
   const others = [
     ...CATALOG.filter((o) => o.slug !== t.slug && o.category === t.category),
@@ -259,6 +261,16 @@ export default async function TemplatePage({ params }) {
                     {src.attributionRequired
                       ? ", so the author's credit stays visible on your site."
                       : ", so its copyright notice stays in the source."}
+                  </>
+                ) : t.photos ? (
+                  <>
+                    An original Foundry design. Its commercial licence covers personal and client
+                    projects, with no credit required for the template. The photographs are by
+                    named photographers under{" "}
+                    <a className="underline underline-offset-2 hover:text-ink" href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">
+                      CC BY 2.0
+                    </a>
+                    : keep the included credits page if you keep them, or swap in your own.
                   </>
                 ) : (
                   "An original Foundry design. Its commercial licence covers personal and client projects, with no credit required."

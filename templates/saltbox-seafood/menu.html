@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu — Saltbox, Whitstable</title>
+<meta name="description" content="Oysters, small plates, fish from the grill and puddings. Written daily after the boats come in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<div class="topline">
+  <div class="container">
+    <span data-open-status><span class="status-dot"></span><span data-open-text>Open Wednesday to Sunday</span></span>
+    <span>The Harbour Wall, Whitstable · <strong>01227 555 019</strong></span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="mark" href="index.html">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3c6 0 11 4.5 11 10.5S20 25 14 25 3 19.5 3 13.5 8 3 14 3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 6v16M8 9.5c2 2.5 2 7.5 0 10M20 9.5c-2 2.5-2 7.5 0 10" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      Saltbox
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="menu.html" aria-current="page">Menu</a>
+      <a href="visit.html">Visit &amp; private dining</a>
+      <a class="btn btn--primary" href="book.html">Book a table</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">Written <span data-today>today</span></span>
+      <h1>The menu</h1>
+      <p class="lede">Everything changes with the boats, so think of this as a very good guess. Your server will tell you what came in this morning and what’s already gone.</p>
+    </div>
+  </section>
+
+  <div class="menu-bar">
+    <div class="container">
+      <div class="tabs" role="tablist" aria-label="Menu sections">
+        <button class="tab" type="button" role="tab" data-tab="all" aria-selected="true">Everything</button>
+        <button class="tab" type="button" role="tab" data-tab="raw" aria-selected="false">Raw bar</button>
+        <button class="tab" type="button" role="tab" data-tab="small" aria-selected="false">Small plates</button>
+        <button class="tab" type="button" role="tab" data-tab="grill" aria-selected="false">From the grill</button>
+        <button class="tab" type="button" role="tab" data-tab="sides" aria-selected="false">Sides</button>
+        <button class="tab" type="button" role="tab" data-tab="pudding" aria-selected="false">Puddings</button>
+        <button class="tab" type="button" role="tab" data-tab="drinks" aria-selected="false">Drinks</button>
+      </div>
+      <div class="diet" aria-label="Dietary filters">
+        <label><input type="checkbox" data-diet value="gf"> Gluten-free</label>
+        <label><input type="checkbox" data-diet value="v"> Vegetarian</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-bottom:96px">
+
+    <section class="menu-section" data-section="raw" id="raw">
+      <header><h2>Raw bar</h2><p>Shucked to order. Served with shallot vinegar, lemon and Tabasco. Half a dozen of any one kind is £15.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags="gf"><h3>Whitstable native oyster</h3><span class="price">£3.40</span><p>Our own beds. Mineral and nutty, September to April only.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Rock oyster, Seasalter</h3><span class="price">£2.80</span><p>Clean and briny. The one to start with.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Scallop crudo</h3><span class="price">£14</span><p>Hand-dived scallop, blood orange, chilli, good olive oil.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Cured salmon</h3><span class="price">£12</span><p>Cured in-house for three days with beetroot and dill, crème fraîche.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <section class="menu-section" data-section="small" id="small">
+      <header><h2>Small plates</h2><p>For the table, or a few to make a meal at the bar.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags=""><h3>Crab on toast</h3><span class="price">£13</span><p>White and brown meat, sourdough, pickled cucumber.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags=""><h3>Fried whitebait</h3><span class="price">£8</span><p>Paprika salt, lemon mayonnaise.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Smoked mackerel pâté</h3><span class="price">£9</span><p>Horseradish, pickled shallots, seeded crackers (ask for gluten-free).</p><div class="tags"><span class="tag tag--gf">GF on request</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Charred hispi cabbage</h3><span class="price">£9</span><p>Seaweed butter, toasted hazelnuts, lemon.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags=""><h3>Salt cod croquettes</h3><span class="price">£9</span><p>Three, with aioli and pickled chilli.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags="v"><h3>Bread &amp; butter</h3><span class="price">£5</span><p>Our sourdough, cultured butter, flaky salt.</p><div class="tags"><span class="tag tag--v">V</span></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <section class="menu-section" data-section="grill" id="grill">
+      <header><h2>From the grill</h2><p>Cooked over oak and charcoal. Whole fish are priced by weight and served on the bone.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags="gf"><h3>Half native lobster</h3><span class="price">£38</span><p>Garlic and seaweed butter, chips or salad.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Whole lemon sole</h3><span class="price">£24</span><p>Brown butter, capers, parsley.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Turbot for two</h3><span class="price">£68</span><p>About 1.2kg, hollandaise, grilled leeks.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags=""><h3>Mussels, cider &amp; cream</h3><span class="price">£17</span><p>Kentish rope mussels, local cider, sourdough.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags="gf"><h3>Saltbox rice for two</h3><span class="price">£46</span><p>Saffron rice with mussels, prawns and the day’s fish.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Grilled celeriac steak</h3><span class="price">£18</span><p>Brown butter, capers, crispy sage, mash.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <section class="menu-section" data-section="sides" id="sides">
+      <header><h2>Sides</h2><p>All £5.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags="gf"><h3>Chips</h3><span class="price">£5</span><p>Fried in beef dripping. Ask for the vegetable-oil batch.</p><div class="tags"><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Green salad</h3><span class="price">£5</span><p>Soft leaves, mustard dressing.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Buttered new potatoes</h3><span class="price">£5</span><p>Mint, sea salt.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Samphire</h3><span class="price">£5</span><p>When in season, with butter.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <section class="menu-section" data-section="pudding" id="pudding">
+      <header><h2>Puddings</h2><p>Made each morning by Ana, our pastry chef.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags="v"><h3>Brown butter tart</h3><span class="price">£8</span><p>Crème fraîche, sea salt.</p><div class="tags"><span class="tag tag--v">V</span></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Burnt honey ice cream</h3><span class="price">£6</span><p>Two scoops, honeycomb.</p><div class="tags"><span class="tag tag--v">V</span><span class="tag tag--gf">GF</span></div></li>
+        <li class="menu-item" data-tags="v"><h3>Rhubarb trifle</h3><span class="price">£8</span><p>Custard, ginger sponge, cream.</p><div class="tags"><span class="tag tag--v">V</span></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <section class="menu-section" data-section="drinks" id="drinks">
+      <header><h2>Drinks</h2><p>A short list built for shellfish. Ask for the full wine list, or a taste before you choose.</p></header>
+      <ul class="menu-list">
+        <li class="menu-item" data-tags="v gf"><h3>Muscadet sur lie</h3><span class="price">£8 / £34</span><p>Glass or bottle. Salty, bright, made for oysters.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Kentish sparkling</h3><span class="price">£11 / £58</span><p>From a vineyard twelve miles inland.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags=""><h3>Oyster stout</h3><span class="price">£6.50</span><p>Brewed down the road, a pint.</p><div class="tags"></div></li>
+        <li class="menu-item" data-tags="v gf"><h3>Saltbox martini</h3><span class="price">£11</span><p>Sea-herb gin, dry vermouth, a pickled samphire.</p><div class="tags"></div></li>
+      </ul>
+      <p class="menu-empty" hidden>Nothing in this section matches your filters today.</p>
+    </section>
+
+    <p class="allergens">Please tell us about any allergies before you order. Our kitchen handles fish, shellfish, gluten, dairy, eggs and nuts, so we can’t promise any dish is free of traces. GF dishes are made without gluten-containing ingredients.</p>
+  </div>
+</main>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Seen enough? Tables go quickly on Fridays.</h2>
+    <a class="btn btn--dark" href="book.html">Book a table</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="mark" href="index.html">Saltbox</a>
+      <p>Oyster bar and seafood kitchen on the harbour wall in Whitstable. Fish from two day boats, oysters from the beds outside.</p>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <ul><li>The Harbour Wall</li><li>Whitstable CT5 1AB</li><li><a href="tel:+441227555019">01227 555 019</a></li></ul>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul><li><a href="menu.html">Menu</a></li><li><a href="book.html">Book a table</a></li><li><a href="visit.html#private">Private dining</a></li><li><a href="visit.html#faq">Questions</a></li></ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <ul><li><a href="#">Instagram</a></li><li><a href="#">Newsletter</a></li><li><a href="mailto:hello@saltbox.example">hello@saltbox.example</a></li></ul>
+    </div>
+  </div>
+  <div class="container footer__base">
+    <span>© 2026 Saltbox Whitstable Ltd</span>
+    <a href="credits.html">Photo credits</a>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -15,10 +15,6 @@ const nextConfig = {
     // Each product page shows that template's README.
     "/t/[slug]": ["./templates/*/README.md"],
   },
-  outputFileTracingExcludes: {
-    // Only single-template zips are ever customised.
-    "/api/editor/[slug]/download": ["./private/downloads/everything.zip"],
-  },
   async headers() {
     return [
       {

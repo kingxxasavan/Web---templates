@@ -25,7 +25,7 @@ const COMPARISON = [
   ["Original author credited", "Always", "Varies by seller"],
   ["Money-back guarantee", `${SITE.refundDays} days`, "Usually only if broken"],
   ["Help from people who know the code", "Yes", "Varies by seller"],
-  ["Online editor to customise it", "Every template", "Rarely"],
+  ["Online editor to customise it", "Every HTML template", "Rarely"],
   ["Built to your brief", `${money(MADE_FOR_YOU.priceCents)}, ${MADE_FOR_YOU.delivery}`, "Quoted separately"],
 ];
 

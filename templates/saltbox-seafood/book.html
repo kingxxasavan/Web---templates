@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a table — Saltbox, Whitstable</title>
+<meta name="description" content="Book a table at Saltbox, up to twelve weeks ahead. The bar is kept for walk-ins every day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<div class="topline">
+  <div class="container">
+    <span data-open-status><span class="status-dot"></span><span data-open-text>Open Wednesday to Sunday</span></span>
+    <span>The Harbour Wall, Whitstable · <strong>01227 555 019</strong></span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="mark" href="index.html">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3c6 0 11 4.5 11 10.5S20 25 14 25 3 19.5 3 13.5 8 3 14 3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 6v16M8 9.5c2 2.5 2 7.5 0 10M20 9.5c-2 2.5-2 7.5 0 10" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      Saltbox
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="visit.html">Visit &amp; private dining</a>
+      <a class="btn btn--primary" href="book.html" aria-current="page">Book a table</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">Reservations</span>
+      <h1>Book a table</h1>
+      <p class="lede">Choose a day, a time and how many of you there are. You’ll get a confirmation straight away. Running late? Call us and we’ll hold the table for fifteen minutes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container booking">
+      <div>
+        <form class="form-card" id="booking-form" novalidate>
+          <div class="row">
+            <div class="field">
+              <label for="date">Date</label>
+              <input class="input" type="date" id="date" name="date" required>
+              <span class="error" data-error="date"></span>
+            </div>
+            <div class="field">
+              <span class="label" id="guests-label">Guests</span>
+              <div class="stepper" role="group" aria-labelledby="guests-label">
+                <button type="button" data-step="-1" aria-label="Fewer guests">−</button>
+                <output data-guests aria-live="polite">2</output>
+                <button type="button" data-step="1" aria-label="More guests">+</button>
+              </div>
+              <span class="label-note">For eight or more, see <a href="visit.html#private">private dining</a>.</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="label">Time</span>
+            <div class="slots" data-slots role="group" aria-label="Available times"></div>
+            <span class="slots-note" data-slots-note>Choose a date to see available times.</span>
+            <span class="error" data-error="time"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">Where would you like to sit?</span>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="seating" value="Dining room" checked> Dining room</label>
+              <label class="chip"><input type="radio" name="seating" value="Window, sea view"> By the window</label>
+              <label class="chip"><input type="radio" name="seating" value="Terrace"> Terrace, weather allowing</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input class="input" id="name" name="name" autocomplete="name" required>
+              <span class="error" data-error="name"></span>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" required>
+              <span class="error" data-error="phone"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" required>
+            <span class="error" data-error="email"></span>
+          </div>
+          <div class="field">
+            <label for="occasion">Anything we should know? <span class="label-note">Optional</span></label>
+            <textarea class="input" id="occasion" name="notes" placeholder="Allergies, a birthday, a high chair…"></textarea>
+          </div>
+          <div class="field">
+            <button class="btn btn--primary btn--block" type="submit">Confirm booking</button>
+          </div>
+        </form>
+
+        <div class="form-card success" id="booking-done" hidden>
+          <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="none" stroke="currentColor" stroke-width="2"/><path d="m17 29 7 7 15-16" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+          <h2>You’re booked in.</h2>
+          <p data-done-text>We’ve sent the details to your email.</p>
+          <p><a class="link-arrow" href="menu.html">Have a look at the menu <span aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+
+      <aside class="summary" aria-label="Your booking">
+        <h3>Your table</h3>
+        <dl>
+          <div><dt>Date</dt><dd data-sum="date">—</dd></div>
+          <div><dt>Time</dt><dd data-sum="time">—</dd></div>
+          <div><dt>Party</dt><dd data-sum="guests">2 guests</dd></div>
+          <div><dt>Seating</dt><dd data-sum="seat">Dining room</dd></div>
+        </dl>
+        <p>No deposit for tables of up to six. We ask for a card to hold larger bookings and only charge for no-shows.</p>
+        <p>Cancel or change any time up to 24 hours before, from the link in your email.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container split split--flip">
+      <div class="split__media reveal"><img src="assets/img/salmon.jpg" alt="Slices of beetroot-cured salmon on a board" width="1024" height="820" loading="lazy"></div>
+      <div class="split__body reveal">
+        <span class="eyebrow">No booking? No problem</span>
+        <h2>The bar is always first come, first served.</h2>
+        <p class="lede">Twelve seats at the raw bar are never booked. Come and have a dozen oysters and a glass of Muscadet while you wait for a table, or instead of one.</p>
+        <p><a class="link-arrow" href="visit.html">Opening hours and directions <span aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="mark" href="index.html">Saltbox</a>
+      <p>Oyster bar and seafood kitchen on the harbour wall in Whitstable. Fish from two day boats, oysters from the beds outside.</p>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <ul><li>The Harbour Wall</li><li>Whitstable CT5 1AB</li><li><a href="tel:+441227555019">01227 555 019</a></li></ul>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul><li><a href="menu.html">Menu</a></li><li><a href="book.html">Book a table</a></li><li><a href="visit.html#private">Private dining</a></li><li><a href="visit.html#faq">Questions</a></li></ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <ul><li><a href="#">Instagram</a></li><li><a href="#">Newsletter</a></li><li><a href="mailto:hello@saltbox.example">hello@saltbox.example</a></li></ul>
+    </div>
+  </div>
+  <div class="container footer__base">
+    <span>© 2026 Saltbox Whitstable Ltd</span>
+    <a href="credits.html">Photo credits</a>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

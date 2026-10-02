@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
 /** What the demo banner offers while the editor is locked. */
 function offerFor(template) {
   return {
-    note: `Every template includes the editor. Buy ${template.name} to save your changes and download your site.`,
+    note: `The editor comes with every HTML template. Buy ${template.name} to save your changes and download your site.`,
     label: `Buy ${template.name} — ${money(TIERS[template.tier].priceCents)}`,
     href: `/t/${template.slug}`,
   };

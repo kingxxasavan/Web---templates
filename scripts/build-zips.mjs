@@ -1,6 +1,8 @@
 /**
  * Packages each template in templates/ into private/downloads/<slug>.zip (served only through the authorised API route),
- * plus one bundle zip containing all of them.
+ * one per template. (The old all-in-one bundle zip is no longer built: it
+ * doubled the size of the download functions, and bundle owners download
+ * each template from their library instead.)
  *
  * Runs before `next build`, so the downloads always match the source in the
  * repo and nothing stale gets committed. Anything a buyer shouldn't receive
@@ -47,16 +49,12 @@ async function main() {
 
   if (!slugs.length) throw new Error(`No templates found in ${SRC}`);
 
-  const all = [];
   for (const slug of slugs) {
     const dir = path.join(SRC, slug);
     const size = await zip([{ dir, prefix: slug }], path.join(OUT, `${slug}.zip`));
-    all.push({ dir, prefix: slug });
     console.log(`  ${slug}.zip — ${kb(size)}`);
   }
 
-  const bundleSize = await zip(all, path.join(OUT, "everything.zip"));
-  console.log(`  everything.zip — ${kb(bundleSize)}`);
   console.log(`packaged ${slugs.length} templates`);
 }
 

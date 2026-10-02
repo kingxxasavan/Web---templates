@@ -329,7 +329,7 @@ export default async function Home() {
                 page titles for Google, then download your finished site.
               </p>
               <ul className="mt-5 flex flex-1 flex-col gap-2 text-[14px]">
-                {["No code and nothing to install", "Changes save to your account", "Included with every template, at every price"].map((x) => (
+                {["No code and nothing to install", "Changes save to your account", "Included with every HTML template, at every price"].map((x) => (
                   <li key={x} className="flex gap-2"><Check /> {x}</li>
                 ))}
               </ul>
@@ -408,7 +408,7 @@ export default async function Home() {
         <SectionHeading eyebrow="Pricing" title="Simple prices. Paid once." center>
           Every template costs {money(TIERS.starter.priceCents)},{" "}
           {money(TIERS.pro.priceCents)} or {money(TIERS.premium.priceCents)}.
-          The online editor is included with all of them.
+          Every HTML template includes the online editor.
         </SectionHeading>
         <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-4">
           {tiers.map((tier, i) => (

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tickets — Signal 2027, Lisbon</title>
+<meta name="description" content="Tickets for Signal 2027: early bird £249, standard £349, and teams of five at £289 each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html"><span class="logo__mark"><span></span></span>Signal</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="schedule.html">Schedule <span class="my-count" data-my-count hidden>0</span></a>
+      <a href="speakers.html">Speakers</a>
+      <a href="index.html#venue">Venue</a>
+      <a class="btn btn--primary" href="tickets.html" aria-current="page">Get tickets</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="kicker" data-days-to-go>Coming soon</span>
+      <h1>Tickets</h1>
+      <p class="lede">Every ticket covers both days, every talk and workshop, lunches, the party and the recordings. Choose how many you need, then tell us who’s coming.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="tiers">
+        <div class="tier tier--hot">
+          <span class="tier__label">Until 31 January</span>
+          <h3 data-name="early">Early bird</h3>
+          <p class="tier__price">£249<s>£349</s></p>
+          <ul><li>Both days, every session</li><li>Lunches and the party</li><li>All recordings</li></ul>
+          <div class="tier__buy">
+            <span class="muted" style="color:#a9a9a9">Quantity</span>
+            <div class="qty"><button type="button" data-add="early" data-by="-1" aria-label="One fewer Early bird ticket">−</button><output data-qty="early" aria-live="polite">0</output><button type="button" data-add="early" data-by="1" aria-label="One more Early bird ticket">+</button></div>
+          </div>
+        </div>
+        <div class="tier">
+          
+          <h3 data-name="standard">Standard</h3>
+          <p class="tier__price">£349</p>
+          <ul><li>Both days, every session</li><li>Lunches and the party</li><li>All recordings</li></ul>
+          <div class="tier__buy">
+            <span class="muted" style="">Quantity</span>
+            <div class="qty"><button type="button" data-add="standard" data-by="-1" aria-label="One fewer Standard ticket">−</button><output data-qty="standard" aria-live="polite">0</output><button type="button" data-add="standard" data-by="1" aria-label="One more Standard ticket">+</button></div>
+          </div>
+        </div>
+        <div class="tier">
+          <span class="tier__label">Save £300</span>
+          <h3 data-name="team">Team of five</h3>
+          <p class="tier__price">£1,445</p>
+          <ul><li>Five standard tickets</li><li>Swap names any time</li><li>One invoice for finance</li></ul>
+          <div class="tier__buy">
+            <span class="muted" style="">Quantity</span>
+            <div class="qty"><button type="button" data-add="team" data-by="-1" aria-label="One fewer Team of five ticket">−</button><output data-qty="team" aria-live="polite">0</output><button type="button" data-add="team" data-by="1" aria-label="One more Team of five ticket">+</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout">
+        <div>
+          <form class="panel" id="checkout" novalidate>
+            <h3>Who’s the booking for?</h3>
+            <p class="muted" style="margin-top:6px">We’ll email the tickets here. You can add each attendee’s name later.</p>
+            <div class="row" style="margin-top:22px">
+              <div class="field"><label for="name">Full name</label><input class="input" id="name" name="name" autocomplete="name" required data-message="Add your name."><span class="error" data-error="name"></span></div>
+              <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" required data-message="Enter an email for your tickets."><span class="error" data-error="email"></span></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="company">Company <span class="muted">(for the invoice)</span></label><input class="input" id="company" name="company" autocomplete="organization"></div>
+              <div class="field"><label for="role">Your role</label><select class="input" id="role" name="role"><option>Engineering</option><option>Design</option><option>Product</option><option>Leadership</option><option>Something else</option></select></div>
+            </div>
+            <div class="field"><label for="needs">Access or dietary needs <span class="muted">(optional)</span></label><textarea class="input" id="needs" name="needs" rows="3" placeholder="Step-free seating, a quiet room, vegan lunches…"></textarea></div>
+            <div class="field"><button class="btn btn--primary btn--block" type="submit" data-pay disabled>Continue to payment</button></div>
+            <p class="muted" style="margin-top:12px;font-size:.86rem">Payment is handled securely by Stripe. Full refunds up to 60 days before the event.</p>
+          </form>
+          <div class="panel success" id="checkout-done" hidden>
+            <div class="success__mark"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></div>
+            <h2 style="font-size:2.2rem">You’re coming to Signal.</h2>
+            <p>Your tickets are on their way to <strong data-done-email>you</strong>. Next stop: <a href="schedule.html">plan your schedule</a>.</p>
+          </div>
+        </div>
+        <aside class="panel order" aria-label="Your order">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Your order</h3><span class="muted" data-count>0 attendees</span></div>
+          <ul class="order__lines" data-lines></ul>
+          <ul class="order__lines" data-discount hidden style="margin-top:0"><li><span>Discount</span><span data-discount-value></span></li></ul>
+          <div class="promo"><input class="input" id="promo" placeholder="Promo code" aria-label="Promo code"><button class="btn btn--outline" type="button" id="promo-apply">Apply</button></div>
+          <p class="error" data-promo-msg aria-live="polite"></p>
+          <div class="order__total"><span>Total</span><span data-total>£0</span></div>
+          <p class="order__note">Prices include Portuguese VAT. Try the code COMMUNITY15.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container intro" style="margin-bottom:0">
+      <div><span class="kicker">Access</span><h2 style="margin-top:16px">Everyone should be able to come.</h2></div>
+      <div>
+        <p class="lede">We give away 60 tickets to people from groups under-represented in tech, and offer 50% off for students, non-profits and anyone paying their own way. Applications close on 31 March.</p>
+        <p style="margin-top:22px"><a class="btn btn--outline" href="#">Apply for a ticket</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="logo" href="index.html"><span class="logo__mark"><span></span></span>Signal</a>
+      <p>The product and engineering conference. Lisbon, every May since 2019.</p>
+    </div>
+    <div><h4>Event</h4><ul><li><a href="schedule.html">Schedule</a></li><li><a href="speakers.html">Speakers</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="index.html#venue">Venue</a></li></ul></div>
+    <div><h4>Get involved</h4><ul><li><a href="#">Call for speakers</a></li><li><a href="#">Sponsor Signal</a></li><li><a href="#">Volunteer</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="mailto:hello@signal.example">hello@signal.example</a></li><li><a href="#">Code of conduct</a></li><li><a href="#">Newsletter</a></li></ul></div>
+  </div>
+  <div class="container footer__base"><span>© 2027 Signal Events Lda.</span><span>Recordings free a month after every event.</span></div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

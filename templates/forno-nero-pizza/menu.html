@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu · Forno Nero</title>
+<meta name="description" content="The Forno Nero menu: red and white pizzas, small plates, desserts and drinks, with vegan and gluten-free options.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip"><div class="container"><span data-status-line>Wood-fired pizza in Ancoats · Collection and delivery</span></div></div>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#1c1714"/><path d="M8 27a12 12 0 0 1 24 0Z" fill="#c8341f"/><path d="M14 27c0-4 2.5-7 6-9 3.5 2 6 5 6 9" fill="#f29a3a"/><path d="M18 27c0-2 1-3.5 2-4.5 1 1 2 2.5 2 4.5" fill="#f6efe4"/><path d="M6 28h28" stroke="#f6efe4" stroke-width="1.6" stroke-linecap="round"/></svg>Forno Nero</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="menu.html" aria-current="page">Menu</a>
+      <a href="order.html">Build a pizza</a>
+      <a href="index.html#deals">Deals</a>
+      <a href="index.html#visit">Visit</a>
+      <button class="basket-btn" type="button" data-open-basket><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>Basket <span data-count>0</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head"><div class="container"><p class="eyebrow">Menu</p><h1>Everything from <em>the fire.</em></h1><p>Add to your order as you go. Prefer something else on it? <a class="link" href="order.html">Build your own</a>, half and half if you like.</p></div></section>
+  <div class="menu-bar"><div class="container">
+    <nav class="tabs" aria-label="Menu sections"><a href="#rosse">Pizze rosse</a><a href="#bianche">Pizze bianche</a><a href="#small">Small plates</a><a href="#sweet">Desserts</a><a href="#drinks">Drinks</a></nav>
+    <div class="toggles" role="group" aria-label="Dietary filters">
+      <label class="toggle"><input type="checkbox" value="v" data-filter><span>Vegetarian</span></label>
+      <label class="toggle"><input type="checkbox" value="vg" data-filter><span>Vegan</span></label>
+      <label class="toggle"><input type="checkbox" value="gf" data-filter><span>Gluten-free option</span></label>
+    </div>
+  </div></div>
+  <div class="container" style="padding-bottom: 64px">
+    <section class="menu-section" id="rosse">
+      <h2>Pizze rosse</h2>
+      <p>With San Marzano tomato. Every pizza can be made on a gluten-free base for £2.</p>
+      <div class="items">
+          <div class="item" data-item="margherita" data-name="Margherita" data-price="950" data-tags="v gf"><img src="assets/img/margherita.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Margherita <span class="diet"><span class="v" title="Vegetarian">V</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>San Marzano tomato, fior di latte, basil, olive oil.</p></div><div class="item__end"><b>£9.50</b><button class="plus" type="button" data-add aria-label="Add Margherita to your order">+</button></div></div>
+          <div class="item" data-item="marinara" data-name="Marinara" data-price="800" data-tags="vg gf"><img src="assets/img/marinara.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Marinara <span class="diet"><span class="vg" title="Vegan">VG</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Tomato, garlic, oregano and good olive oil. No cheese, all flavour.</p></div><div class="item__end"><b>£8</b><button class="plus" type="button" data-add aria-label="Add Marinara to your order">+</button></div></div>
+          <div class="item" data-item="diavola" data-name="Diavola" data-price="1250" data-tags="hot gf"><img src="assets/img/diavola.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Diavola <span class="diet"><span class="hot" title="Spicy">🌶</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Spicy salami, fior di latte, black olives, chilli oil.</p></div><div class="item__end"><b>£12.50</b><button class="plus" type="button" data-add aria-label="Add Diavola to your order">+</button></div></div>
+          <div class="item" data-item="salsiccia" data-name="Salsiccia" data-price="1300" data-tags="gf"><img src="assets/img/salsiccia.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Salsiccia <span class="diet"><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Fennel sausage, fior di latte, tomato, basil, pecorino.</p></div><div class="item__end"><b>£13</b><button class="plus" type="button" data-add aria-label="Add Salsiccia to your order">+</button></div></div>
+          <div class="item" data-item="salame" data-name="Salame e olive" data-price="1200" data-tags="gf"><img src="assets/img/salame.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Salame e olive <span class="diet"><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Milano salami, tomato, mozzarella, Gaeta olives.</p></div><div class="item__end"><b>£12</b><button class="plus" type="button" data-add aria-label="Add Salame e olive to your order">+</button></div></div>
+          <div class="item" data-item="funghi" data-name="Funghi e salame" data-price="1250" data-tags="gf"><img src="assets/img/funghi.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Funghi e salame <span class="diet"><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Roasted mushrooms, salami, olives, tomato, mozzarella.</p></div><div class="item__end"><b>£12.50</b><button class="plus" type="button" data-add aria-label="Add Funghi e salame to your order">+</button></div></div>
+      </div>
+      <p class="empty" data-none hidden>Nothing here matches your filters.</p>
+    </section>
+    <section class="menu-section" id="bianche">
+      <h2>Pizze bianche</h2>
+      <p>No tomato: a base of fior di latte and garlic oil instead.</p>
+      <div class="items">
+          <div class="item" data-item="zucchine" data-name="Zucchine" data-price="1150" data-tags="v gf"><img src="assets/img/zucchine.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Zucchine <span class="diet"><span class="v" title="Vegetarian">V</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Courgette, ricotta, cherry tomatoes, lemon zest and mint.</p></div><div class="item__end"><b>£11.50</b><button class="plus" type="button" data-add aria-label="Add Zucchine to your order">+</button></div></div>
+          <div class="item" data-item="rucola" data-name="Rucola" data-price="1200" data-tags="v gf"><img src="assets/img/rucola.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Rucola <span class="diet"><span class="v" title="Vegetarian">V</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Fior di latte, garlic, rocket, Parmigiano and toasted almonds.</p></div><div class="item__end"><b>£12</b><button class="plus" type="button" data-add aria-label="Add Rucola to your order">+</button></div></div>
+          <div class="item" data-item="ortolana" data-name="Ortolana" data-price="1200" data-tags="v gf"><img src="assets/img/ortolana.jpg" alt="" width="600" height="600" loading="lazy" decoding="async"><div><h3>Ortolana <span class="diet"><span class="v" title="Vegetarian">V</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Roasted peppers, basil pesto, red onion, mozzarella, rocket.</p></div><div class="item__end"><b>£12</b><button class="plus" type="button" data-add aria-label="Add Ortolana to your order">+</button></div></div>
+      </div>
+      <p class="empty" data-none hidden>Nothing here matches your filters.</p>
+    </section>
+    <section class="menu-section" id="small">
+      <h2>Small plates</h2>
+      <p>Good for sharing while the oven does its thing.</p>
+      <div class="items">
+          <div class="item" data-item="dough" data-name="Garlic dough balls" data-price="550" data-tags="v"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Garlic dough balls <span class="diet"><span class="v" title="Vegetarian">V</span></span></h3><p>Wood-fired, with whipped garlic butter.</p></div><div class="item__end"><b>£5.50</b><button class="plus" type="button" data-add aria-label="Add Garlic dough balls to your order">+</button></div></div>
+          <div class="item" data-item="burrata" data-name="Burrata" data-price="850" data-tags="v"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Burrata <span class="diet"><span class="v" title="Vegetarian">V</span></span></h3><p>Heritage tomatoes, basil oil and charred sourdough.</p></div><div class="item__end"><b>£8.50</b><button class="plus" type="button" data-add aria-label="Add Burrata to your order">+</button></div></div>
+          <div class="item" data-item="arancini" data-name="Arancini" data-price="650" data-tags="v"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Arancini <span class="diet"><span class="v" title="Vegetarian">V</span></span></h3><p>Three, with mozzarella and peas, smoked tomato dip.</p></div><div class="item__end"><b>£6.50</b><button class="plus" type="button" data-add aria-label="Add Arancini to your order">+</button></div></div>
+          <div class="item" data-item="olives" data-name="Gaeta olives" data-price="400" data-tags="vg gf"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Gaeta olives <span class="diet"><span class="vg" title="Vegan">VG</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Warm, with orange peel and fennel.</p></div><div class="item__end"><b>£4</b><button class="plus" type="button" data-add aria-label="Add Gaeta olives to your order">+</button></div></div>
+      </div>
+      <p class="empty" data-none hidden>Nothing here matches your filters.</p>
+    </section>
+    <section class="menu-section" id="sweet">
+      <h2>Desserts</h2>
+      <p>Made in the morning, gone by the evening.</p>
+      <div class="items">
+          <div class="item" data-item="tiramisu" data-name="Tiramisù" data-price="650" data-tags="v"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Tiramisù <span class="diet"><span class="v" title="Vegetarian">V</span></span></h3><p>Espresso, mascarpone, a lot of cocoa.</p></div><div class="item__end"><b>£6.50</b><button class="plus" type="button" data-add aria-label="Add Tiramisù to your order">+</button></div></div>
+          <div class="item" data-item="nutella" data-name="Hazelnut calzone" data-price="700" data-tags="v"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Hazelnut calzone <span class="diet"><span class="v" title="Vegetarian">V</span></span></h3><p>Chocolate hazelnut spread, toasted hazelnuts, sea salt.</p></div><div class="item__end"><b>£7</b><button class="plus" type="button" data-add aria-label="Add Hazelnut calzone to your order">+</button></div></div>
+          <div class="item" data-item="affogato" data-name="Affogato" data-price="450" data-tags="v gf"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Affogato <span class="diet"><span class="v" title="Vegetarian">V</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Fior di latte gelato drowned in espresso.</p></div><div class="item__end"><b>£4.50</b><button class="plus" type="button" data-add aria-label="Add Affogato to your order">+</button></div></div>
+      </div>
+      <p class="empty" data-none hidden>Nothing here matches your filters.</p>
+    </section>
+    <section class="menu-section" id="drinks">
+      <h2>Drinks</h2>
+      <p>Soft drinks, local beer and a short list of Italian wine.</p>
+      <div class="items">
+          <div class="item" data-item="lemon" data-name="Lemon soda" data-price="300" data-tags="vg gf"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Lemon soda <span class="diet"><span class="vg" title="Vegan">VG</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Italian-style and not too sweet.</p></div><div class="item__end"><b>£3</b><button class="plus" type="button" data-add aria-label="Add Lemon soda to your order">+</button></div></div>
+          <div class="item" data-item="lager" data-name="House lager" data-price="500" data-tags="vg"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>House lager <span class="diet"><span class="vg" title="Vegan">VG</span></span></h3><p>Brewed half a mile away. A pint.</p></div><div class="item__end"><b>£5</b><button class="plus" type="button" data-add aria-label="Add House lager to your order">+</button></div></div>
+          <div class="item" data-item="red" data-name="Montepulciano" data-price="650" data-tags="vg gf"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Montepulciano <span class="diet"><span class="vg" title="Vegan">VG</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>A glass of the house red, 175ml.</p></div><div class="item__end"><b>£6.50</b><button class="plus" type="button" data-add aria-label="Add Montepulciano to your order">+</button></div></div>
+          <div class="item" data-item="spritz" data-name="Spritz" data-price="800" data-tags="vg gf"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div><h3>Spritz <span class="diet"><span class="vg" title="Vegan">VG</span><span class="gf" title="Gluten-free option">GF</span></span></h3><p>Bitter orange aperitivo, prosecco and soda.</p></div><div class="item__end"><b>£8</b><button class="plus" type="button" data-add aria-label="Add Spritz to your order">+</button></div></div>
+      </div>
+      <p class="empty" data-none hidden>Nothing here matches your filters.</p>
+    </section>
+  </div>
+</main>
+
+<div class="scrim" data-scrim></div>
+<aside class="drawer" id="drawer" aria-label="Your basket" aria-hidden="true">
+  <div class="drawer__head"><h2>Your order</h2><button class="close" type="button" aria-label="Close basket" data-close-basket>✕</button></div>
+  <div class="drawer__body" data-lines></div>
+  <div class="drawer__foot">
+    <div class="sum"><span>Subtotal</span><span data-subtotal>£0</span></div>
+    <div class="sum" style="color:var(--ink-3);font-size:.9rem"><span data-free-note>Free delivery over £25</span></div>
+    <a class="btn" href="order.html#checkout" data-to-checkout>Checkout</a>
+  </div>
+</aside>
+<div class="toast" role="status" aria-live="polite"></div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div><a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#1c1714"/><path d="M8 27a12 12 0 0 1 24 0Z" fill="#c8341f"/><path d="M14 27c0-4 2.5-7 6-9 3.5 2 6 5 6 9" fill="#f29a3a"/><path d="M18 27c0-2 1-3.5 2-4.5 1 1 2 2.5 2 4.5" fill="#f6efe4"/><path d="M6 28h28" stroke="#f6efe4" stroke-width="1.6" stroke-linecap="round"/></svg>Forno Nero</a><p>Wood-fired Neapolitan-style pizza from a black oven in Ancoats, Manchester. Since 2011.</p></div>
+      <div><h4>Eat</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="order.html">Build a pizza</a></li><li><a href="index.html#deals">This week’s deals</a></li><li><a href="index.html#delivery">Delivery areas</a></li></ul></div>
+      <div><h4>Visit</h4><ul><li>48 Jersey Street</li><li>Ancoats, Manchester M4 6XX</li><li><a href="tel:+441614960420">0161 496 0420</a></li></ul></div>
+      <div><h4>Follow</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="credits.html">Photo credits</a></li><li><a href="#">Allergens</a></li></ul></div>
+    </div>
+    <div class="footer__base"><span>© 2026 Forno Nero Ltd</span><span>Tell us about allergies when you order. Our kitchen handles gluten, dairy and nuts.</span></div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

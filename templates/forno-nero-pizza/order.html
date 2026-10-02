@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build a pizza &amp; order · Forno Nero</title>
+<meta name="description" content="Build your own wood-fired pizza, half and half if you like, then order for collection or delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip"><div class="container"><span data-status-line>Wood-fired pizza in Ancoats · Collection and delivery</span></div></div>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#1c1714"/><path d="M8 27a12 12 0 0 1 24 0Z" fill="#c8341f"/><path d="M14 27c0-4 2.5-7 6-9 3.5 2 6 5 6 9" fill="#f29a3a"/><path d="M18 27c0-2 1-3.5 2-4.5 1 1 2 2.5 2 4.5" fill="#f6efe4"/><path d="M6 28h28" stroke="#f6efe4" stroke-width="1.6" stroke-linecap="round"/></svg>Forno Nero</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="menu.html">Menu</a>
+      <a href="order.html" aria-current="page">Build a pizza</a>
+      <a href="index.html#deals">Deals</a>
+      <a href="index.html#visit">Visit</a>
+      <button class="basket-btn" type="button" data-open-basket><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>Basket <span data-count>0</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head"><div class="container"><p class="eyebrow">Build your own</p><h1>Your pizza, <em>your rules.</em></h1><p>Pick a size, a base and up to eight toppings, on the whole pizza or just one half. Watch it come together, then add it to your order.</p></div></section>
+  <section class="container builder" style="padding-bottom: 72px">
+    <div class="pizza-stage" aria-live="polite">
+      <svg viewBox="0 0 400 400" role="img" aria-label="Your pizza" data-pizza></svg>
+      <div class="pizza-stage__price" data-build-price>£9.50</div>
+      <p class="pizza-stage__name" data-build-name>Margherita base</p>
+      <div class="hero__actions" style="justify-content:center"><button class="btn" type="button" data-build-add>Add to order</button><button class="btn btn--line" type="button" data-build-reset>Start again</button></div>
+    </div>
+    <div class="steps">
+      <div class="step"><h3><span>1</span>Size</h3><div class="opts">
+        <label class="opt"><input type="radio" name="size" value="10" data-price="800"><span>10 inch<small>One hungry person · £8</small></span></label>
+        <label class="opt"><input type="radio" name="size" value="12" data-price="950" checked><span>12 inch<small>The classic · £9.50</small></span></label>
+      </div></div>
+      <div class="step"><h3><span>2</span>Base &amp; cheese</h3><div class="opts">
+        <label class="opt"><input type="radio" name="sauce" value="rosso" checked><span>Tomato<small>San Marzano</small></span></label>
+        <label class="opt"><input type="radio" name="sauce" value="bianca"><span>White<small>Garlic &amp; cream</small></span></label>
+        <label class="opt"><input type="radio" name="cheese" value="fior" checked><span>Fior di latte<small>Included</small></span></label>
+        <label class="opt"><input type="radio" name="cheese" value="vegan" data-price="100"><span>Vegan mozzarella<small>+£1</small></span></label>
+        <label class="opt"><input type="radio" name="cheese" value="none"><span>No cheese<small>Marinara-style</small></span></label>
+        <label class="opt"><input type="checkbox" name="gf" data-price="200"><span>Gluten-free base<small>+£2</small></span></label>
+      </div></div>
+      <div class="step"><h3><span>3</span>Toppings</h3>
+        <div class="toppings">
+          <div class="topping" data-topping="salami" data-price="200"><span class="swatch" style="background:#b8321f"></span><div><b>Spicy salami</b><small>+£2 · half £1</small></div><div class="where" role="group" aria-label="Spicy salami"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="sausage" data-price="200"><span class="swatch" style="background:#8b5a3c"></span><div><b>Fennel sausage</b><small>+£2 · half £1</small></div><div class="where" role="group" aria-label="Fennel sausage"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="ham" data-price="200"><span class="swatch" style="background:#e7a2a0"></span><div><b>Cotto ham</b><small>+£2 · half £1</small></div><div class="where" role="group" aria-label="Cotto ham"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="nduja" data-price="250"><span class="swatch" style="background:#9c1f12"></span><div><b>’Nduja</b><small>+£2.50 · half £1.25</small></div><div class="where" role="group" aria-label="’Nduja"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="mushroom" data-price="150"><span class="swatch" style="background:#c9b08a"></span><div><b>Mushrooms</b><small>+£1.50 · half £0.75</small></div><div class="where" role="group" aria-label="Mushrooms"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="olive" data-price="100"><span class="swatch" style="background:#2a2522"></span><div><b>Black olives</b><small>+£1 · half £0.50</small></div><div class="where" role="group" aria-label="Black olives"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="pepper" data-price="150"><span class="swatch" style="background:#d63a2a"></span><div><b>Roasted peppers</b><small>+£1.50 · half £0.75</small></div><div class="where" role="group" aria-label="Roasted peppers"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="onion" data-price="100"><span class="swatch" style="background:#9a4a8a"></span><div><b>Red onion</b><small>+£1 · half £0.50</small></div><div class="where" role="group" aria-label="Red onion"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="artichoke" data-price="150"><span class="swatch" style="background:#a6b36a"></span><div><b>Artichoke</b><small>+£1.50 · half £0.75</small></div><div class="where" role="group" aria-label="Artichoke"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="chilli" data-price="80"><span class="swatch" style="background:#e23b2b"></span><div><b>Fresh chilli</b><small>+£0.80 · half £0.40</small></div><div class="where" role="group" aria-label="Fresh chilli"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="basil" data-price="50"><span class="swatch" style="background:#3f8a3a"></span><div><b>Fresh basil</b><small>+£0.50 · half £0.25</small></div><div class="where" role="group" aria-label="Fresh basil"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+          <div class="topping" data-topping="rocket" data-price="100"><span class="swatch" style="background:#4f8f2f"></span><div><b>Rocket</b><small>+£1 · half £0.50</small></div><div class="where" role="group" aria-label="Rocket"><button type="button" data-where="left" aria-pressed="false">Left</button><button type="button" data-where="whole" aria-pressed="false">Whole</button><button type="button" data-where="right" aria-pressed="false">Right</button></div></div>
+        </div>
+        <p class="half-note" data-top-note>Choose Left or Right to put a topping on one half only. Half toppings are half price.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="checkout" style="background: var(--surface-2)">
+    <div class="container builder">
+      <div class="summary-card">
+        <h2 style="font-size:2.2rem">Your order</h2>
+        <div data-checkout-lines style="margin-top:10px"></div>
+        <div style="margin-top:14px">
+          <div class="sum"><span>Subtotal</span><span data-co-sub>£0</span></div>
+          <div class="sum"><span>Delivery</span><span data-co-delivery>—</span></div>
+          <div class="sum is-total"><span>Total</span><span data-co-total>£0</span></div>
+        </div>
+      </div>
+      <div>
+        <form class="checkout" id="checkout-form" novalidate>
+          <fieldset class="field"><legend>How would you like it?</legend><div class="opts">
+            <label class="opt"><input type="radio" name="method" value="collect" checked><span>Collection<small data-collect-eta>Ready in about 20 min</small></span></label>
+            <label class="opt"><input type="radio" name="method" value="deliver"><span>Delivery<small>By bike, within 3 miles</small></span></label>
+          </div></fieldset>
+          <div class="field" data-for-deliver hidden><label for="co-pc">Delivery postcode</label><input id="co-pc" name="postcode" autocomplete="postal-code" data-message="We need a postcode in our delivery area."><span class="error" data-error="postcode"></span></div>
+          <div class="field" data-for-deliver hidden><label for="co-addr">Address</label><input id="co-addr" name="address" autocomplete="street-address" data-message="Where should the rider go?"><span class="error" data-error="address"></span></div>
+          <div class="field"><label for="co-time">When?</label><select id="co-time" name="time" data-times></select></div>
+          <div class="row-2">
+            <div class="field"><label for="co-name">Name</label><input id="co-name" name="name" autocomplete="name" required data-message="Who’s the order for?"><span class="error" data-error="name"></span></div>
+            <div class="field"><label for="co-phone">Phone</label><input id="co-phone" name="phone" type="tel" autocomplete="tel" required data-message="So we can call if anything changes."><span class="error" data-error="phone"></span></div>
+          </div>
+          <div class="field"><label for="co-notes">Notes and allergies</label><textarea id="co-notes" name="notes" rows="3" placeholder="Doorbell broken? Nut allergy? Tell us here."></textarea></div>
+          <span class="error" data-error="basket"></span>
+          <button class="btn" type="submit">Place order</button>
+        </form>
+        <div class="done" id="placed" hidden tabindex="-1"><h3>Order placed!</h3><p data-placed-text>We’re on it.</p><span class="ticket" data-ticket>FN-0000</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" data-scrim></div>
+<aside class="drawer" id="drawer" aria-label="Your basket" aria-hidden="true">
+  <div class="drawer__head"><h2>Your order</h2><button class="close" type="button" aria-label="Close basket" data-close-basket>✕</button></div>
+  <div class="drawer__body" data-lines></div>
+  <div class="drawer__foot">
+    <div class="sum"><span>Subtotal</span><span data-subtotal>£0</span></div>
+    <div class="sum" style="color:var(--ink-3);font-size:.9rem"><span data-free-note>Free delivery over £25</span></div>
+    <a class="btn" href="order.html#checkout" data-to-checkout>Checkout</a>
+  </div>
+</aside>
+<div class="toast" role="status" aria-live="polite"></div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div><a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#1c1714"/><path d="M8 27a12 12 0 0 1 24 0Z" fill="#c8341f"/><path d="M14 27c0-4 2.5-7 6-9 3.5 2 6 5 6 9" fill="#f29a3a"/><path d="M18 27c0-2 1-3.5 2-4.5 1 1 2 2.5 2 4.5" fill="#f6efe4"/><path d="M6 28h28" stroke="#f6efe4" stroke-width="1.6" stroke-linecap="round"/></svg>Forno Nero</a><p>Wood-fired Neapolitan-style pizza from a black oven in Ancoats, Manchester. Since 2011.</p></div>
+      <div><h4>Eat</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="order.html">Build a pizza</a></li><li><a href="index.html#deals">This week’s deals</a></li><li><a href="index.html#delivery">Delivery areas</a></li></ul></div>
+      <div><h4>Visit</h4><ul><li>48 Jersey Street</li><li>Ancoats, Manchester M4 6XX</li><li><a href="tel:+441614960420">0161 496 0420</a></li></ul></div>
+      <div><h4>Follow</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="credits.html">Photo credits</a></li><li><a href="#">Allergens</a></li></ul></div>
+    </div>
+    <div class="footer__base"><span>© 2026 Forno Nero Ltd</span><span>Tell us about allergies when you order. Our kitchen handles gluten, dairy and nuts.</span></div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import { marked } from "marked";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
 import AddToCart from "@/components/AddToCart";
@@ -60,6 +60,9 @@ export default async function TemplatePage({ params }) {
   ]);
   const { owned } = library;
   const isOwned = owned.has(t.slug);
+  // Retired editions stay visible to their owners; everyone else is sent to
+  // the current templates for the same kind of business.
+  if (t.retired && !isOwned) permanentRedirect(`/templates?category=${encodeURIComponent(t.category)}`);
   const canEdit = editorAccess(t, library).ok;
   const mine = user && isOwned ? await myReview(user.id, t.slug) : null;
   const price = TIERS[t.tier].priceCents;

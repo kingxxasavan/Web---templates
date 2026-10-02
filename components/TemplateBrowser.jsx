@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TemplateCard from "./TemplateCard";
 import { Icon } from "./icons";
 import { openBrief } from "./BriefWizard";
 import { CATEGORIES, CATALOG, TIERS, money, priceOf } from "@/lib/catalog";
+import { track } from "@/lib/firebase-client";
 
 const SORTS = {
   featured: { label: "Featured", fn: () => 0 },
@@ -19,6 +20,11 @@ export default function TemplateBrowser({ owned = [], ratings = {}, initialCateg
   const [category, setCategory] = useState(initialCategory);
   const [tier, setTier] = useState("all");
   const [sort, setSort] = useState("featured");
+
+  // Funnel step: which category lists people actually look at.
+  useEffect(() => {
+    track("view_item_list", { item_list_id: category, item_list_name: category });
+  }, [category]);
   const ownedSet = useMemo(() => new Set(owned), [owned]);
 
   const results = useMemo(() => {

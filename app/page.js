@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import TemplateCard from "@/components/TemplateCard";
 import TourLauncher from "@/components/TourLauncher";
 import HelixField from "@/components/HelixField";
+import Showcase from "@/components/Showcase";
 import { BriefButton } from "@/components/BriefWizard";
 import { Icon } from "@/components/icons";
 import { Reveal, Check } from "@/components/store";
@@ -32,15 +33,15 @@ import {
 
 // One strong example from each of the busiest categories.
 const FEATURED = [
-  "aurora-commerce",
   "helix-ai",
-  "ember-table",
-  "sable-studio",
-  "pulse-fitness",
-  "monolith-portfolio",
+  "saltbox-seafood",
+  "tessel-saas",
+  "keyline-estates",
+  "wren-calloway-law",
+  "aurora-commerce",
 ].map(bySlug);
 
-const HERO_SHOTS = ["aurora-commerce", "ember-table", "sable-studio"];
+const HERO_SHOTS = ["aurora-commerce", "saltbox-seafood", "tessel-saas"];
 const HELIX = bySlug("helix-ai");
 
 const PILLARS = [
@@ -169,6 +170,8 @@ export default async function Home() {
             </div>
           </Reveal>
         </div>
+
+        <Showcase />
 
         {/* facts strip */}
         <div className="border-y border-line bg-card">

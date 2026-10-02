@@ -256,6 +256,24 @@ body {
   .doc-prose th, .doc-prose td { border-bottom: 1px solid var(--color-line); padding: 8px 10px; text-align: left; }
   .doc-prose th { color: var(--color-ink); font-weight: 600; }
 
+  /* the moving wall of templates under the home page hero */
+  .showcase { display: grid; gap: 18px; padding: 8px 0 40px; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  .showcase__track { display: flex; gap: 18px; width: max-content; margin: 0; padding: 4px 0 8px; list-style: none; animation: showcase-drift 70s linear infinite; }
+  .showcase__row[data-dir="rev"] .showcase__track { animation-direction: reverse; animation-duration: 80s; }
+  .showcase:hover .showcase__track, .showcase:focus-within .showcase__track { animation-play-state: paused; }
+  .showcase__card { display: block; width: 300px; overflow: hidden; border: 1px solid var(--color-line); border-radius: 16px; background: var(--color-card); box-shadow: var(--shadow-card); transition: transform .3s, box-shadow .3s; }
+  .showcase__card:hover, .showcase__card:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .showcase__img { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--color-sunk); border-bottom: 1px solid var(--color-line); }
+  .showcase__meta { display: flex; align-items: baseline; gap: 8px; padding: 10px 14px; font-size: 13px; }
+  .showcase__meta b { font-weight: 600; white-space: nowrap; }
+  .showcase__meta span { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--color-muted); }
+  .showcase__meta em { font-style: normal; font-weight: 600; }
+  @keyframes showcase-drift { to { transform: translateX(calc(-50% - 9px)); } }
+  @media (prefers-reduced-motion: reduce) {
+    .showcase { overflow-x: auto; mask-image: none; }
+    .showcase__track { animation: none !important; }
+  }
+
   .dot-grid {
     background-image: radial-gradient(color-mix(in oklab, var(--color-ink) 12%, transparent) 1px, transparent 1px);
     background-size: 22px 22px;

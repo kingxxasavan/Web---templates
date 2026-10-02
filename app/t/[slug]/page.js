@@ -11,6 +11,7 @@ import { Check, Badge } from "@/components/store";
 import { Icon } from "@/components/icons";
 import Reviews from "@/components/Reviews";
 import LivePreview from "@/components/LivePreview";
+import TrackEvent from "@/components/TrackEvent";
 import Stars from "@/components/Stars";
 import { currentUser } from "@/lib/auth";
 import { libraryFor } from "@/lib/store";
@@ -77,6 +78,14 @@ export default async function TemplatePage({ params }) {
   return (
     <>
       <Masthead />
+      <TrackEvent
+        name="view_item"
+        params={{
+          currency: "USD",
+          value: price / 100,
+          items: [{ item_id: t.slug, item_name: t.name, item_category: t.category, item_variant: t.tier, price: price / 100 }],
+        }}
+      />
 
       <article className="pb-16 pt-8">
         <div className="shell">

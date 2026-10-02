@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
+import { track } from "@/lib/firebase-client";
 
 const money = (c) => `$${(c / 100).toFixed(c % 100 === 0 ? 0 : 2)}`;
 
@@ -28,6 +29,11 @@ export default function CartView({ initialCart, signedIn, refundDays }) {
   async function checkout() {
     setBusy(true);
     setError(null);
+    track("begin_checkout", {
+      currency: "USD",
+      value: cart.totalCents / 100,
+      items: cart.items.map((i) => ({ item_id: i.slug, item_name: i.name, price: i.priceCents / 100 })),
+    });
     const res = await fetch("/api/checkout", { method: "POST" }).catch(() => null);
     const data = await res?.json().catch(() => ({}));
 

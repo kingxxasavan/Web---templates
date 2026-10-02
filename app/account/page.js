@@ -9,6 +9,7 @@ import { libraryFor, ordersFor, orderById, itemName } from "@/lib/store";
 import { buildsFor } from "@/lib/builds";
 import { editorAccess } from "@/lib/editor-core";
 import BuildStatus from "@/components/BuildStatus";
+import TrackEvent from "@/components/TrackEvent";
 import { TEMPLATES, money } from "@/lib/catalog";
 
 export const metadata = { title: "Your library", robots: { index: false } };
@@ -36,6 +37,18 @@ export default async function AccountPage({ searchParams }) {
     <>
       <Masthead />
       <main className="shell py-12 md:py-16">
+        {returned?.status === "paid" && (
+          <TrackEvent
+            name="purchase"
+            once={`purchase-${returned.id}`}
+            params={{
+              transaction_id: returned.id,
+              currency: "USD",
+              value: Number(returned.total_cents) / 100,
+              items: (returned.items ?? []).map((r) => ({ item_id: r.slug, item_name: itemName(r.slug), price: Number(r.price_cents) / 100 })),
+            }}
+          />
+        )}
         {returned?.status === "paid" && (
           <div role="status" className="mb-8 flex items-start gap-3 rounded-2xl border border-good/20 bg-good-soft px-5 py-4">
             <Icon name="check" size={20} strokeWidth={2.2} className="mt-0.5 text-good" />

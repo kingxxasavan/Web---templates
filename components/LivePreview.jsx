@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { track } from "@/lib/firebase-client";
 
 const DEVICES = {
   desktop: { w: "100%", label: "Desktop", icon: "M3 5h18v11H3z M9 20h6" },
@@ -20,6 +21,10 @@ export default function LivePreview({ template }) {
   const [device, setDevice] = useState("desktop");
   const [loading, setLoading] = useState(true);
   const frameRef = useRef(null);
+  const seen = useRef(false);
+  // Funnel steps: the preview loaded, and the visitor actually used it.
+  const used = (action, extra = {}) =>
+    track("preview_interact", { item_id: slug, action, ...extra });
 
   useEffect(() => {
     setLoading(true);
@@ -63,7 +68,10 @@ export default function LivePreview({ template }) {
             {pageList.map((p) => (
               <button
                 key={p.file}
-                onClick={() => setPage(p)}
+                onClick={() => {
+                  setPage(p);
+                  used("page", { page: p.file });
+                }}
                 aria-pressed={page.file === p.file}
                 className={`rounded-md px-2.5 py-1 text-[11.5px] transition-colors ${
                   page.file === p.file
@@ -80,7 +88,10 @@ export default function LivePreview({ template }) {
             {Object.entries(DEVICES).map(([key, d]) => (
               <button
                 key={key}
-                onClick={() => setDevice(key)}
+                onClick={() => {
+                  setDevice(key);
+                  used("device", { device: key });
+                }}
                 aria-label={d.label}
                 aria-pressed={device === key}
                 className={`rounded-md p-1.5 transition-colors ${
@@ -103,6 +114,7 @@ export default function LivePreview({ template }) {
               href={`/preview/${slug}/${page.file}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => used("open_full", { page: page.file })}
               className="ml-1 rounded-md px-2 py-1 text-[11.5px] text-muted transition-colors hover:text-ink"
             >
               Open ↗
@@ -126,7 +138,13 @@ export default function LivePreview({ template }) {
               key={`${slug}-${page.file}`}
               src={`/preview/${slug}/${page.file}`}
               title={`${template.name} — ${page.name}`}
-              onLoad={() => setLoading(false)}
+              onLoad={() => {
+                setLoading(false);
+                if (!seen.current) {
+                  seen.current = true;
+                  track("preview_view", { item_id: slug });
+                }
+              }}
               loading="lazy"
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
               className="h-[620px] w-full border-0 bg-white"

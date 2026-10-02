@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop all plants — Leaf & Clay</title>
+<meta name="description" content="Shop bonsai, houseplants and succulents. Filter by pet safe and easy care.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<p class="ribbon">Free delivery over £50 · Every plant arrives with a care card</p>
+<header class="header">
+  <div class="container header__inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.6"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="shop.html" aria-current="page">Shop all</a>
+      <a href="shop.html?cat=bonsai">Bonsai</a>
+      <a href="care.html">Plant care</a>
+    </nav>
+    <a class="logo" href="index.html"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22C4 11 11 4 22 4c0 11-7 18-18 18Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 22 15 11" stroke="currentColor" stroke-width="1.6"/></svg>Leaf &amp; Clay</a>
+    <div class="tools"><a class="icon-btn" href="shop.html" data-open-basket aria-label="Open basket"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="label">Basket</span><span class="count" data-count>0</span></a></div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="page-head">
+    <span class="tag">The greenhouse</span>
+    <h1>Shop all plants</h1>
+    <p class="lede">Every plant is photographed as a type, then picked by hand for you: yours will be just as healthy, and just a little bit unique.</p>
+  </section>
+  <div class="shopbar">
+    <div class="chips" role="group" aria-label="Categories">
+      <button class="chip" type="button" data-cat-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-cat-filter="bonsai" aria-pressed="false">Bonsai</button>
+      <button class="chip" type="button" data-cat-filter="houseplants" aria-pressed="false">Houseplants</button>
+      <button class="chip" type="button" data-cat-filter="succulents" aria-pressed="false">Succulents</button>
+    </div>
+    <div class="toggles">
+      <label><input type="checkbox" id="pet"> Pet safe</label>
+      <label><input type="checkbox" id="easy"> Easy care</label>
+      <select id="sort" aria-label="Sort"><option value="featured">Featured</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select>
+      <span class="muted" data-shown></span>
+    </div>
+  </div>
+  <div class="grid" data-shop style="padding-bottom:24px">
+        <article class="product" data-product="juniper" data-name="Juniper bonsai" data-price="18500" data-img="assets/img/juniper.jpg" data-cat="bonsai" data-tags="outdoor" data-order="0">
+          <div class="product__media"><a class="product__img" href="product.html"><img src="assets/img/juniper.jpg" alt="Juniper bonsai" width="600" height="750" loading="lazy"><span class="badges"><span class="badge badge--clay">Bestseller</span></span></a><button class="quick" type="button" data-quick aria-label="Add Juniper bonsai to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="product.html">Juniper bonsai</a></h3>
+          <p class="latin">Juniperus procumbens</p>
+          <p class="price">£185</p>
+          <p class="care"><span>Outdoors</span></p>
+        </article>
+        <article class="product" data-product="driftwood" data-name="Driftwood juniper" data-price="24000" data-img="assets/img/driftwood.jpg" data-cat="bonsai" data-tags="outdoor" data-order="1">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/driftwood.jpg" alt="Driftwood juniper" width="600" height="750" loading="lazy"><span class="badges"><span class="badge">One of a kind</span></span></a><button class="quick" type="button" data-quick aria-label="Add Driftwood juniper to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Driftwood juniper</a></h3>
+          <p class="latin">Juniperus chinensis</p>
+          <p class="price">£240</p>
+          <p class="care"><span>Outdoors</span></p>
+        </article>
+        <article class="product" data-product="gardenia-bonsai" data-name="Gardenia bonsai" data-price="9500" data-img="assets/img/gardenia-bonsai.jpg" data-cat="bonsai" data-tags="" data-order="2">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/gardenia-bonsai.jpg" alt="Gardenia bonsai" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Gardenia bonsai to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Gardenia bonsai</a></h3>
+          <p class="latin">Gardenia jasminoides</p>
+          <p class="price">£95</p>
+          
+        </article>
+        <article class="product" data-product="maple" data-name="Trident maple bonsai" data-price="16000" data-img="assets/img/maple.jpg" data-cat="bonsai" data-tags="outdoor" data-order="3">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/maple.jpg" alt="Trident maple bonsai" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Trident maple bonsai to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Trident maple bonsai</a></h3>
+          <p class="latin">Acer buergerianum</p>
+          <p class="price">£160</p>
+          <p class="care"><span>Outdoors</span></p>
+        </article>
+        <article class="product" data-product="palm" data-name="Parlour palm" data-price="2800" data-img="assets/img/palm.jpg" data-cat="houseplants" data-tags="pet easy" data-order="4">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/palm.jpg" alt="Parlour palm" width="600" height="750" loading="lazy"><span class="badges"><span class="badge">Pet safe</span></span></a><button class="quick" type="button" data-quick aria-label="Add Parlour palm to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Parlour palm</a></h3>
+          <p class="latin">Chamaedorea elegans</p>
+          <p class="price">£28</p>
+          <p class="care"><span>Pet safe</span><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="gardenia" data-name="Gardenia" data-price="2400" data-img="assets/img/gardenia.jpg" data-cat="houseplants" data-tags="" data-order="5">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/gardenia.jpg" alt="Gardenia" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Gardenia to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Gardenia</a></h3>
+          <p class="latin">Gardenia jasminoides</p>
+          <p class="price">£24</p>
+          
+        </article>
+        <article class="product" data-product="alocasia" data-name="Elephant ear" data-price="3600" data-img="assets/img/alocasia.jpg" data-cat="houseplants" data-tags="" data-order="6">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/alocasia.jpg" alt="Elephant ear" width="600" height="750" loading="lazy"><span class="badges"><span class="badge badge--clay">New</span></span></a><button class="quick" type="button" data-quick aria-label="Add Elephant ear to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Elephant ear</a></h3>
+          <p class="latin">Alocasia macrorrhizos</p>
+          <p class="price">£36</p>
+          
+        </article>
+        <article class="product" data-product="orchid" data-name="Moth orchid" data-price="2600" data-img="assets/img/orchid.jpg" data-cat="houseplants" data-tags="pet easy" data-order="7">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/orchid.jpg" alt="Moth orchid" width="600" height="750" loading="lazy"><span class="badges"><span class="badge">Pet safe</span></span></a><button class="quick" type="button" data-quick aria-label="Add Moth orchid to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Moth orchid</a></h3>
+          <p class="latin">Phalaenopsis</p>
+          <p class="price">£26</p>
+          <p class="care"><span>Pet safe</span><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="oxalis" data-name="Purple shamrock" data-price="1200" data-img="assets/img/oxalis.jpg" data-cat="houseplants" data-tags="easy" data-order="8">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/oxalis.jpg" alt="Purple shamrock" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Purple shamrock to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Purple shamrock</a></h3>
+          <p class="latin">Oxalis triangularis</p>
+          <p class="price">£12</p>
+          <p class="care"><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="podocarpus" data-name="Buddhist pine" data-price="4500" data-img="assets/img/podocarpus.jpg" data-cat="houseplants" data-tags="easy" data-order="9">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/podocarpus.jpg" alt="Buddhist pine" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Buddhist pine to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Buddhist pine</a></h3>
+          <p class="latin">Podocarpus macrophyllus</p>
+          <p class="price">£45</p>
+          <p class="care"><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="aeonium" data-name="Aeonium rosette" data-price="1400" data-img="assets/img/aeonium.jpg" data-cat="succulents" data-tags="easy" data-order="10">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/aeonium.jpg" alt="Aeonium rosette" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Aeonium rosette to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Aeonium rosette</a></h3>
+          <p class="latin">Aeonium arboreum</p>
+          <p class="price">£14</p>
+          <p class="care"><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="agave" data-name="Queen Victoria agave" data-price="3200" data-img="assets/img/agave.jpg" data-cat="succulents" data-tags="easy" data-order="11">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/agave.jpg" alt="Queen Victoria agave" width="600" height="750" loading="lazy"><span class="badges"><span class="badge badge--clay">Rare</span></span></a><button class="quick" type="button" data-quick aria-label="Add Queen Victoria agave to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Queen Victoria agave</a></h3>
+          <p class="latin">Agave victoriae-reginae</p>
+          <p class="price">£32</p>
+          <p class="care"><span>Easy care</span></p>
+        </article>
+        <article class="product" data-product="aloe" data-name="Aloe vera" data-price="1800" data-img="assets/img/aloe.jpg" data-cat="succulents" data-tags="easy" data-order="12">
+          <div class="product__media"><a class="product__img" href="shop.html"><img src="assets/img/aloe.jpg" alt="Aloe vera" width="600" height="750" loading="lazy"></a><button class="quick" type="button" data-quick aria-label="Add Aloe vera to basket"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+          <h3><a href="shop.html">Aloe vera</a></h3>
+          <p class="latin">Aloe barbadensis</p>
+          <p class="price">£18</p>
+          <p class="care"><span>Easy care</span></p>
+        </article>
+  </div>
+  <p class="empty" data-none hidden>No plants match those filters. Try fewer, or ask our <a href="care.html#doctor">plant doctor</a> for a recommendation.</p>
+  <div style="height:80px"></div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div><a class="logo" href="index.html"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22C4 11 11 4 22 4c0 11-7 18-18 18Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 22 15 11" stroke="currentColor" stroke-width="1.6"/></svg>Leaf &amp; Clay</a><p>Houseplants and bonsai grown in our Herefordshire greenhouse and delivered in plastic-free packaging.</p></div>
+    <div><h4>Shop</h4><ul><li><a href="shop.html">All plants</a></li><li><a href="shop.html?cat=bonsai">Bonsai</a></li><li><a href="shop.html?cat=houseplants">Houseplants</a></li><li><a href="shop.html?cat=succulents">Succulents</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="care.html">Plant care</a></li><li><a href="care.html#doctor">Plant doctor</a></li><li><a href="care.html#faq">Delivery &amp; returns</a></li></ul></div>
+    <div><h4>A care tip a month</h4><p style="margin-top:0">Seasonal advice and first look at rare plants.</p><form data-signup><input class="input" type="email" required placeholder="Your email" aria-label="Your email"><button class="btn btn--clay btn--sm" type="submit">Join</button></form></div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Leaf &amp; Clay Ltd</span><a href="credits.html">Photo credits</a></div>
+</footer>
+
+<div class="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your basket" aria-hidden="true">
+  <div class="drawer__head"><h2>Your basket</h2><button class="drawer__close" type="button" aria-label="Close basket">×</button></div>
+  <div class="drawer__body"></div>
+  <div class="drawer__foot">
+    <p class="muted" style="font-size:.9rem" data-free-msg></p>
+    <div class="freebar"><i></i></div>
+    <div class="total"><span>Delivery</span><span data-delivery>—</span></div>
+    <div class="total"><span>Total</span><span data-total>£0</span></div>
+    <button class="btn btn--clay btn--block" type="button" data-checkout>Checkout</button>
+    <form class="checkout-form" id="checkout" hidden novalidate>
+      <input class="input" name="name" required placeholder="Full name" aria-label="Full name" autocomplete="name">
+      <input class="input" name="email" type="email" required placeholder="Email" aria-label="Email" autocomplete="email">
+      <input class="input" name="postcode" required placeholder="Postcode" aria-label="Postcode" autocomplete="postal-code">
+      <button class="btn btn--primary btn--block" type="submit">Place order</button>
+    </form>
+  </div>
+</aside>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

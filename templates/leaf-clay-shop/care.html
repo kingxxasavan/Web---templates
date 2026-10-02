@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant care — Leaf & Clay</title>
+<meta name="description" content="Simple care guides for houseplants, succulents and bonsai, and a free plant doctor for life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<p class="ribbon">Free delivery over £50 · Every plant arrives with a care card</p>
+<header class="header">
+  <div class="container header__inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.6"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="shop.html">Shop all</a>
+      <a href="shop.html?cat=bonsai">Bonsai</a>
+      <a href="care.html" aria-current="page">Plant care</a>
+    </nav>
+    <a class="logo" href="index.html"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22C4 11 11 4 22 4c0 11-7 18-18 18Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 22 15 11" stroke="currentColor" stroke-width="1.6"/></svg>Leaf &amp; Clay</a>
+    <div class="tools"><a class="icon-btn" href="shop.html" data-open-basket aria-label="Open basket"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="label">Basket</span><span class="count" data-count>0</span></a></div>
+  </div>
+</header>
+
+<main>
+  <section class="container page-head">
+    <span class="tag">Help</span>
+    <h1>Plant care, made simple</h1>
+    <p class="lede">Most plants are lost to love: too much water, too little light. Here’s what actually matters, and a real person to ask when something looks wrong.</p>
+  </section>
+  <section class="section" style="padding-top:24px">
+    <div class="container guides">
+      <div class="guide reveal"><span class="guide__icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>Light</h3><p>Bright but indirect suits most houseplants. Succulents and bonsai want direct sun. If a plant leans, it’s asking to move closer to the window.</p></div>
+      <div class="guide reveal"><span class="guide__icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s-7 8-7 12a7 7 0 0 0 14 0c0-4-7-12-7-12Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>Water</h3><p>Check with a finger, not a calendar. Water thoroughly when the top few centimetres are dry, then let it drain. Soggy roots kill more plants than drought.</p></div>
+      <div class="guide reveal"><span class="guide__icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21h12M9 21l-1-8h8l-1 8M12 13V7M12 7c-2-3-5-3-6-2 1 3 4 3 6 2Zm0 0c2-3 5-3 6-2-1 3-4 3-6 2Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>Repotting</h3><p>Every one to two years in spring, one size up. Bonsai are repotted with root pruning; book a workshop and we’ll show you how.</p></div>
+    </div>
+  </section>
+  <section class="section section--alt" id="doctor">
+    <div class="container split" style="align-items:start">
+      <div class="split__body">
+        <span class="tag">Plant doctor</span>
+        <h2>Something not right?</h2>
+        <p class="lede">Tell us what you’re seeing. Our growers reply within one working day, free, for any plant bought from us.</p>
+      </div>
+      <div>
+        <form class="review" id="doctor" novalidate style="padding:28px">
+          <div class="field"><label for="d-plant">Which plant?</label><input class="input" id="d-plant" name="plant" required data-message="Tell us which plant it is."><span class="error" data-error="plant"></span></div>
+          <div class="field"><label for="d-what">What’s happening?</label><textarea class="input" id="d-what" name="what" required data-message="Describe what you’re seeing." placeholder="Yellow leaves at the bottom, soil stays damp…"></textarea><span class="error" data-error="what"></span></div>
+          <div class="field"><label for="d-email">Email</label><input class="input" id="d-email" name="email" type="email" required data-message="Enter an email we can reply to."><span class="error" data-error="email"></span></div>
+          <div class="field"><button class="btn btn--clay btn--block" type="submit">Ask the plant doctor</button></div>
+        </form>
+        <div class="review done" id="doctor-done" hidden style="padding:28px"><h3>We’re on it.</h3><p>One of our growers will reply within a working day. Photos help: reply to our email with a couple if you can.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="faq">
+    <div class="container split" style="align-items:start">
+      <div><span class="tag">Delivery &amp; returns</span><h2 style="margin-top:10px">Good to know</h2></div>
+      <div class="faq">
+        <details><summary>How are plants packed?</summary><p>In recycled cardboard with paper, wool and a moss collar to hold the soil in. No plastic, and all of it can go in your recycling or compost.</p></details>
+        <details><summary>What if my plant arrives damaged?</summary><p>Send a photo within 7 days and we’ll replace it. Our 30-day guarantee covers any plant that struggles despite following its care card.</p></details>
+        <details><summary>Do you deliver everywhere?</summary><p>Across mainland UK, Tuesday to Friday. Highlands and islands take an extra day.</p></details>
+        <details><summary>Can I visit the greenhouse?</summary><p>Yes, on Saturdays from 10am to 4pm, and for workshops. Directions are in your order confirmation.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div><a class="logo" href="index.html"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22C4 11 11 4 22 4c0 11-7 18-18 18Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 22 15 11" stroke="currentColor" stroke-width="1.6"/></svg>Leaf &amp; Clay</a><p>Houseplants and bonsai grown in our Herefordshire greenhouse and delivered in plastic-free packaging.</p></div>
+    <div><h4>Shop</h4><ul><li><a href="shop.html">All plants</a></li><li><a href="shop.html?cat=bonsai">Bonsai</a></li><li><a href="shop.html?cat=houseplants">Houseplants</a></li><li><a href="shop.html?cat=succulents">Succulents</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="care.html">Plant care</a></li><li><a href="care.html#doctor">Plant doctor</a></li><li><a href="care.html#faq">Delivery &amp; returns</a></li></ul></div>
+    <div><h4>A care tip a month</h4><p style="margin-top:0">Seasonal advice and first look at rare plants.</p><form data-signup><input class="input" type="email" required placeholder="Your email" aria-label="Your email"><button class="btn btn--clay btn--sm" type="submit">Join</button></form></div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Leaf &amp; Clay Ltd</span><a href="credits.html">Photo credits</a></div>
+</footer>
+
+<div class="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your basket" aria-hidden="true">
+  <div class="drawer__head"><h2>Your basket</h2><button class="drawer__close" type="button" aria-label="Close basket">×</button></div>
+  <div class="drawer__body"></div>
+  <div class="drawer__foot">
+    <p class="muted" style="font-size:.9rem" data-free-msg></p>
+    <div class="freebar"><i></i></div>
+    <div class="total"><span>Delivery</span><span data-delivery>—</span></div>
+    <div class="total"><span>Total</span><span data-total>£0</span></div>
+    <button class="btn btn--clay btn--block" type="button" data-checkout>Checkout</button>
+    <form class="checkout-form" id="checkout" hidden novalidate>
+      <input class="input" name="name" required placeholder="Full name" aria-label="Full name" autocomplete="name">
+      <input class="input" name="email" type="email" required placeholder="Email" aria-label="Email" autocomplete="email">
+      <input class="input" name="postcode" required placeholder="Postcode" aria-label="Postcode" autocomplete="postal-code">
+      <button class="btn btn--primary btn--block" type="submit">Place order</button>
+    </form>
+  </div>
+</aside>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

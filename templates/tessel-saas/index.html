@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessel · Staff rotas in minutes, not evenings</title>
+<meta name="description" content="Tessel is staff scheduling for cafés, restaurants, shops and care teams: drag-and-drop rotas, shift swaps, clock-in and labour costs. Free for up to five people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html#features">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="index.html#faq">FAQ</a>
+      <div class="nav__end"><a class="btn btn--ghost btn--sm" href="#">Log in</a><a class="btn btn--accent btn--sm" href="signup.html">Start free</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="demo">
+    <div class="container">
+      <a class="pill" href="changelog.html"><b>New</b>Shift swaps with manager approval →</a>
+      <h1>Staff rotas in <mark class="hl">minutes,</mark> not evenings.</h1>
+      <p class="hero__lede">Build next week’s rota by dragging shifts around. Tessel warns you about overtime, gaps and labour costs before you publish, then texts everyone their shifts.</p>
+      <div class="hero__actions"><a class="btn btn--accent" href="signup.html">Start free <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="#features">See how it works</a></div>
+      <p class="hero__note">Free for up to 5 people · No card needed · Set up in 10 minutes</p>
+      <div class="app reveal" aria-label="Interactive rota demo">
+        <div class="app__bar">
+          <div class="week"><button type="button" aria-label="Previous week" data-week="-1">‹</button><span data-week-label>This week</span><button type="button" aria-label="Next week" data-week="1">›</button></div>
+          <div class="legend"><span><i style="background:var(--r-lead)"></i>Lead</span><span><i style="background:var(--r-floor)"></i>Floor</span><span><i style="background:var(--r-bar)"></i>Bar</span><span><i style="background:var(--r-kitchen)"></i>Kitchen</span></div>
+          <button class="btn btn--ghost btn--sm" type="button" data-fix>✨ Fix issues</button>
+          <button class="btn btn--accent btn--sm" type="button" data-publish>Publish rota</button>
+        </div>
+        <div class="rota-wrap"><div class="rota" data-rota></div></div>
+        <div class="app__foot">
+          <div><small>Hours</small><b data-total-hours>0</b></div>
+          <div><small>Labour cost</small><b data-total-cost>£0</b></div>
+          <div><small>Of forecast sales</small><b data-labour-pct>0%</b><div class="meter" data-meter><i></i></div></div>
+          <div><small>Shifts</small><b data-total-shifts>0</b></div>
+          <div class="issues"><small>Checks</small><ul data-issues></ul></div>
+        </div>
+        <p class="app__hint">Try it: drag a shift to another day or person. On a phone, tap a shift and then tap where it should go.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="logos">
+    <div class="container">
+      <p>Trusted by 38,000 teams who’d rather not spend Sunday on a spreadsheet</p>
+      <div class="logos__row"><span>Bramble&amp;Co</span><span>The Larder</span><span>Northfield</span><span>Pressed</span><span>OAKWAY</span><span>Saltwater</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section__head"><span class="eyebrow">Features</span><h2>Everything after the rota, too.</h2><p>Swaps, clock-ins, costs and payroll, all fed by the same rota, so nobody types anything twice.</p></div>
+      <div class="tour">
+        <div class="tour__tabs" role="tablist" aria-label="Feature tour">
+          <button class="tour__tab" role="tab" id="tt-1" aria-controls="tp-1" aria-selected="true" type="button"><h3><i>⇄</i>Shift swaps</h3><p>Staff swap shifts in the app; you approve with one tap. Tessel checks the swap won’t break any rules first.</p></button>
+          <button class="tour__tab" role="tab" id="tt-2" aria-controls="tp-2" aria-selected="false" tabindex="-1" type="button"><h3><i>◷</i>Clock in &amp; out</h3><p>Clock in on a phone, only when they’re actually at work. Hours flow straight into timesheets.</p></button>
+          <button class="tour__tab" role="tab" id="tt-3" aria-controls="tp-3" aria-selected="false" tabindex="-1" type="button"><h3><i>£</i>Labour costs</h3><p>See wages against forecast sales for every day, before you publish and as the week happens.</p></button>
+          <button class="tour__tab" role="tab" id="tt-4" aria-controls="tp-4" aria-selected="false" tabindex="-1" type="button"><h3><i>↓</i>Payroll export</h3><p>Approved hours, overtime and holiday in one file for your payroll provider. Try it.</p></button>
+        </div>
+        <div class="tour__stage">
+          <div class="panel" id="tp-1" role="tabpanel" aria-labelledby="tt-1">
+            <h4>Swap requests</h4>
+            <div class="mini-list" data-swaps>
+              <div class="mini-row"><span class="av" style="background:var(--r-bar)">MC</span><div>Mia ↔ Leo · Saturday 8–4<small>Same role, no overtime, both available</small></div><div class="mini-actions"><button class="btn btn--accent btn--sm" type="button" data-swap="ok">Approve</button><button class="btn btn--ghost btn--sm" type="button" data-swap="no">Decline</button></div></div>
+              <div class="mini-row"><span class="av" style="background:var(--r-floor)">AO</span><div>Ama ↔ Sam · Thursday 12–8<small>Sam would reach 42 hours (over 40)</small></div><div class="mini-actions"><button class="btn btn--accent btn--sm" type="button" data-swap="ok">Approve</button><button class="btn btn--ghost btn--sm" type="button" data-swap="no">Decline</button></div></div>
+              <div class="mini-row"><span class="av" style="background:var(--r-kitchen)">JR</span><div>Jonah gives away Sunday 10–6<small>Two people have offered to take it</small></div><span class="tag tag--wait">Waiting</span></div>
+            </div>
+          </div>
+          <div class="panel" id="tp-2" role="tabpanel" aria-labelledby="tt-2" hidden>
+            <div class="phone-mock"><div class="phone-mock__screen center">
+              <small style="color:var(--ink-3)">Today · Bramble &amp; Co, Harbourside</small>
+              <h4 style="margin-top:6px">Floor lead · 8:00 – 16:00</h4>
+              <button class="clock-btn" type="button" data-clock>Clock in</button>
+              <p class="mono" data-clock-time style="font-size:1.6rem;font-weight:600">00:00:00</p>
+              <p style="font-size:.85rem;color:var(--ink-3);margin-top:6px" data-clock-note>You’re at work · within 80m of the site</p>
+            </div></div>
+          </div>
+          <div class="panel" id="tp-3" role="tabpanel" aria-labelledby="tt-3" hidden>
+            <h4>Wages as a share of sales, this week</h4>
+            <div class="bars" data-bars></div>
+            <div class="kpis"><div class="kpi"><small>Forecast sales</small><b>£21,400</b></div><div class="kpi"><small>Scheduled wages</small><b>£5,610</b></div><div class="kpi"><small>Labour %</small><b>26.2%</b></div></div>
+          </div>
+          <div class="panel" id="tp-4" role="tabpanel" aria-labelledby="tt-4" hidden>
+            <h4>Approved hours · this pay period</h4>
+            <div class="mini-list" data-payroll></div>
+            <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap"><button class="btn btn--accent" type="button" data-export>Download CSV <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span style="align-self:center;font-size:.9rem;color:var(--ink-3)">Columns your payroll provider expects.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bento">
+        <div class="reveal"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8M12 8v8"/><rect x="3" y="3" width="18" height="18" rx="5"/></g></svg></span><h3>Plays nicely with your other tools</h3><p>Pull sales from your till to forecast labour, and push approved hours to payroll. Everything else connects through our open API and webhooks.</p><div class="integrations"><span>Tills &amp; POS</span><span>Payroll</span><span>Accounting</span><span>Calendars</span><span>Single sign-on</span><span>Webhooks &amp; API</span></div></div>
+        <div class="reveal"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></g></svg></span><h3>Holidays &amp; availability</h3><p>Staff book time off and set when they can work. You’ll never schedule someone who’s on a beach.</p></div>
+        <div class="reveal"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"/></g></svg></span><h3>Texts that actually get read</h3><p>New rota? Changed shift? Everyone hears by app, text or email, and you can see who’s read it.</p></div>
+        <div class="reveal"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></g></svg></span><h3>Forecasts from last year</h3><p>Tessel learns your busy days and suggests how many people each shift needs.</p></div>
+        <div class="reveal"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></g></svg></span><h3>One rota, many sites</h3><p>Share staff between locations and compare labour costs side by side.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="stats">
+        <div class="stat reveal"><b>4.1h</b><span>saved per manager, every week</span></div>
+        <div class="stat reveal"><b>−11%</b><span>average labour cost after three months</span></div>
+        <div class="stat reveal"><b>92%</b><span>of shifts confirmed within an hour</span></div>
+        <div class="stat reveal"><b>4.8★</b><span>app rating from 21,000 reviews</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section__head"><span class="eyebrow">Customers</span><h2>Managers sleep better.</h2></div>
+      <div class="quotes">
+        <figure class="quote reveal"><blockquote>“I used to do the rota on Sunday nights with a spreadsheet and a glass of wine. Now it takes ten minutes on Thursday, and nobody texts me asking when they’re working.”</blockquote><figcaption><span class="av">RB</span><span><b>Rosa Bianchi</b><span>Owner, Bramble &amp; Co cafés</span></span></figcaption></figure>
+        <figure class="quote reveal"><blockquote>“The labour percentage under the rota changed how we plan quiet Tuesdays. We saved more than the subscription in the first month.”</blockquote><figcaption><span class="av">DK</span><span><b>Dev Kapoor</b><span>GM, The Larder</span></span></figcaption></figure>
+        <figure class="quote reveal"><blockquote>“Our carers swap shifts in the app and I approve them on my phone. It just works.”</blockquote><figcaption><span class="av">SL</span><span><b>Sue Lawson</b><span>Manager, Northfield Care</span></span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" style="padding-block: clamp(56px, 8vw, 96px)">
+    <div class="container center">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin-top:14px">Free for five. <mark class="hl">£2.50</mark> a person after that.</h2>
+      <p style="margin:16px auto 0;max-width:34rem;color:var(--ink-2)">No setup fees, no contracts, and you only pay for people on the rota that month.</p>
+      <div class="hero__actions"><a class="btn btn--accent" href="pricing.html">See pricing <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section__head"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
+      <div class="faq">
+        <details><summary>Is it really free for five people?</summary><p>Yes. Teams of up to five get the rota, the app and clock-in free forever, with one location. No card needed to sign up.</p></details>
+        <details><summary>Does my team need to download an app?</summary><p>It helps, but it isn’t required. Everyone gets their shifts by text and email too, and can see the rota on any phone browser.</p></details>
+        <details><summary>Can Tessel work out holiday pay and overtime?</summary><p>It tracks holiday allowance and flags overtime as you build the rota. The payroll export includes both, ready for your payroll provider.</p></details>
+        <details><summary>What if we have more than one site?</summary><p>The Business plan covers unlimited locations, with staff who can work across sites and a combined labour report.</p></details>
+        <details><summary>Can I import my team from a spreadsheet?</summary><p>Paste names, roles and pay rates straight from a spreadsheet, or invite people by text and let them fill in their own details.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="container" style="margin-top: clamp(72px, 10vw, 128px)">
+  <div class="cta">
+    <h2>Your next rota could take <mark class="hl">ten minutes.</mark></h2>
+    <p>Free for up to five people, forever. Bigger teams get every feature free for 30 days.</p>
+    <div class="hero__actions"><a class="btn btn--accent" href="signup.html">Start free <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="#">Book a demo</a></div>
+  </div>
+</section>
+<footer class="footer" style="">
+  <div class="container">
+    <div class="footer__grid">
+      <div><a class="brand" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a><p>Staff scheduling for cafés, restaurants, shops and care teams. Made in Bristol.</p><a class="status" href="#"><i></i>All systems normal</a></div>
+      <div><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="#">Mobile app</a></li></ul></div>
+      <div><h4>Use cases</h4><ul><li><a href="#">Cafés &amp; restaurants</a></li><li><a href="#">Retail</a></li><li><a href="#">Care homes</a></li><li><a href="#">Gyms &amp; leisure</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li><li><a href="#">Press kit</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">Help centre</a></li><li><a href="#">API docs</a></li><li><a href="#">Security</a></li><li><a href="#">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer__base"><span>© 2026 Tessel Software Ltd.</span><span>Prices exclude VAT.</span></div>
+  </div>
+</footer>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

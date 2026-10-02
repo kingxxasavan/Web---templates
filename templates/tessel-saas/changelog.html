@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog · Tessel</title>
+<meta name="description" content="Everything new, improved and fixed in Tessel, release by release.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html#features">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="changelog.html" aria-current="page">Changelog</a>
+      <a href="index.html#faq">FAQ</a>
+      <div class="nav__end"><a class="btn btn--ghost btn--sm" href="#">Log in</a><a class="btn btn--accent btn--sm" href="signup.html">Start free</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <div class="container"><span class="eyebrow">Changelog</span><h1>What’s new in Tessel</h1><p>We ship something every week. The highlights live here, newest first.</p></div>
+  </section>
+  <section class="container cl" style="padding-bottom: 24px">
+    <aside class="cl__side">
+      <label class="search"><span class="sr-only">Search the changelog</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="search" placeholder="Search updates" data-cl-search></label>
+      <div><h4>Show</h4><div class="filters" role="group" aria-label="Filter updates">
+        <button class="filter" type="button" data-kind-filter="all" aria-pressed="true">Everything <small data-count="all"></small></button>
+        <button class="filter" type="button" data-kind-filter="new" aria-pressed="false">New <small data-count="new"></small></button>
+        <button class="filter" type="button" data-kind-filter="improved" aria-pressed="false">Improved <small data-count="improved"></small></button>
+        <button class="filter" type="button" data-kind-filter="fixed" aria-pressed="false">Fixed <small data-count="fixed"></small></button>
+      </div></div>
+      <div class="subscribe"><p>Get a short email when we ship something big. About once a month.</p><form data-subscribe novalidate><label class="sr-only" for="cl-email">Email</label><input id="cl-email" type="email" placeholder="you@company.com" required><button class="btn btn--sm" type="submit">Subscribe</button><span class="error" data-sub-error></span></form></div>
+    </aside>
+    <div data-releases>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v4.2</b>21 Sep 2026</time>
+          <div><h2>Shift swaps with manager approval</h2><p>Staff can now swap or give away shifts in the app. Tessel checks every swap against your rules before it reaches you, so you only approve the ones that work.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Swap and give-away requests in the app</span></li><li data-kind="new"><span class="kind kind--new">new</span><span>One-tap approval from the notification</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Swap checks for overtime, rest breaks and roles</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>Notifications could arrive twice on some Android phones</span></li></ul><div class="shot"><div class="mini-list"><div class="mini-row"><span class="av" style="background:var(--r-bar)">MC</span><div>Mia ↔ Leo · Saturday 8–4<small>Same role, no overtime</small></div><span class="tag tag--ok">Approved</span></div></div></div></div>
+        </article>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v4.1</b>2 Sep 2026</time>
+          <div><h2>Labour forecast from your till</h2><p>Connect your till and Tessel predicts each day’s sales from the last 52 weeks, then shows wages as a share of those sales as you build the rota.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Sales forecast for every day of the week</span></li><li data-kind="new"><span class="kind kind--new">new</span><span>Labour percentage under the rota</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Faster loading of the costs report</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>Bank holidays were missing from forecasts</span></li></ul><div class="shot"><div class="bars" style="height:120px"><div data-d="M" style="height:60%"><i style="height:30%"></i></div><div data-d="T" style="height:52%"><i style="height:28%"></i></div><div data-d="W" style="height:64%"><i style="height:27%"></i></div><div data-d="T" style="height:70%"><i style="height:26%"></i></div><div data-d="F" style="height:92%"><i style="height:24%"></i></div><div data-d="S" style="height:100%"><i style="height:25%"></i></div><div data-d="S" style="height:80%"><i style="height:27%"></i></div></div></div></div>
+        </article>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v4.0</b>5 Aug 2026</time>
+          <div><h2>A faster rota editor</h2><p>We rebuilt the rota from scratch. It opens twice as fast, and dragging a shift now shows exactly where it will land.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Drag-and-drop preview while you move a shift</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Rota loads 2× faster for teams over 50</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Keyboard shortcuts: arrows move a selected shift</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>Copying a week could skip Sundays</span></li></ul></div>
+        </article>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v3.9</b>14 Jul 2026</time>
+          <div><h2>Holiday allowances</h2><p>Set each person’s yearly allowance and Tessel keeps count as holiday is booked and taken, including part-timers.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Allowance tracking in days or hours</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Time-off requests show remaining allowance</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>Half-day requests rounded up</span></li></ul></div>
+        </article>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v3.8</b>23 Jun 2026</time>
+          <div><h2>Clock-in geofencing</h2><p>Choose how close to work someone needs to be to clock in. No more clocking in from the bus.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Geofenced clock-in, 50m to 500m</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Clearer timesheet differences</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>Breaks over midnight counted twice</span></li></ul></div>
+        </article>
+        <article class="release" data-release>
+          <time datetime="2026"><b>v3.7</b>2 Jun 2026</time>
+          <div><h2>Payroll export presets</h2><p>Save export settings for your payroll provider once, then export every period with one click.</p><ul><li data-kind="new"><span class="kind kind--new">new</span><span>Saved export presets</span></li><li data-kind="improved"><span class="kind kind--improved">improved</span><span>Overtime split by rate</span></li><li data-kind="fixed"><span class="kind kind--fixed">fixed</span><span>CSV dates used US format for some accounts</span></li></ul></div>
+        </article>
+      <p class="none" data-cl-none hidden>Nothing matches that. Try “swap” or “payroll”.</p>
+    </div>
+  </section>
+</main>
+
+<section class="container" style="margin-top: clamp(72px, 10vw, 128px)">
+  <div class="cta">
+    <h2>Your next rota could take <mark class="hl">ten minutes.</mark></h2>
+    <p>Free for up to five people, forever. Bigger teams get every feature free for 30 days.</p>
+    <div class="hero__actions"><a class="btn btn--accent" href="signup.html">Start free <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="#">Book a demo</a></div>
+  </div>
+</section>
+<footer class="footer" style="">
+  <div class="container">
+    <div class="footer__grid">
+      <div><a class="brand" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a><p>Staff scheduling for cafés, restaurants, shops and care teams. Made in Bristol.</p><a class="status" href="#"><i></i>All systems normal</a></div>
+      <div><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="#">Mobile app</a></li></ul></div>
+      <div><h4>Use cases</h4><ul><li><a href="#">Cafés &amp; restaurants</a></li><li><a href="#">Retail</a></li><li><a href="#">Care homes</a></li><li><a href="#">Gyms &amp; leisure</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li><li><a href="#">Press kit</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">Help centre</a></li><li><a href="#">API docs</a></li><li><a href="#">Security</a></li><li><a href="#">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer__base"><span>© 2026 Tessel Software Ltd.</span><span>Prices exclude VAT.</span></div>
+  </div>
+</footer>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start free · Tessel</title>
+<meta name="description" content="Create your Tessel account and get your first rota drafted in a few minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="var(--ink)"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html#features">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="index.html#faq">FAQ</a>
+      <div class="nav__end"><a class="btn btn--ghost btn--sm" href="#">Log in</a><a class="btn btn--accent btn--sm" href="signup.html">Start free</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="signup">
+  <section class="signup__main">
+    <div class="progress" aria-hidden="true"><i class="is-done"></i><i></i><i></i><i></i></div>
+    <form class="wiz" id="wizard" novalidate>
+      <div class="stack" data-step="1">
+        <span class="step-label">Step 1 of 4</span>
+        <h2>What kind of business is it?</h2>
+        <p>We’ll set up roles and shift patterns that suit you. You can change everything later.</p>
+        <div class="choices"><label class="choice"><input type="radio" name="biz" value="cafe" checked><span><i aria-hidden="true">☕</i>Café</span></label><label class="choice"><input type="radio" name="biz" value="restaurant"><span><i aria-hidden="true">🍽</i>Restaurant</span></label><label class="choice"><input type="radio" name="biz" value="bar"><span><i aria-hidden="true">🍺</i>Bar or pub</span></label><label class="choice"><input type="radio" name="biz" value="shop"><span><i aria-hidden="true">🛍</i>Shop</span></label><label class="choice"><input type="radio" name="biz" value="care"><span><i aria-hidden="true">🤝</i>Care home</span></label><label class="choice"><input type="radio" name="biz" value="gym"><span><i aria-hidden="true">🏋</i>Gym or leisure</span></label></div>
+      </div>
+      <div class="stack" data-step="2" hidden>
+        <span class="step-label">Step 2 of 4</span>
+        <h2>Tell us about your team</h2>
+        <p>Roughly is fine. You’ll invite people properly once you’re in.</p>
+        <div class="row-2">
+          <div class="field"><label for="w-site">Location name</label><input id="w-site" name="site" placeholder="e.g. Harbourside" required data-message="Give your first location a name."><span class="error" data-error="site"></span></div>
+          <div class="field"><label for="w-size">Team size</label><select id="w-size" name="size"><option>1–5 people</option><option selected>6–15 people</option><option>16–50 people</option><option>51+ people</option></select></div>
+        </div>
+        <fieldset class="field"><legend>Roles on your rota</legend><div class="chips" data-roles></div></fieldset>
+      </div>
+      <div class="stack" data-step="3" hidden>
+        <span class="step-label">Step 3 of 4</span>
+        <h2>When are you open?</h2>
+        <p>We’ll only suggest shifts during these hours.</p>
+        <div class="hours-list" data-hours-list></div>
+      </div>
+      <div class="stack" data-step="4" hidden>
+        <span class="step-label">Step 4 of 4</span>
+        <h2>Create your account</h2>
+        <p>Free for up to five people. No card needed.</p>
+        <div class="field"><label for="w-name">Your name</label><input id="w-name" name="name" autocomplete="name" required data-message="What should we call you?"><span class="error" data-error="name"></span></div>
+        <div class="field"><label for="w-email">Work email</label><input id="w-email" name="email" type="email" autocomplete="email" required data-message="We’ll send your login link here."><span class="error" data-error="email"></span></div>
+        <div class="field"><label for="w-pass">Password</label><input id="w-pass" name="password" type="password" autocomplete="new-password" required minlength="10" data-message="Use at least 10 characters."><div class="strength" data-strength aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="error" data-error="password" aria-live="polite"></span></div>
+      </div>
+      <div class="ready" data-step="5" hidden tabindex="-1">
+        <span class="step-label">All set</span>
+        <h2 data-ready-title>Your first rota is drafted.</h2>
+        <p data-ready-text>Here’s a starting point based on your answers.</p>
+        <div class="rota" data-ready-rota></div>
+        <div class="hero__actions" style="justify-content:flex-start"><a class="btn btn--accent" href="index.html#demo">Open my rota <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="#">Invite my team</a></div>
+      </div>
+      <div class="wiz__nav" data-wiz-nav><button class="btn btn--ghost" type="button" data-back hidden>Back</button><button class="btn btn--accent" type="submit" data-next>Continue <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </form>
+  </section>
+  <aside class="signup__side">
+    <div><a class="brand" href="index.html" style="color:#fff"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3.5" fill="var(--accent)"/><rect x="15" y="1" width="12" height="12" rx="3.5" fill="#ffffff"/><rect x="1" y="15" width="12" height="12" rx="3.5" fill="#ffffff"/><rect x="15" y="15" width="12" height="12" rx="6" fill="var(--pop)"/></svg>Tessel</a></div>
+    <div><h2>Ten minutes now saves you an evening every week.</h2><p>Set up your team, opening hours and roles, and we’ll draft your first rota for you.</p></div>
+    <blockquote>“We were up and running before the lunch rush. The team had their shifts by text the same afternoon.”<footer>Rosa Bianchi, Bramble &amp; Co</footer></blockquote>
+  </aside>
+</main>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

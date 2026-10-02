@@ -4,8 +4,8 @@ import { bySlug, money, priceOf } from "@/lib/catalog";
 
 // The most visual templates, in two rows that drift in opposite directions.
 const ROWS = [
-  ["helix-ai", "saltbox-seafood", "tessel-saas", "keyline-estates", "loose-threads-podcast", "hollis-photography", "panetto-bakery"],
-  ["wren-calloway-law", "aurora-commerce", "signal-conference", "leaf-clay-shop", "noor-haddad", "clearview-dental", "ember-table"],
+  ["helix-ai", "saltbox-seafood", "tessel-saas", "forno-nero-pizza", "keyline-estates", "loose-threads-podcast", "hollis-photography", "window-light-course"],
+  ["wren-calloway-law", "aurora-commerce", "copperfield-plumbing", "signal-conference", "leaf-clay-shop", "noor-haddad", "panetto-bakery", "clearview-dental"],
 ];
 
 /**

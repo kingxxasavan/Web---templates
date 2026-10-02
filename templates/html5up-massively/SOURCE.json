@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for an independent travel magazine: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Playfair Display and Lora, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Massively",
+  "edition": {
+    "name": "Wayfarer",
+    "niche": "an independent travel magazine",
+    "category": "Blog & media",
+    "updatedOn": "2026-10-02"
+  }
 }

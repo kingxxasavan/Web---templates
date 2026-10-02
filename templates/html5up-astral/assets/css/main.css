@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
+
 @import url("font-awesome.min.css");
 
 /*
@@ -1325,7 +1325,7 @@ input, select, textarea {
 		}
 
 	body, input, textarea, select {
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 300;
 		color: #777777;
 		font-size: 20pt;

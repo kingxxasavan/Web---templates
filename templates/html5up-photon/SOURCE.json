@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a personal budgeting app: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Plus Jakarta Sans and Plus Jakarta Sans, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Photon",
+  "edition": {
+    "name": "Penny",
+    "niche": "a personal budgeting app",
+    "category": "SaaS & apps",
+    "updatedOn": "2026-10-02"
+  }
 }

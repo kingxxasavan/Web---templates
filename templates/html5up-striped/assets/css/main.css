@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700|Open+Sans+Condensed:300,700");
+
 
 /*
 	Striped by HTML5 UP
@@ -103,13 +103,13 @@ input, select, textarea {
 		}
 
 	body, input, textarea, select {
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 400;
 		color: #565656;
 	}
 
 	a {
-		color: #c94663;
+		color: var(--accent);
 	}
 
 	strong, b {
@@ -118,7 +118,7 @@ input, select, textarea {
 	}
 
 	h2, h3, h4, h5, h6 {
-		font-family: 'Open Sans Condensed', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 700;
 		color: #232323;
 	}
@@ -1666,7 +1666,7 @@ input, select, textarea {
 /* Form */
 
 	form label {
-		font-family: 'Open Sans Condensed', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 700;
 		color: #232323;
 		margin: 0 0 0.75em 0;
@@ -1691,7 +1691,7 @@ input, select, textarea {
 		form input[type="password"]:focus,
 		form select:focus,
 		form textarea:focus {
-			box-shadow: 0px 0px 2px 2px #c94663;
+			box-shadow: 0px 0px 2px 2px var(--accent);
 		}
 
 	form ::-webkit-input-placeholder {
@@ -1717,7 +1717,7 @@ input, select, textarea {
 	}
 
 		header > p {
-			font-family: 'Open Sans Condensed', sans-serif;
+			font-family: var(--font-body);
 			font-weight: 300;
 			display: block;
 			margin-top: 1em;
@@ -1779,13 +1779,13 @@ input, select, textarea {
 	button,
 	.button {
 		cursor: pointer;
-		background-color: #c94663;
+		background-color: var(--accent);
 		background-image: url("images/bg01.png");
 		border-radius: 0.4em;
 		text-align: center;
 		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.15);
 		color: #fff;
-		font-family: 'Open Sans Condensed', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 700;
 		text-decoration: none;
 		-moz-transition: background-color .25s ease-in-out, color .25s ease-in-out;
@@ -1813,7 +1813,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #d95673;
+			background-color: #81c36c;
 		}
 
 		input[type="button"]:active,
@@ -1821,7 +1821,7 @@ input, select, textarea {
 		input[type="reset"]:active,
 		button:active,
 		.button:active {
-			background-color: #b93653;
+			background-color: #61a34c;
 		}
 
 		input[type="button"].alt,
@@ -1829,7 +1829,7 @@ input, select, textarea {
 		input[type="reset"].alt,
 		button.alt,
 		.button.alt {
-			background-color: #364050;
+			background-color: #4c3a41;
 		}
 
 			input[type="button"].alt:hover,
@@ -1837,7 +1837,7 @@ input, select, textarea {
 			input[type="reset"].alt:hover,
 			button.alt:hover,
 			.button.alt:hover {
-				background-color: #465060;
+				background-color: #5c4a51;
 			}
 
 			input[type="button"].alt:active,
@@ -1845,7 +1845,7 @@ input, select, textarea {
 			input[type="reset"].alt:active,
 			button.alt:active,
 			.button.alt:active {
-				background-color: #263040;
+				background-color: #3c2a31;
 			}
 
 /* List */
@@ -1872,7 +1872,7 @@ input, select, textarea {
 
 	.pagination .pages {
 		display: inline-block;
-		font-family: 'Open Sans Condensed', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 700;
 	}
 
@@ -1906,7 +1906,7 @@ input, select, textarea {
 			}
 
 			.pagination .pages a.active {
-				background-color: #364050;
+				background-color: #4c3a41;
 				color: #fff;
 				box-shadow: none;
 				text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.5);
@@ -1975,12 +1975,12 @@ input, select, textarea {
 	}
 
 		.box.calendar td a:hover {
-			background-color: rgba(200, 225, 255, 0.1);
+			background-color: rgba(246, 209, 227, 0.1);
 			color: #fff;
 		}
 
 	.box.calendar td.today a {
-		background-color: #c94663;
+		background-color: var(--accent);
 		background-image: url("images/bg01.png");
 		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.15), 0 0.025em 0.15em 0em rgba(0, 0, 0, 0.25);
 		color: #fff !important;
@@ -2175,7 +2175,7 @@ input, select, textarea {
 		top: 0;
 		width: 100%;
 		z-index: 10001;
-		background: #364050 url("images/bg01.png");
+		background: #4c3a41 url("images/bg01.png");
 	}
 
 		#titleBar .title {
@@ -2183,7 +2183,7 @@ input, select, textarea {
 			color: #fff;
 			line-height: 44px;
 			font-size: 1.25em;
-			font-family: 'Open Sans Condensed', sans-serif;
+			font-family: var(--font-body);
 			font-weight: 700;
 			letter-spacing: 0.1em;
 			text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.5);
@@ -2219,7 +2219,7 @@ input, select, textarea {
 				width: 50px;
 				height: 30px;
 				line-height: 30px;
-				background: #c94663 url("images/bg01.png");
+				background: var(--accent) url("images/bg01.png");
 				border-radius: 5px;
 				color: #fff;
 				text-align: center;
@@ -2229,7 +2229,7 @@ input, select, textarea {
 			}
 
 			#titleBar .toggle:active:before {
-				background-color: #d95673;
+				background-color: #81c36c;
 			}
 
 	#sidebar {
@@ -2237,7 +2237,7 @@ input, select, textarea {
 		text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.5);
 		width: 14em;
 		padding: 3em 1.35em 1em 1.15em;
-		background: #364050 url("images/bg01.png");
+		background: #4c3a41 url("images/bg01.png");
 		overflow-y: auto;
 		left: 0;
 		box-shadow: inset -0.1em 0em 0.35em 0em rgba(0, 0, 0, 0.15);
@@ -2281,7 +2281,7 @@ input, select, textarea {
 		}
 
 		#sidebar a {
-			color: #d4dde0;
+			color: #ded6dc;
 		}
 
 		#sidebar h2, #sidebar h3, #sidebar h4, #sidebar h5, #sidebar h6 {
@@ -2459,7 +2459,7 @@ input, select, textarea {
 		/* Logo */
 
 			#logo {
-				font-family: 'Open Sans Condensed', sans-serif;
+				font-family: var(--font-body);
 				font-weight: 700;
 				font-size: 2em;
 				letter-spacing: 0.1em;
@@ -2467,7 +2467,7 @@ input, select, textarea {
 
 				#logo a {
 					display: block;
-					background-color: #c94663;
+					background-color: var(--accent);
 					background-image: url("images/bg01.png");
 					padding: 0.875em 0.25em;
 					border-radius: 0.2em;
@@ -2566,7 +2566,7 @@ input, select, textarea {
 				.box.post .info .date {
 					position: relative;
 					z-index: 1;
-					font-family: 'Open Sans Condensed', sans-serif;
+					font-family: var(--font-body);
 					font-weight: 400;
 					text-align: center;
 					display: block;
@@ -2587,7 +2587,7 @@ input, select, textarea {
 						margin: 0.25em 0 0 0;
 						font-size: 1.5em;
 						font-weight: 700;
-						color: #1b252a;
+						color: #271e24;
 					}
 
 				.box.post .info .stats {
@@ -2799,7 +2799,7 @@ input, select, textarea {
 
 				.box.post header > p {
 					font-size: 1em;
-					font-family: 'Source Sans Pro', sans-serif;
+					font-family: var(--font-body);
 					line-height: 1.5em;
 				}
 

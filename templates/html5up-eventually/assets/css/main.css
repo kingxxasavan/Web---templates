@@ -1,5 +1,5 @@
 @import url(font-awesome.min.css);
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
 
 /*
 	Eventually by HTML5 UP
@@ -316,7 +316,7 @@ input, select, textarea {
 
 	body, input, select, textarea {
 		color: rgba(255, 255, 255, 0.75);
-		font-family: "Roboto", sans-serif;
+		font-family: var(--font-body);
 		font-size: 16pt;
 		font-weight: 400;
 		letter-spacing: -0.01em;
@@ -369,13 +369,13 @@ input, select, textarea {
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		border-bottom: dotted 1px rgba(255, 255, 255, 0.25);
-		color: #1cb495;
+		color: var(--accent);
 		text-decoration: none;
 	}
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #1cb495 !important;
+			color: var(--accent) !important;
 			text-decoration: none;
 		}
 
@@ -654,7 +654,7 @@ input, select, textarea {
 			}
 
 			form .message.success {
-				color: #1cb495;
+				color: var(--accent);
 			}
 
 				form .message.success:before {
@@ -662,7 +662,7 @@ input, select, textarea {
 				}
 
 			form .message.failure {
-				color: #ff2361;
+				color: #ffa523;
 			}
 
 				form .message.failure:before {
@@ -816,7 +816,7 @@ input, select, textarea {
 			-ms-animation: focus 0.1s;
 			animation: focus 0.1s;
 			background-color: rgba(255, 255, 255, 0.125);
-			border-color: #1cb495;
+			border-color: var(--accent);
 		}
 
 	select {
@@ -908,16 +908,16 @@ input, select, textarea {
 
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
-			background: #1cb495;
-			border-color: #1cb495;
+			background: var(--accent);
+			border-color: var(--accent);
 			color: #ffffff;
 			content: '\f00c';
 		}
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #1cb495;
-			box-shadow: 0 0 0 2px #1cb495;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 2px var(--accent);
 		}
 
 	input[type="checkbox"] + label:before {
@@ -968,7 +968,7 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
-		background-color: #1cb495;
+		background-color: var(--accent);
 		border-radius: 6px;
 		border: 0;
 		color: #ffffff !important;
@@ -988,7 +988,7 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #1fcaa7;
+			background-color: #0951e0;
 		}
 
 		input[type="submit"]:active,
@@ -996,7 +996,7 @@ input, select, textarea {
 		input[type="button"]:active,
 		button:active,
 		.button:active {
-			background-color: #199e83;
+			background-color: #083faf;
 		}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,

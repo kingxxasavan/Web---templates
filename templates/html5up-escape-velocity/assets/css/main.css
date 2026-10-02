@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,900");
+
 
 /*
 	Escape Velocity by HTML5 UP
@@ -98,7 +98,7 @@ input, select, textarea {
 	}
 
 	body, input, textarea, select {
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 400;
 		color: #919499;
 		font-size: 14pt;
@@ -1655,7 +1655,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #f98780;
+			background-color: #ea8fa7;
 		}
 
 		input[type="button"].large,
@@ -1672,7 +1672,7 @@ input, select, textarea {
 		input[type="reset"].style1,
 		button.style1,
 		.button.style1 {
-			background: #e97770 url("images/overlay.png");
+			background: #da7f97 url("images/overlay.png");
 			color: #fff;
 		}
 
@@ -1681,7 +1681,7 @@ input, select, textarea {
 			input[type="reset"].style1:hover,
 			button.style1:hover,
 			.button.style1:hover {
-				background-color: #f98780;
+				background-color: #ea8fa7;
 			}
 
 			input[type="button"].style1:active,
@@ -1689,7 +1689,7 @@ input, select, textarea {
 			input[type="reset"].style1:active,
 			button.style1:active,
 			.button.style1:active {
-				background-color: #d96760;
+				background-color: #ca6f87;
 			}
 
 		input[type="button"].style2,
@@ -1723,7 +1723,7 @@ input, select, textarea {
 		input[type="reset"].style3,
 		button.style3,
 		.button.style3 {
-			background: #2f333b url("images/overlay.png");
+			background: #30363a url("images/overlay.png");
 			color: #fff;
 		}
 
@@ -1740,7 +1740,7 @@ input, select, textarea {
 			input[type="reset"].style3:active,
 			button.style3:active,
 			.button.style3:active {
-				background-color: #1f232b;
+				background-color: #20262a;
 			}
 
 /* List */
@@ -1850,7 +1850,7 @@ input, select, textarea {
 		}
 
 		.feature-list h3 {
-			color: #e97770 !important;
+			color: #da7f97 !important;
 			margin: -0.35em 0 0.75em 0;
 			font-size: 1.15em;
 			letter-spacing: 0.05em;
@@ -1859,7 +1859,7 @@ input, select, textarea {
 			.feature-list h3:before {
 				display: block;
 				color: #fff;
-				background: #2f333b url("images/overlay.png");
+				background: #30363a url("images/overlay.png");
 				border-radius: 2.5em;
 				text-align: center;
 				width: 2.5em;
@@ -1987,13 +1987,13 @@ input, select, textarea {
 			}
 
 		.wrapper.style1 {
-			background: #e97770 url("images/overlay.png");
+			background: #da7f97 url("images/overlay.png");
 			color: #eee;
 			color: rgba(255, 255, 255, 0.75);
 		}
 
 			.wrapper.style1 .title {
-				background: #e97770 url("images/overlay.png");
+				background: #da7f97 url("images/overlay.png");
 				color: #fff;
 			}
 
@@ -2147,8 +2147,8 @@ input, select, textarea {
 				}
 
 	.dropotron {
-		background: #222835 url("images/overlay.png");
-		background-color: rgba(44, 50, 63, 0.925);
+		background: #242e33 url("images/overlay.png");
+		background-color: rgba(46, 56, 61, 0.925);
 		padding: 1.25em 1em 1.25em 1em;
 		border-radius: 0.35em;
 		box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
@@ -2231,11 +2231,11 @@ input, select, textarea {
 
 /* Features */
 
-	#features header.style1 {
+	var(--accent)tures header.style1 {
 		padding-bottom: 5em;
 	}
 
-	#features ul.actions {
+	var(--accent)tures ul.actions {
 		margin-top: 5em;
 	}
 
@@ -2246,7 +2246,7 @@ input, select, textarea {
 	}
 
 		#highlights .highlight h3 {
-			color: #e97770;
+			color: #da7f97;
 			margin: 0 0 0.75em 0;
 			font-size: 1.15em;
 			letter-spacing: 0.05em;
@@ -2257,7 +2257,7 @@ input, select, textarea {
 /* Footer */
 
 	#footer {
-		background: #282b34 url("images/overlay.png");
+		background: #292f33 url("images/overlay.png");
 		color: #eee;
 		color: rgba(255, 255, 255, 0.5);
 		padding-bottom: 6em;
@@ -2324,7 +2324,7 @@ input, select, textarea {
 			}
 
 		#footer .title {
-			background: #282b34 url("images/overlay.png");
+			background: #292f33 url("images/overlay.png");
 			color: #eee;
 		}
 
@@ -2647,7 +2647,7 @@ input, select, textarea {
 				top: 0;
 				width: 275px;
 				z-index: 10002;
-				background: #242730 url("images/overlay.png");
+				background: #252b2f url("images/overlay.png");
 				box-shadow: inset -3px 0px 4px 0px rgba(0, 0, 0, 0.1);
 			}
 
@@ -2899,11 +2899,11 @@ input, select, textarea {
 
 		/* Features */
 
-			#features header.style1 {
+			var(--accent)tures header.style1 {
 				padding-bottom: 4em;
 			}
 
-			#features ul.actions {
+			var(--accent)tures ul.actions {
 				margin-top: 4em;
 			}
 

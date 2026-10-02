@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600");
+
 
 /*
 	Telephasic by HTML5 UP
@@ -88,7 +88,7 @@ input, select, textarea {
 
 	body {
 		background: #f5f7fa;
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 300;
 		color: #52575c;
 		line-height: 1.75em;
@@ -107,7 +107,7 @@ input, select, textarea {
 		}
 
 	input, textarea, select {
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: var(--font-body);
 		font-weight: 300;
 		color: #52575c;
 		line-height: 1.75em;
@@ -145,7 +145,7 @@ input, select, textarea {
 	}
 
 		a:hover {
-			color: #f35858;
+			color: var(--accent);
 			border-bottom-color: rgba(255, 255, 255, 0);
 		}
 
@@ -220,7 +220,7 @@ input, select, textarea {
 
 		header > p {
 			display: block;
-			color: #f35858;
+			color: var(--accent);
 			padding: 0.75em 0 1em 0;
 			font-size: 1.5em;
 			line-height: 1.5em;
@@ -1843,7 +1843,7 @@ input, select, textarea {
 	}
 
 		ul.divided li {
-			border-top: solid 1px #d2d7dc;
+			border-top: solid 1px #dcd8d2;
 			padding-top: 2em;
 			margin-top: 2em;
 			padding-left: 0;
@@ -1887,7 +1887,7 @@ input, select, textarea {
 
 		ul.menu li {
 			display: inline-block;
-			border-left: solid 1px #d2d7dc;
+			border-left: solid 1px #dcd8d2;
 			padding-left: 1em;
 			margin-left: 1em;
 		}
@@ -1923,7 +1923,7 @@ input, select, textarea {
 		-webkit-appearance: none;
 		display: block;
 		background: #f9fbfe;
-		border: solid 1px #d2d7dc;
+		border: solid 1px #dcd8d2;
 		border-radius: 0.35em;
 		width: 100%;
 		line-height: 1.5em;
@@ -1973,7 +1973,7 @@ input, select, textarea {
 		}
 
 			table.default tbody tr {
-				border-top: solid 1px #D2D7DC;
+				border-top: solid 1px #dcd8d2;
 			}
 
 				table.default tbody tr:nth-child(2n+1) {
@@ -1991,7 +1991,7 @@ input, select, textarea {
 			}
 
 			table.default tfoot {
-				border-top: solid 1px #D2D7DC;
+				border-top: solid 1px #dcd8d2;
 			}
 
 /* Button */
@@ -2021,8 +2021,8 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			color: #f35858;
-			border-color: rgba(243, 88, 88, 0.5);
+			color: var(--accent);
+			border-color: color-mix(in srgb, var(--accent) 50%, transparent);
 		}
 
 /* Icons */
@@ -2082,11 +2082,11 @@ input, select, textarea {
 		position: relative;
 		padding: 4em 0 2em 0;
 		background-image: url("images/header.svg");
-		background-image: url("images/overlay.png"), url("images/header.svg"), -moz-linear-gradient(75deg, #FF7088 15%, #F2B69D 55%);
-		background-image: url("images/overlay.png"), url("images/header.svg"), -webkit-linear-gradient(75deg, #FF7088 15%, #F2B69D 55%);
-		background-image: url("images/overlay.png"), url("images/header.svg"), -ms-linear-gradient(75deg, #FF7088 15%, #F2B69D 55%);
-		background-image: url("images/overlay.png"), url("images/header.svg"), linear-gradient(75deg, #FF7088 15%, #F2B69D 55%);
-		background-color: #f08c89;
+		background-image: url("images/overlay.png"), url("images/header.svg"), -moz-linear-gradient(75deg, #73fcf6 15%, #9fcef0 55%);
+		background-image: url("images/overlay.png"), url("images/header.svg"), -webkit-linear-gradient(75deg, #73fcf6 15%, #9fcef0 55%);
+		background-image: url("images/overlay.png"), url("images/header.svg"), -ms-linear-gradient(75deg, #73fcf6 15%, #9fcef0 55%);
+		background-image: url("images/overlay.png"), url("images/header.svg"), linear-gradient(75deg, #73fcf6 15%, #9fcef0 55%);
+		background-color: #8bdfee;
 		background-size: 100% 620%;
 		background-size: 128px 128px, 100% 620%, auto;
 		background-repeat: repeat, no-repeat, no-repeat;
@@ -2227,7 +2227,7 @@ input, select, textarea {
 			}
 
 			.dropotron li.active > a, .dropotron li.active > span {
-				color: #f35858;
+				color: var(--accent);
 			}
 
 		.dropotron.level-0 {
@@ -2289,7 +2289,7 @@ input, select, textarea {
 		#hero .button {
 			background: #fff;
 			border-color: rgba(255, 255, 255, 0);
-			color: #f08c89;
+			color: #8bdfee;
 			font-size: 1.25em;
 		}
 
@@ -2331,7 +2331,7 @@ input, select, textarea {
 		#promo .button {
 			background: #fff;
 			border-color: rgba(255, 255, 255, 0);
-			color: #27636B;
+			color: #6a3828;
 			font-size: 1.25em;
 		}
 
@@ -2350,7 +2350,7 @@ input, select, textarea {
 /* Sidebar */
 
 	#sidebar section {
-		border-top: solid 1px #d2d7dc;
+		border-top: solid 1px #dcd8d2;
 		margin-top: 3em;
 		padding-top: 3em;
 	}
@@ -2378,7 +2378,7 @@ input, select, textarea {
 		position: relative;
 		z-index: 1;
 		text-align: center;
-		border-top: solid 1px #d2d7dc;
+		border-top: solid 1px #dcd8d2;
 		color: #a2a7ac;
 		padding-top: 4em;
 		margin-top: 6em;
@@ -2728,7 +2728,7 @@ input, select, textarea {
 			}
 
 				#footer ul.divided li:first-child {
-					border-top: solid 1px #d2d7dc;
+					border-top: solid 1px #dcd8d2;
 					padding-top: 0.75em;
 					margin-top: 0.75em;
 				}

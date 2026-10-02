@@ -4,7 +4,7 @@ A working storefront that sells original designs and adapted open-source website
 downloadable source. Accounts, cart, checkout, order history and
 ownership-gated downloads — not a landing page with a Gumroad link.
 
-**One-time pricing: $5 · $10 · $35.** No subscriptions.
+**One-time pricing: $5 · $10 · $15 per template, $35 for everything.** No subscriptions.
 
 ---
 
@@ -12,9 +12,15 @@ ownership-gated downloads — not a landing page with a Gumroad link.
 
 | Tier | Price | What's in it |
 |---|---|---|
-| **Starter** | **$5** | 6 single-purpose templates, no build step |
-| **Pro** | **$10** | 3 multi-page / app-grade templates |
-| **Bundle** | **$35** | All 9 — saves $25 against $60 separately |
+| **Starter** | **$5** | Focused one-to-three page sites, no build step |
+| **Pro** | **$10** | Multi-page sites, with the online editor included |
+| **Premium** | **$15** | Complete business sites and app-grade builds |
+| **All-access** | **$35** | Every template, including future releases |
+
+Templates are grouped into nine business categories (e-commerce, SaaS & apps,
+agencies, restaurants, local services, portfolios, blogs, personal sites,
+events). A done-for-you "Made for you" setup is $15 and is paid through the
+same Stripe checkout.
 
 Prices live in `lib/catalog.js` and are re-synced into the database on every
 boot. The client never sends an amount: totals are always recomputed
@@ -185,7 +191,9 @@ a 403 — the page should not announce that it exists.
 
 The store includes nine original designs and 50 adapted open-source designs: 36 from HTML5 UP (CC BY 3.0) and 14 from Start Bootstrap (MIT). Each imported folder includes LICENSE.txt, README.md and SOURCE.json. A source index is in templates/SOURCES.json. Product pages link the source and identify attribution requirements.
 
-Paid editions include replacement artwork created for the store, focus and reduced-motion improvements, page metadata, local demo-form feedback and customization instructions. Original versions are available free from their authors. Preserve upstream credits and license terms; the Foundry commercial license applies only to the original Foundry designs. Imported designs do not include working business backends, email delivery or payment processing.
+Each open-source design is reworked into an edition for one kind of business: a brand name, real copy in place of lorem ipsum, a re-tuned colour palette, new typography and illustrations drawn for that niche. Brand colour and fonts live in each template's `foundry-theme.css`, which the online editor reads. `source.design` in `lib/imported-templates.js` names the original template, and each folder's SOURCE.json lists the changes.
+
+Original versions are available free from their authors. Preserve upstream credits and license terms: every HTML5 UP page keeps its visible "Design: HTML5 UP" footer credit. The Foundry commercial license applies only to the original Foundry designs. Imported designs do not include working business backends, email delivery or payment processing.
 
 Individual templates cost $5, $10 or $15. The existing $35 complete bundle remains available and includes the expanded catalog.
 

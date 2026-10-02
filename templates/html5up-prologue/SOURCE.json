@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a full-stack developer: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in JetBrains Mono and Inter, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Prologue",
+  "edition": {
+    "name": "Theo Park",
+    "niche": "a full-stack developer",
+    "category": "Personal & resume",
+    "updatedOn": "2026-10-02"
+  }
 }

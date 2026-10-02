@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a family-run winery and cellar door: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Cormorant Garamond and Lora, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Big Picture",
+  "edition": {
+    "name": "Vale & Vine",
+    "niche": "a family-run winery and cellar door",
+    "category": "Restaurants & food",
+    "updatedOn": "2026-10-02"
+  }
 }

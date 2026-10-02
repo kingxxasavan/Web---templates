@@ -99,11 +99,11 @@ input, select, textarea {
 	}
 
 	body {
-		background-color: #935d8c;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+		background-color: #9a5661;
+		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #f1ba68 15%, #99449c 85%);
+		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #f1ba68 15%, #99449c 85%);
+		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #f1ba68 15%, #99449c 85%);
+		background-image: url("images/overlay.png"), linear-gradient(45deg, #f1ba68 15%, #99449c 85%);
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -120,12 +120,12 @@ input, select, textarea {
 /* Type */
 
 	body {
-		background-color: #935d8c;
+		background-color: #9a5661;
 		color: rgba(255, 255, 255, 0.65);
 	}
 
 	body, input, select, textarea {
-		font-family: "Source Sans Pro", Helvetica, sans-serif;
+		font-family: var(--font-body);
 		font-size: 17pt;
 		font-weight: 300;
 		line-height: 1.65;
@@ -1957,7 +1957,7 @@ input, select, textarea {
 		input[type="button"].primary,
 		button.primary,
 		.button.primary {
-			background-color: #8cc9f0;
+			background-color: var(--accent);
 			color: #ffffff !important;
 			box-shadow: none;
 		}
@@ -1967,7 +1967,7 @@ input, select, textarea {
 			input[type="button"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
-				background-color: #9acff2;
+				background-color: #9b8ffd;
 			}
 
 			input[type="submit"].primary:active,
@@ -1975,7 +1975,7 @@ input, select, textarea {
 			input[type="button"].primary:active,
 			button.primary:active,
 			.button.primary:active {
-				background-color: #7ec3ee;
+				background-color: #7d70fc;
 			}
 
 			input[type="submit"].primary.icon:before,
@@ -2152,8 +2152,8 @@ input, select, textarea {
 		input[type="email"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #8cc9f0;
-			box-shadow: 0 0 0 1px #8cc9f0;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 1px var(--accent);
 		}
 
 	select {
@@ -2162,7 +2162,7 @@ input, select, textarea {
 
 		select option {
 			color: #ffffff;
-			background: #935d8c;
+			background: #9a5661;
 		}
 
 	input[type="checkbox"] + label,
@@ -2180,13 +2180,13 @@ input, select, textarea {
 	input[type="radio"]:checked + label:before {
 		background-color: #ffffff;
 		border-color: #ffffff;
-		color: #935d8c;
+		color: #9a5661;
 	}
 
 	input[type="checkbox"]:focus + label:before,
 	input[type="radio"]:focus + label:before {
-		border-color: #8cc9f0;
-		box-shadow: 0 0 0 1px #8cc9f0;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 1px var(--accent);
 	}
 
 	::-webkit-input-placeholder {
@@ -2270,23 +2270,23 @@ input, select, textarea {
 			}
 
 		.icon.style1 {
-			color: #efa8b0;
+			color: #f8d49f;
 		}
 
 		.icon.style2 {
-			color: #c79cc8;
+			color: #ce96a8;
 		}
 
 		.icon.style3 {
-			color: #a89cc8;
+			color: #cd96ce;
 		}
 
 		.icon.style4 {
-			color: #9bb2e1;
+			color: #b492ea;
 		}
 
 		.icon.style5 {
-			color: #8cc9f0;
+			color: var(--accent);
 		}
 
 		@media screen and (max-width: 1680px) {
@@ -2863,23 +2863,23 @@ input, select, textarea {
 		}
 
 			.statistics li.style1 {
-				background-color: #efa8b0;
+				background-color: #f8d49f;
 			}
 
 			.statistics li.style2 {
-				background-color: #c79cc8;
+				background-color: #ce96a8;
 			}
 
 			.statistics li.style3 {
-				background-color: #a89cc8;
+				background-color: #cd96ce;
 			}
 
 			.statistics li.style4 {
-				background-color: #9bb2e1;
+				background-color: #b492ea;
 			}
 
 			.statistics li.style5 {
-				background-color: #8cc9f0;
+				background-color: var(--accent);
 			}
 
 			.statistics li strong, .statistics li b {
@@ -3390,7 +3390,7 @@ input, select, textarea {
 			#main input[type="button"].primary,
 			#main button.primary,
 			#main .button.primary {
-				background-color: #8cc9f0;
+				background-color: var(--accent);
 				color: #ffffff !important;
 				box-shadow: none;
 			}
@@ -3400,7 +3400,7 @@ input, select, textarea {
 				#main input[type="button"].primary:hover,
 				#main button.primary:hover,
 				#main .button.primary:hover {
-					background-color: #9acff2;
+					background-color: #9b8ffd;
 				}
 
 				#main input[type="submit"].primary:active,
@@ -3408,7 +3408,7 @@ input, select, textarea {
 				#main input[type="button"].primary:active,
 				#main button.primary:active,
 				#main .button.primary:active {
-					background-color: #7ec3ee;
+					background-color: #7d70fc;
 				}
 
 				#main input[type="submit"].primary.icon:before,
@@ -3437,8 +3437,8 @@ input, select, textarea {
 			#main input[type="email"]:focus,
 			#main select:focus,
 			#main textarea:focus {
-				border-color: #8cc9f0;
-				box-shadow: 0 0 0 1px #8cc9f0;
+				border-color: var(--accent);
+				box-shadow: 0 0 0 1px var(--accent);
 			}
 
 		#main select {
@@ -3470,8 +3470,8 @@ input, select, textarea {
 
 		#main input[type="checkbox"]:focus + label:before,
 		#main input[type="radio"]:focus + label:before {
-			border-color: #8cc9f0;
-			box-shadow: 0 0 0 1px #8cc9f0;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 1px var(--accent);
 		}
 
 		#main ::-webkit-input-placeholder {
@@ -3525,10 +3525,10 @@ input, select, textarea {
 
 		#main header.major h2:after {
 			background-color: #dddddd;
-			background-image: -moz-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: -webkit-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: -ms-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+			background-image: -moz-linear-gradient(90deg, #f8d49f, #cd96ce, var(--accent));
+			background-image: -webkit-linear-gradient(90deg, #f8d49f, #cd96ce, var(--accent));
+			background-image: -ms-linear-gradient(90deg, #f8d49f, #cd96ce, var(--accent));
+			background-image: linear-gradient(90deg, #f8d49f, #cd96ce, var(--accent));
 		}
 
 		#main table tbody tr {

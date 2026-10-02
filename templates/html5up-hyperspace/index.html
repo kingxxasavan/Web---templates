@@ -6,14 +6,19 @@
 -->
 <html lang="en">
 	<head>
-		<title>Hyperspace — Sidebar SaaS landing page</title>
+		<title>Orbitly — API monitoring</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	<meta name="description" content="A colorful section-based layout with persistent navigation and a clear feature story." />
+	<meta name="description" content="Orbitly watches your APIs from 18 regions and pages the right person before your customers notice." />
 <link rel="stylesheet" href="foundry.css" />
-</head>
+		<meta name="generator" content="Foundry edition" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" />
+		<link rel="stylesheet" href="foundry-theme.css" />
+	</head>
 	<body class="is-preload">
 
 		<!-- Sidebar -->
@@ -21,10 +26,10 @@
 				<div class="inner">
 					<nav>
 						<ul>
-							<li><a href="#intro">Welcome</a></li>
-							<li><a href="#one">Who we are</a></li>
-							<li><a href="#two">What we do</a></li>
-							<li><a href="#three">Get in touch</a></li>
+							<li><a href="#intro">Synthetic checks</a></li>
+							<li><a href="#one">Latency budgets</a></li>
+							<li><a href="#two">On-call routing</a></li>
+							<li><a href="#three">Start monitoring</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -36,10 +41,10 @@
 				<!-- Intro -->
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="inner">
-							<h1>Sidebar SaaS landing page</h1>
-							<p>A colorful section-based layout with persistent navigation and a clear feature story.</p>
+							<h1>Know before your customers do.</h1>
+							<p>Orbitly checks every endpoint from 18 regions each minute, and pages the right person the moment something breaks.</p>
 							<ul class="actions">
-								<li><a href="#one" class="button scrolly">Learn more</a></li>
+								<li><a href="#one" class="button scrolly">Read the docs</a></li>
 							</ul>
 						</div>
 					</section>
@@ -47,37 +52,37 @@
 				<!-- One -->
 					<section id="one" class="wrapper style2 spotlights">
 						<section>
-							<a href="#" class="image"><img src="images/pic01.jpg" alt="" data-position="center center" /></a>
+							<a href="#" class="image"><img src="images/pic01.jpg" alt="Code on a dark editor window" data-position="center center" /></a>
 							<div class="content">
 								<div class="inner">
-									<h2>Selected work</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
+									<h2>Checks from 18 regions</h2>
+									<p>Orbitly sends real requests to your APIs from 18 regions every minute, checks the status code, the body and the latency, and tells you the instant something drifts out of bounds.</p>
 									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
+										<li><a href="generic.html" class="button">Docs</a></li>
 									</ul>
 								</div>
 							</div>
 						</section>
 						<section>
-							<a href="#" class="image"><img src="images/pic02.jpg" alt="" data-position="top center" /></a>
+							<a href="#" class="image"><img src="images/pic02.jpg" alt="Product dashboard with charts and metrics" data-position="top center" /></a>
 							<div class="content">
 								<div class="inner">
-									<h2>A thoughtful approach</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
+									<h2>Alerts that wake the right person</h2>
+									<p>When a check fails, Orbitly routes the alert to whoever is on call, with the failing request, the response and the last good deploy attached, so they can start fixing instead of investigating.</p>
 									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
+										<li><a href="generic.html" class="button">Docs</a></li>
 									</ul>
 								</div>
 							</div>
 						</section>
 						<section>
-							<a href="#" class="image"><img src="images/pic03.jpg" alt="" data-position="25% 25%" /></a>
+							<a href="#" class="image"><img src="images/pic03.jpg" alt="Product dashboard with charts and metrics" data-position="25% 25%" /></a>
 							<div class="content">
 								<div class="inner">
-									<h2>Ultricies aliquam</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
+									<h2>Status pages your customers trust</h2>
+									<p>Every incident gets a timeline that writes itself: when it started, which regions saw it, who acknowledged it and what fixed it.</p>
 									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
+										<li><a href="generic.html" class="button">Docs</a></li>
 									</ul>
 								</div>
 							</div>
@@ -87,42 +92,42 @@
 				<!-- Two -->
 					<section id="two" class="wrapper style3 fade-up">
 						<div class="inner">
-							<h2>What we do</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<h2>On-call routing</h2>
+							<p>Define checks in YAML or Terraform and keep them in the repo next to your code. Orbitly plugs into GitHub Actions, PagerDuty, Slack, Datadog and OpenTelemetry.</p>
 							<div class="features">
 								<section>
 									<span class="icon major fa-code"></span>
-									<h3>Lorem ipsum amet</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Status pages</h3>
+									<p>Orbitly sends real requests to your APIs from 18 regions every minute, checks the status code, the body and the latency, and tells you the instant something drifts out of bounds.</p>
 								</section>
 								<section>
 									<span class="icon major fa-lock"></span>
-									<h3>Built around your story</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Incident timelines</h3>
+									<p>When a check fails, Orbitly routes the alert to whoever is on call, with the failing request, the response and the last good deploy attached, so they can start fixing instead of investigating.</p>
 								</section>
 								<section>
 									<span class="icon major fa-cog"></span>
-									<h3>Let’s create something useful</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>SLA reports</h3>
+									<p>Every incident gets a timeline that writes itself: when it started, which regions saw it, who acknowledged it and what fixed it.</p>
 								</section>
 								<section>
 									<span class="icon major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Terraform provider</h3>
+									<p>Define checks in YAML or Terraform and keep them in the repo next to your code.</p>
 								</section>
 								<section>
 									<span class="icon major fa-chain"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>OpenTelemetry</h3>
+									<p>Orbitly sends real requests to your APIs from 18 regions every minute, checks the status code, the body and the latency, and tells you the instant something drifts out of bounds.</p>
 								</section>
 								<section>
 									<span class="icon major fa-diamond"></span>
-									<h3>Selected work</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Checks from 18 regions</h3>
+									<p>When a check fails, Orbitly routes the alert to whoever is on call, with the failing request, the response and the last good deploy attached, so they can start fixing instead of investigating.</p>
 								</section>
 							</div>
 							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn more</a></li>
+								<li><a href="generic.html" class="button">Docs</a></li>
 							</ul>
 						</div>
 					</section>
@@ -130,8 +135,8 @@
 				<!-- Three -->
 					<section id="three" class="wrapper style1 fade-up">
 						<div class="inner">
-							<h2>Get in touch</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<h2>See integrations</h2>
+							<p>Every incident gets a timeline that writes itself: when it started, which regions saw it, who acknowledged it and what fixed it. Share it with customers as a status page, or keep it internal.</p>
 							<div class="split style1">
 								<section>
 									<form method="post">
@@ -158,20 +163,18 @@
 									<ul class="contact">
 										<li>
 											<h3>Address</h3>
-											<span>12345 Somewhere Road #654<br />
-											Nashville, TN 00000-0000<br />
-											USA</span>
+											<span>Checks run every 60 seconds from 18 regions worldwide.</span>
 										</li>
 										<li>
 											<h3>Email</h3>
-											<a href="#">user@untitled.tld</a>
+											<a href="#">user@orbitly.tld</a>
 										</li>
 										<li>
 											<h3>Phone</h3>
-											<span>(000) 000-0000</span>
+											<span>(555) 014-2290</span>
 										</li>
 										<li>
-											<h3>Social</h3>
+											<h3>PagerDuty</h3>
 											<ul class="icons">
 												<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
 												<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
@@ -192,7 +195,7 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>© Orbitly. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 				</div>
 			</footer>

@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700");
+
 
 /*
 	Strongly Typed by HTML5 UP
@@ -98,7 +98,7 @@ input, select, textarea {
 		}
 
 	body, input, textarea, select {
-		font-family: 'Source Sans Pro';
+		font-family: var(--font-body);
 		font-weight: 300;
 		color: #777;
 		line-height: 1.65em;
@@ -149,12 +149,12 @@ input, select, textarea {
 		}
 
 		a:hover {
-			color: #ed786a;
+			color: var(--accent);
 			border-bottom-color: rgba(255, 255, 255, 0);
 		}
 
 			a:hover strong {
-				color: #ed786a;
+				color: var(--accent);
 			}
 
 	strong, b {
@@ -1768,7 +1768,7 @@ input, select, textarea {
 		-webkit-appearance: none;
 		position: relative;
 		display: inline-block;
-		background: #ed786a;
+		background: var(--accent);
 		color: #fff !important;
 		text-transform: uppercase;
 		border-radius: 4px;
@@ -1799,7 +1799,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background: #fd887a;
+			background: #eb8c9a;
 		}
 
 		input[type="button"]:active,
@@ -1807,7 +1807,7 @@ input, select, textarea {
 		input[type="reset"]:active,
 		button:active,
 		.button:active {
-			background: #ed786a;
+			background: var(--accent);
 		}
 
 		input[type="button"].alt,
@@ -1897,9 +1897,9 @@ input, select, textarea {
 		}
 
 		#header h1 {
-			font-family: 'Arvo';
+			font-family: var(--font-body);
 			font-weight: 700;
-			color: #ed786a;
+			color: var(--accent);
 			text-shadow: 0.05em 0.075em 0 rgba(0, 0, 0, 0.1);
 			font-size: 3em;
 			letter-spacing: 13px;
@@ -1981,12 +1981,12 @@ input, select, textarea {
 			}
 
 			#nav > ul > li.active > a:before, #nav > ul > li:hover > a:before {
-				background: #ED786A;
+				background: var(--accent);
 				color: #fff;
 			}
 
 			#nav > ul > li.active > a > span, #nav > ul > li:hover > a > span {
-				color: #ED786A;
+				color: var(--accent);
 			}
 
 	.dropotron {
@@ -2053,12 +2053,12 @@ input, select, textarea {
 				-webkit-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
 				-ms-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
 				transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
-				color: #ed786a;
+				color: var(--accent);
 			}
 
 /* Features */
 
-	#features {
+	#f3d7b6tures {
 		position: relative;
 		overflow: hidden;
 		background: #fff;
@@ -2066,11 +2066,11 @@ input, select, textarea {
 		padding: 6em 0;
 	}
 
-		#features p {
+		#f3d7b6tures p {
 			text-align: center;
 		}
 
-		#features ul.actions {
+		#f3d7b6tures ul.actions {
 			margin-top: 1.25em;
 		}
 
@@ -2271,7 +2271,7 @@ input, select, textarea {
 
 		/* Features */
 
-			#features {
+			#f3d7b6tures {
 				padding: 4em 0;
 			}
 
@@ -2615,11 +2615,11 @@ input, select, textarea {
 
 		/* Features */
 
-			#features {
+			#f3d7b6tures {
 				padding: 2em 0;
 			}
 
-				#features ul.actions {
+				#f3d7b6tures ul.actions {
 					margin-top: 0;
 				}
 

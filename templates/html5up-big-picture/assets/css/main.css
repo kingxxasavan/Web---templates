@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+
 @import url("font-awesome.min.css");
 
 /*
@@ -500,11 +500,11 @@ input, select, textarea {
 /* Type */
 
 	body, input, textarea, select {
-		font-family: "Source Sans Pro", "sans-serif";
+		font-family: var(--font-body);
 		font-weight: 300;
 		font-size: 18pt;
 		line-height: 1.75em;
-		color: #39454b;
+		color: #4a3a41;
 		letter-spacing: 0.025em;
 	}
 
@@ -588,7 +588,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out;
-		color: #98c593;
+		color: #9d97c1;
 	}
 
 	sub {
@@ -622,7 +622,7 @@ input, select, textarea {
 
 	.box {
 		background: #ffffff;
-		color: #39454b;
+		color: #4a3a41;
 		padding: 2em;
 	}
 
@@ -662,7 +662,7 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;
-		background-color: #98c593;
+		background-color: #9d97c1;
 		border: 0;
 		border-radius: 3.5em;
 		color: #ffffff;
@@ -719,7 +719,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		.button:hover,
 		button:hover {
-			background-color: #a8cea4;
+			background-color: #ada7cb;
 		}
 
 		input[type="button"]:active,
@@ -727,7 +727,7 @@ input, select, textarea {
 		input[type="reset"]:active,
 		.button:active,
 		button:active {
-			background-color: #88bc82;
+			background-color: #8e86b8;
 		}
 
 		input[type="button"].style2,
@@ -858,7 +858,7 @@ input, select, textarea {
 		-webkit-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		-ms-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		color: #39454b;
+		color: #4a3a41;
 		display: block;
 		width: 100%;
 		padding: 0.65em 0.75em;
@@ -877,7 +877,7 @@ input, select, textarea {
 		input[type="url"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #9ac8e9;
+			border-color: var(--accent);
 		}
 
 	input[type="text"],
@@ -1204,7 +1204,7 @@ input, select, textarea {
 			}
 
 			table.default thead {
-				background: #39454b;
+				background: #4a3a41;
 				color: #ffffff;
 			}
 
@@ -2032,7 +2032,7 @@ input, select, textarea {
 			}
 
 			.main.style3.secondary {
-				background: #f5f6f7;
+				background: #f7f5f6;
 			}
 
 		.main.dark {
@@ -2161,7 +2161,7 @@ input, select, textarea {
 		margin: 0;
 		line-height: 1em;
 		padding: 1.5em;
-		background: #39454b;
+		background: #4a3a41;
 		color: rgba(185, 186, 187, 0.5);
 		overflow: hidden;
 	}

@@ -6,13 +6,18 @@
 -->
 <html lang="en">
 	<head>
-		<title>Future Imperfect — Independent editorial blog</title>
+		<title>Article — Byte Notes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-	<meta name="description" content="A refined publication layout with article cards, author details and sidebar navigation." />
+	<meta name="description" content="Article — Byte Notes. Byte Notes: practical essays on software engineering, from databases to debugging. A new issue every Tuesday." />
 <link rel="stylesheet" href="foundry.css" />
-</head>
+		<meta name="generator" content="Foundry edition" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" />
+		<link rel="stylesheet" href="foundry-theme.css" />
+	</head>
 	<body class="single is-preload">
 
 		<!-- Wrapper -->
@@ -20,14 +25,14 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="index.html">Future Imperfect</a></h1>
+						<h1><a href="index.html">Home</a></h1>
 						<nav class="links">
 							<ul>
-								<li><a href="#">Lorem</a></li>
-								<li><a href="#">Ipsum</a></li>
-								<li><a href="#">Feugiat</a></li>
-								<li><a href="#">Tempus</a></li>
-								<li><a href="#">Adipiscing</a></li>
+								<li><a href="#">Databases</a></li>
+								<li><a href="#">Debugging</a></li>
+								<li><a href="#">Architecture</a></li>
+								<li><a href="#">Career</a></li>
+								<li><a href="#">Postgres</a></li>
 							</ul>
 						</nav>
 						<nav class="main">
@@ -60,26 +65,26 @@
 								<ul class="links">
 									<li>
 										<a href="#">
-											<h3>Lorem ipsum</h3>
-											<p>Feugiat tempus veroeros dolor</p>
+											<h3>Testing</h3>
+											<p>Issue 112</p>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Dolor sit amet</h3>
-											<p>Sed vitae justo condimentum</p>
+											<h3>8 min read</h3>
+											<p>Code review</p>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Feugiat veroeros</h3>
-											<p>Phasellus sed ultricies mi congue</p>
+											<h3>Popular</h3>
+											<p>Most slow queries come down to three mistakes.</p>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Etiam sed consequat</h3>
-											<p>Porta lectus amet ultricies</p>
+											<h3>Issue 112</h3>
+											<p>8 min read</p>
 										</a>
 									</li>
 								</ul>
@@ -101,20 +106,20 @@
 							<article class="post">
 								<header>
 									<div class="title">
-										<h2><a href="#">Magna sed adipiscing</a></h2>
-										<p>A refined publication layout with article cards, author details and sidebar navigation. Customize the content and artwork to tell your own story.</p>
+										<h2><a href="#">The case for boring technology</a></h2>
+										<p>I'm Alex, a backend engineer who has spent fifteen years building and breaking production systems. Byte Notes is where I write down the things I wish someone had told me sooner.</p>
 									</div>
 									<div class="meta">
 										<time class="published" datetime="2015-11-01">November 1, 2015</time>
-										<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+										<a href="#" class="author"><span class="name">Popular</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
 								</header>
-								<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-								<p>Nunc quis dui scelerisque, scelerisque urna ut, dapibus orci. Sed vitae condimentum lectus, ut imperdiet quam. Maecenas in justo ut nulla aliquam sodales vel at ligula. Sed blandit diam odio, sed fringilla lectus molestie sit amet. Praesent eu tortor viverra lorem mattis pulvinar feugiat in turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ullamcorper tellus sit amet mattis dignissim. Phasellus ut metus ligula. Curabitur nec leo turpis. Ut gravida purus quis erat pretium, sed pellentesque massa elementum. Fusce vestibulum porta augue, at mattis justo. Integer sed sapien fringilla, dapibus risus id, faucibus ante. Pellentesque mattis nunc sit amet tortor pellentesque, non placerat neque viverra. </p>
+								<span class="image featured"><img src="images/pic01.jpg" alt="An open book beside a cup of tea" /></span>
+								<p>You added an index and the query is still slow. Before you reach for a bigger database, check the three usual suspects: a function wrapped around the column, a type mismatch, or a filter the planner thinks is cheap.</p>
+								<p>Every new technology comes with unknown unknowns. The boring stack you already understand has had its sharp edges filed off by a decade of other people's outages.</p>
 								<footer>
 									<ul class="stats">
-										<li><a href="#">General</a></li>
+										<li><a href="#">Databases</a></li>
 										<li><a href="#" class="icon fa-heart">28</a></li>
 										<li><a href="#" class="icon fa-comment">128</a></li>
 									</ul>
@@ -129,10 +134,10 @@
 							<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
 							<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
 							<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+							<li><a href="#" class="fa-rss"><span class="label">Alex Rivera</span></a></li>
 							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
 						</ul>
-						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+						<p class="copyright">© Byte Notes. Design: <a href="http://html5up.net">HTML5 UP</a>.</p>
 					</section>
 
 			</div>

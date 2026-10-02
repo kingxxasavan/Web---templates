@@ -1,5 +1,5 @@
 /* Foundry adaptation: focus visibility, touch targets and motion preferences. */
-:root { --foundry-accent: #4b8084; }
+:root { --foundry-accent: #ee271c; }
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--foundry-accent) !important; outline-offset: 5px; }

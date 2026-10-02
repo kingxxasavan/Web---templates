@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
+
 
 /*
 	Alpha by HTML5 UP
@@ -110,7 +110,7 @@
 
 	body, input, select, textarea {
 		color: #777;
-		font-family: "Source Sans Pro", sans-serif;
+		font-family: var(--font-body);
 		font-size: 16pt;
 		font-weight: 300;
 		line-height: 1.65em;
@@ -123,7 +123,7 @@
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		border-bottom: dotted 1px;
-		color: #e89980;
+		color: var(--accent);
 		text-decoration: none;
 	}
 
@@ -2109,8 +2109,8 @@
 		input[type="email"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #e89980;
-			box-shadow: 0 0 0 2px #e89980;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 2px var(--accent);
 		}
 
 	select {
@@ -2210,8 +2210,8 @@
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #e89980;
-			box-shadow: 0 0 0 1px #e89980;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 1px var(--accent);
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2401,22 +2401,22 @@
 			}
 
 			.icon.major.accent2 {
-				background: #e89980;
+				background: var(--accent);
 				color: #ffffff;
 			}
 
 			.icon.major.accent3 {
-				background: #7fcdb8;
+				background: #7cd0a2;
 				color: #ffffff;
 			}
 
 			.icon.major.accent4 {
-				background: #90b0ba;
+				background: #8ebcba;
 				color: #ffffff;
 			}
 
 			.icon.major.accent5 {
-				background: #e5cb95;
+				background: #e8b592;
 				color: #ffffff;
 			}
 
@@ -2827,7 +2827,7 @@
 		input[type="reset"].primary,
 		input[type="button"].primary,
 		.button.primary {
-			background-color: #e89980;
+			background-color: var(--accent);
 			color: #ffffff !important;
 		}
 
@@ -2835,14 +2835,14 @@
 			input[type="reset"].primary:hover,
 			input[type="button"].primary:hover,
 			.button.primary:hover {
-				background-color: #ecaa96;
+				background-color: #f09296;
 			}
 
 			input[type="submit"].primary:active,
 			input[type="reset"].primary:active,
 			input[type="button"].primary:active,
 			.button.primary:active {
-				background-color: #e4886a;
+				background-color: #e96568;
 			}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,
@@ -3108,7 +3108,7 @@
 			}
 
 			.dropotron li.active > a, .dropotron li.active > span, .dropotron li:hover > a, .dropotron li:hover > span {
-				background: #e89980;
+				background: var(--accent);
 				color: #ffffff;
 			}
 
@@ -3282,8 +3282,8 @@
 /* CTA */
 
 	#cta {
-		background: #e89980;
-		color: #f9e6df;
+		background: var(--accent);
+		color: #fadede;
 		padding: 3.5em 0 4em 0;
 		text-align: center;
 	}
@@ -3304,7 +3304,7 @@
 		#cta .button {
 			box-shadow: none;
 			background: #fff;
-			color: #e89980;
+			color: var(--accent);
 		}
 
 		#cta input[type="text"],

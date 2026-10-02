@@ -1,23 +1,29 @@
-# Grayscale — Foundry edition
+# Night Shift — Podcast
 
-A restrained cinematic introduction with project sections and a signup area.
+An atmospheric one-page site for a podcast: full-screen intro, about, featured episodes and a newsletter signup.
+
+Built for: Podcasters, YouTubers and creators.
 
 ## Start
-Open index.html. A local static server is recommended for previews. No npm install or build is needed. Upload the whole folder to a static host such as Vercel, Netlify or GitHub Pages.
 
-## Customize
-1. Edit the text, links and navigation in the HTML files.
-2. Replace the original abstract artwork with images for your own brand.
-3. Adjust the styles in foundry.css; the upstream styles remain in their original folders.
-4. Connect contact/signup forms to your own service. These demo forms send no data.
-5. Replace placeholder social links, addresses and contact information before publishing.
+Open `index.html` in a browser, or serve the folder locally. There is nothing to install or build. To publish, upload the whole folder to any static host: Netlify, Vercel, Cloudflare Pages or GitHub Pages.
 
-## What you bought
-A prepared, adapted edition with local artwork, page metadata, accessibility refinements, demo-form messaging and these instructions. The upstream design is also available free from https://github.com/StartBootstrap/startbootstrap-grayscale. No exclusive ownership or support from the upstream author is implied.
+## Pages
 
-## License and credits
-Original design: Start Bootstrap. Source: https://github.com/StartBootstrap/startbootstrap-grayscale
-License: MIT (https://opensource.org/license/mit). Keep LICENSE.txt and upstream credits. Keep the MIT copyright and permission notice in redistributed source.
-Foundry modifications use the same license as the original template. Replacement raster artwork created for this edition is CC0. Third-party scripts, fonts and icons retain their own notices. Source revision: d974402.
+- `index.html`: Home
 
-See SOURCE.json for the adaptation record. Backend processing, payments, email delivery and business content are not included.
+## Make it yours
+
+1. **Brand colour and fonts:** edit the variables at the top of `foundry-theme.css`. The fonts load from Google Fonts in each page's `<head>`.
+2. **Words:** the copy is written for a weekly interview podcast. Replace the business name (Night Shift), contact details and prices with your own in each HTML file.
+3. **Pictures:** the illustrations in `images/` were drawn for this edition. Swap in your own photos at similar sizes.
+4. **Forms:** they validate in the browser but send nothing. Point them at Formspree, Netlify Forms or your own backend before launch.
+5. **Links:** replace the placeholder social links and addresses before publishing.
+
+## Licence and credit
+
+This edition is based on **Grayscale** by Start Bootstrap, released under MIT (https://opensource.org/license/mit). The original design is available free from https://github.com/StartBootstrap/startbootstrap-grayscale; this edition adds the rework described here. Keep the copyright notice in the source files. MIT requires nothing on the page itself.
+
+Foundry's changes (copy, colours, typography, illustrations, page metadata and this guide) are released under the same licence as the original. The illustrations are original to this edition. Third-party scripts, fonts and icons keep their own licences.
+
+See SOURCE.json for the full list of changes.

@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a cybersecurity consultancy: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Space Grotesk and IBM Plex Sans, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Solid State",
+  "edition": {
+    "name": "Ironclad",
+    "niche": "a cybersecurity consultancy",
+    "category": "Agency & consulting",
+    "updatedOn": "2026-10-02"
+  }
 }

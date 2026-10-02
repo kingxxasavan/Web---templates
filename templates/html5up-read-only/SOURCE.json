@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a freelance copywriter: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in DM Serif Display and Karla, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Read Only",
+  "edition": {
+    "name": "Sam Whitlock",
+    "niche": "a freelance copywriter",
+    "category": "Personal & resume",
+    "updatedOn": "2026-10-02"
+  }
 }

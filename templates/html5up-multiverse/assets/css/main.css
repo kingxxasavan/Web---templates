@@ -1,5 +1,5 @@
 @import url(font-awesome.min.css);
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic");
+
 
 /*
 	Multiverse by HTML5 UP
@@ -192,7 +192,7 @@ input, select, textarea {
 
 	body, input, select, textarea {
 		color: #a0a0a1;
-		font-family: "Source Sans Pro", Helvetica, sans-serif;
+		font-family: var(--font-body);
 		font-size: 15pt;
 		font-weight: 300;
 		letter-spacing: 0.025em;
@@ -213,13 +213,13 @@ input, select, textarea {
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		border-bottom: dotted 1px;
-		color: #34a58e;
+		color: var(--accent);
 		text-decoration: none;
 	}
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #34a58e !important;
+			color: var(--accent) !important;
 		}
 
 	strong, b {
@@ -400,8 +400,8 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			box-shadow: inset 0 0 0 2px #34a58e;
-			color: #34a58e !important;
+			box-shadow: inset 0 0 0 2px var(--accent);
+			color: var(--accent) !important;
 		}
 
 			input[type="submit"]:hover:active,
@@ -409,8 +409,8 @@ input, select, textarea {
 			input[type="button"]:hover:active,
 			button:hover:active,
 			.button:hover:active {
-				background-color: rgba(52, 165, 142, 0.15);
-				color: #34a58e !important;
+				background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+				color: var(--accent) !important;
 			}
 
 		input[type="submit"].icon,
@@ -458,7 +458,7 @@ input, select, textarea {
 		input[type="button"].primary,
 		button.primary,
 		.button.primary {
-			background-color: #34a58e;
+			background-color: var(--accent);
 			box-shadow: none;
 		}
 
@@ -467,7 +467,7 @@ input, select, textarea {
 			input[type="button"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
-				background-color: #47c5ab;
+				background-color: #af795d;
 				color: #ffffff !important;
 			}
 
@@ -476,7 +476,7 @@ input, select, textarea {
 				input[type="button"].primary:hover:active,
 				button.primary:hover:active,
 				.button.primary:hover:active {
-					background-color: #287e6d;
+					background-color: #6f4b37;
 				}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,
@@ -616,7 +616,7 @@ input, select, textarea {
 		input[type="url"]:focus,
 		select:focus,
 		textarea:focus {
-			box-shadow: inset 0 0 0 2px #34a58e;
+			box-shadow: inset 0 0 0 2px var(--accent);
 		}
 
 	select {
@@ -709,15 +709,15 @@ input, select, textarea {
 
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
-			background: #34a58e;
-			border-color: #34a58e;
+			background: var(--accent);
+			border-color: var(--accent);
 			color: #ffffff;
 			content: '\f00c';
 		}
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			box-shadow: 0 0 0 2px #34a58e;
+			box-shadow: 0 0 0 2px var(--accent);
 		}
 
 	input[type="radio"] + label:before {
@@ -1595,10 +1595,10 @@ input, select, textarea {
 		}
 
 			#main .thumb:after {
-				background-image: -moz-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%);
-				background-image: -webkit-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%);
-				background-image: -ms-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%);
-				background-image: linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%);
+				background-image: -moz-linear-gradient(to top, rgba(22, 22, 13, 0.35) 5%, rgba(22, 22, 13, 0) 35%);
+				background-image: -webkit-linear-gradient(to top, rgba(22, 22, 13, 0.35) 5%, rgba(22, 22, 13, 0) 35%);
+				background-image: -ms-linear-gradient(to top, rgba(22, 22, 13, 0.35) 5%, rgba(22, 22, 13, 0) 35%);
+				background-image: linear-gradient(to top, rgba(22, 22, 13, 0.35) 5%, rgba(22, 22, 13, 0) 35%);
 				pointer-events: none;
 				background-size: cover;
 				content: '';

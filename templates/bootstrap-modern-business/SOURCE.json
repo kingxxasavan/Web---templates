@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for accounting software for small businesses: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Manrope and Inter, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Modern Business",
+  "edition": {
+    "name": "Ledgerly",
+    "niche": "accounting software for small businesses",
+    "category": "SaaS & apps",
+    "updatedOn": "2026-10-02"
+  }
 }

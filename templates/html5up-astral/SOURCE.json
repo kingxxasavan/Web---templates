@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a UX and product designer: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Outfit and Outfit, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Astral",
+  "edition": {
+    "name": "Lena Vos",
+    "niche": "a UX and product designer",
+    "category": "Personal & resume",
+    "updatedOn": "2026-10-02"
+  }
 }

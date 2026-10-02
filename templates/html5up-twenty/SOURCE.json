@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a two-day technology conference: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Unbounded and Inter, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Twenty",
+  "edition": {
+    "name": "Northwind Summit",
+    "niche": "a two-day technology conference",
+    "category": "Events & courses",
+    "updatedOn": "2026-10-02"
+  }
 }

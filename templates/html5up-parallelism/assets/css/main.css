@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600");
+
 @import url("font-awesome.min.css");
 
 /*
@@ -92,7 +92,7 @@ input, select, textarea {
 		background-attachment: fixed;
 		background-repeat: repeat, no-repeat, auto;
 		position: relative;
-		background-color: #150C07;
+		background-color: #150907;
 		line-height: 1.75em;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -129,7 +129,7 @@ input, select, textarea {
 		}
 
 	body, input, select, textarea {
-		font-family: 'Source Sans Pro';
+		font-family: var(--font-body);
 		font-weight: 400;
 		padding: 0;
 		font-size: 13pt;
@@ -171,7 +171,7 @@ input, select, textarea {
 	}
 
 		a:hover {
-			color: #d64760;
+			color: var(--accent);
 		}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -384,7 +384,7 @@ input, select, textarea {
 			}
 
 			#main .item.intro {
-				background-color: #d64760;
+				background-color: var(--accent);
 				background-image: url("images/overlay.png");
 				display: -moz-flex;
 				display: -webkit-flex;
@@ -424,7 +424,7 @@ input, select, textarea {
 					position: absolute;
 					bottom: 0;
 					left: 0;
-					background: rgba(18, 21, 29, 0.85);
+					background: rgba(18, 23, 29, 0.85);
 					width: 100%;
 					padding: 1em;
 					font-weight: 400;
@@ -697,9 +697,9 @@ input, select, textarea {
 /* Popup */
 
 	.poptrox-popup {
-		background: #1a1f2c;
-		background: rgba(18, 21, 29, 0.9);
-		box-shadow: 0px 0px 0px 10px #fff, 0px 10px 60px 10px rgba(8, 11, 19, 0.55);
+		background: #1a222c;
+		background: rgba(18, 23, 29, 0.9);
+		box-shadow: 0px 0px 0px 10px #fff, 0px 10px 60px 10px rgba(8, 13, 19, 0.55);
 		cursor: default;
 	}
 
@@ -719,8 +719,8 @@ input, select, textarea {
 			position: absolute;
 			bottom: 0;
 			left: 0;
-			background: #1a1f2c;
-			background: rgba(18, 21, 29, 0.85);
+			background: #1a222c;
+			background: rgba(18, 23, 29, 0.85);
 			display: block;
 			width: 100%;
 			line-height: 75px;
@@ -783,8 +783,8 @@ input, select, textarea {
 		@media screen and (max-width: 736px) {
 
 			.poptrox-popup {
-				background: #0a0f1c;
-				box-shadow: 0px 0px 30px 10px rgba(8, 11, 19, 0.85);
+				background: #0a121c;
+				box-shadow: 0px 0px 30px 10px rgba(8, 13, 19, 0.85);
 				border: solid 2.5px #fff;
 				-moz-box-sizing: content-box;
 				-webkit-box-sizing: content-box;

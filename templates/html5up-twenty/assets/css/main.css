@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Lato:300,400,900");
+
 
 /*
 	Twenty by HTML5 UP
@@ -83,7 +83,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #f3f6fa;
+		background: #fcfbf1;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -99,7 +99,7 @@ input, select, textarea {
 
 	body, input, select, textarea {
 		color: #7c8081;
-		font-family: 'Lato', sans-serif;
+		font-family: var(--font-body);
 		font-size: 15pt;
 		font-weight: 300;
 		letter-spacing: 0.025em;
@@ -111,7 +111,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		color: #3fb1a3;
+		color: #ce5123;
 		text-decoration: none;
 		border-bottom: dotted 1px;
 	}
@@ -1813,7 +1813,7 @@ input, select, textarea {
 		input[type="password"]:focus,
 		input[type="email"]:focus,
 		textarea:focus {
-			border-color: #83d3c9;
+			border-color: var(--accent);
 		}
 
 	input[type="text"],
@@ -1919,48 +1919,48 @@ input, select, textarea {
 			}
 
 			.icon.circle.fa-twitter {
-				background: #70aecd;
+				background: #e4be59;
 				color: #fff;
 			}
 
 				.icon.circle.fa-twitter:hover {
-					background: #7fb7d2;
+					background: #e7c46a;
 				}
 
 			.icon.circle.fa-facebook {
-				background: #7490c3;
+				background: #d2d760;
 				color: #fff;
 			}
 
 				.icon.circle.fa-facebook:hover {
-					background: #829bc9;
+					background: #d6db70;
 				}
 
 			.icon.circle.fa-google-plus {
-				background: #db6b67;
+				background: #4aaef8;
 				color: #fff;
 			}
 
 				.icon.circle.fa-google-plus:hover {
-					background: #df7b77;
+					background: #5db6f9;
 				}
 
 			.icon.circle.fa-github {
-				background: #dcad8b;
+				background: #778ef0;
 				color: #fff;
 			}
 
 				.icon.circle.fa-github:hover {
-					background: #e1b89b;
+					background: #8a9ef3;
 				}
 
 			.icon.circle.fa-dribbble {
-				background: #da83ae;
+				background: #6df0e2;
 				color: #fff;
 			}
 
 				.icon.circle.fa-dribbble:hover {
-					background: #df93b8;
+					background: #80f2e7;
 				}
 
 		.icon.featured {
@@ -2142,7 +2142,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background: rgba(188, 202, 206, 0.15);
+			background: rgba(211, 200, 184, 0.15);
 			border-color: inherit;
 		}
 
@@ -2151,8 +2151,8 @@ input, select, textarea {
 		input[type="reset"].primary,
 		button.primary,
 		.button.primary {
-			background: #83d3c9;
-			border-color: #83d3c9;
+			background: var(--accent);
+			border-color: var(--accent);
 			color: #fff !important;
 		}
 
@@ -2161,8 +2161,8 @@ input, select, textarea {
 			input[type="reset"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
-				background: #96dad1 !important;
-				border-color: #96dad1 !important;
+				background: #eba085 !important;
+				border-color: #eba085 !important;
 			}
 
 		input[type="button"].fit,
@@ -2195,7 +2195,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style2 {
-			background-color: #83d3c9;
+			background-color: var(--accent);
 			background-image: url("images/light-bl.svg"), url("images/light-br.svg");
 			background-position: bottom left, bottom right;
 			background-repeat: no-repeat, no-repeat;
@@ -2218,7 +2218,7 @@ input, select, textarea {
 			.wrapper.style2 .button.primary {
 				background: #fff;
 				border-color: #fff;
-				color: #83d3c9 !important;
+				color: var(--accent) !important;
 			}
 
 				.wrapper.style2 input[type="button"].primary:hover,
@@ -2371,7 +2371,7 @@ input, select, textarea {
 						-webkit-transition: all 0.2s ease-in-out;
 						-ms-transition: all 0.2s ease-in-out;
 						transition: all 0.2s ease-in-out;
-						background: rgba(188, 202, 206, 0.15);
+						background: rgba(211, 200, 184, 0.15);
 					}
 
 					#header nav ul li.current > a {
@@ -2453,7 +2453,7 @@ input, select, textarea {
 			}
 
 			.dropotron > li:hover > a {
-				background: #83d3c9;
+				background: var(--accent);
 				color: #fff;
 			}
 
@@ -2525,7 +2525,7 @@ input, select, textarea {
 			-webkit-animation-fill-mode: forwards;
 			-ms-animation-fill-mode: forwards;
 			animation-fill-mode: forwards;
-			background: rgba(52, 27, 43, 0.5);
+			background: rgba(21, 58, 49, 0.5);
 			color: #fff;
 			display: inline-block;
 			opacity: 0;
@@ -2620,7 +2620,7 @@ input, select, textarea {
 /* Footer */
 
 	#footer {
-		background: #E8EEF4;
+		background: #f7f5e5;
 		color: #7c8081;
 		padding: 5em 5em 10em 5em;
 		text-align: center;

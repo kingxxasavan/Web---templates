@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a personal finance blog: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Lora and Inter, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Clean Blog",
+  "edition": {
+    "name": "The Frugal Ledger",
+    "niche": "a personal finance blog",
+    "category": "Blog & media",
+    "updatedOn": "2026-10-02"
+  }
 }

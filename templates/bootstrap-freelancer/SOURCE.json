@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for an indie game developer and pixel artist: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Press Start 2P and Rubik, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Freelancer",
+  "edition": {
+    "name": "Pixelbound",
+    "niche": "an indie game developer and pixel artist",
+    "category": "Portfolio & photography",
+    "updatedOn": "2026-10-02"
+  }
 }

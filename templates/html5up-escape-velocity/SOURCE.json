@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a residential construction company: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Oswald and Barlow, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Escape Velocity",
+  "edition": {
+    "name": "Keystone Builders",
+    "niche": "a residential construction company",
+    "category": "Local services",
+    "updatedOn": "2026-10-02"
+  }
 }

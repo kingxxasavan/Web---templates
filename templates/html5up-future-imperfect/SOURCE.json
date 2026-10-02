@@ -11,6 +11,17 @@
     "Accessible focus outlines, zoom enabled and reduced-motion styles",
     "Page titles and descriptions",
     "Local form validation with explicit demo messaging",
-    "Customization and deployment guide"
-  ]
+    "Customization and deployment guide",
+    "Rewritten for a software engineering newsletter and blog: brand, headings, body copy and calls to action",
+    "Colour palette re-tuned around a new brand accent",
+    "Typography set in Space Grotesk and Newsreader, themed from foundry-theme.css",
+    "New illustrations drawn for this edition, with descriptive alt text"
+  ],
+  "design": "Future Imperfect",
+  "edition": {
+    "name": "Byte Notes",
+    "niche": "a software engineering newsletter and blog",
+    "category": "Blog & media",
+    "updatedOn": "2026-10-02"
+  }
 }

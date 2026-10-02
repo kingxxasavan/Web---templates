@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our bakeries — Panetto, Bristol</title>
+<meta name="description" content="Opening hours, directions and wholesale at Panetto's two Bristol bakeries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<p class="notice">Order by 8pm, collect warm from 7.30am. <strong>Free coffee with every order over £15.</strong></p>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 18c0-6 5-11 11-11s11 5 11 11c0 2.2-1.8 4-4 4H8c-2.2 0-4-1.8-4-4Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 12c1.5 1.6 1.5 4.4 0 6M15 10.5c1.6 2 1.6 5.5 0 7.5M20 12c1.5 1.6 1.5 4.4 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Panetto
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="order.html">Order ahead</a>
+      <a href="cakes.html">Celebration cakes</a>
+      <a href="visit.html" aria-current="page">Our bakeries</a>
+      <a class="basket-link btn btn--primary btn--sm" href="order.html">Basket <span class="count" data-basket-count>0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="tag-line"><i></i>Bristol</span>
+      <h1>Our bakeries</h1>
+      <p class="lede">Market Street is where it started: a narrow shop with the ovens on show. Canal Wharf has the seats, the sun and the bigger coffee machine.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="container shops">
+      <div class="shop" data-shop="Market Street">
+        <h3>Market Street</h3>
+        <p class="muted">14 Market Street, Bristol BS1 1JQ · Takeaway, two benches outside</p>
+        <span class="open-pill">Checking…</span>
+        <ul class="hours"></ul>
+      </div>
+      <div class="shop" data-shop="Canal Wharf">
+        <h3>Canal Wharf</h3>
+        <p class="muted">Unit 3, Canal Wharf, Bristol BS1 6XN · 30 seats, step-free, dogs welcome</p>
+        <span class="open-pill">Checking…</span>
+        <ul class="hours"></ul>
+      </div>
+    </div>
+  </section>
+  <section class="section section--alt">
+    <div class="container split">
+      <img src="assets/img/pastries.jpg" alt="A plate of croissants, a pain aux raisins and a pecan bun" width="900" height="900" loading="lazy">
+      <div class="split__body">
+        <span class="tag-line"><i></i>The bakers</span>
+        <h2>Twelve bakers, one very old starter.</h2>
+        <p class="lede">Our sourdough starter is older than the business: it came from Ana’s grandmother in Porto in a jam jar. Today twelve bakers feed it every morning at four.</p>
+        <ul class="ticks"><li>Bakery school graduates and career changers</li><li>Paid the real Living Wage, with four-day weeks</li><li>Bread classes on the first Sunday of the month</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="wholesale">
+    <div class="container split" style="align-items:start">
+      <div class="split__body">
+        <span class="tag-line"><i></i>Wholesale</span>
+        <h2>Our bread in your café.</h2>
+        <p class="lede">We deliver to thirty cafés, delis and restaurants across Bristol before 7am, six days a week. Minimum order £40.</p>
+        <ul class="ticks"><li>Sourdough, focaccia, rolls and pastry</li><li>Daily or weekly standing orders</li><li>Free tasting box for new partners</li></ul>
+      </div>
+      <div>
+        <form class="form" id="wholesale-form" novalidate>
+          <div class="row">
+            <div class="field"><label for="w-name">Your name</label><input class="input" id="w-name" name="name" required data-message="Add your name."><span class="error" data-error="name"></span></div>
+            <div class="field"><label for="w-business">Business</label><input class="input" id="w-business" name="business" required data-message="Which business is it for?"><span class="error" data-error="business"></span></div>
+          </div>
+          <div class="field"><label for="w-email">Email</label><input class="input" id="w-email" name="email" type="email" required data-message="Enter an email we can reply to."><span class="error" data-error="email"></span></div>
+          <div class="field"><label for="w-notes">What would you like? <span class="hint">Optional</span></label><textarea class="input" id="w-notes" name="notes" placeholder="Roughly what, how much and how often"></textarea></div>
+          <button class="btn btn--primary btn--block" type="submit" style="margin-top:18px">Ask for a tasting box</button>
+        </form>
+        <div class="form done" id="wholesale-done" hidden>
+          <div class="done__icon" aria-hidden="true">✓</div>
+          <h2>Thank you.</h2>
+          <p>We’ll be in touch within two working days to arrange your tasting box.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section section--alt" id="contact">
+    <div class="container split" style="align-items:start">
+      <div><span class="tag-line"><i></i>Questions</span><h2 style="margin-top:14px">Good to know</h2><p class="lede" style="margin-top:18px">Anything else? Call <a href="tel:+441179555012">0117 955 5012</a> or email <a href="mailto:hello@panetto.example">hello@panetto.example</a>.</p></div>
+      <div class="faq">
+        <details><summary>Do you have gluten-free bread?</summary><p>Not yet: our kitchen is full of flour, so we can’t promise anything is free of traces. Our celebration cakes can be made with a gluten-free sponge.</p></details>
+        <details><summary>Can I freeze your sourdough?</summary><p>Yes. Slice it first, freeze it in a bag and toast from frozen. It’s nearly as good as fresh.</p></details>
+        <details><summary>Do you deliver?</summary><p>Only to wholesale customers for now. Order ahead and collect from either bakery instead.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="brand" href="index.html">Panetto</a>
+      <p>Slow-fermented bread, pastry and coffee from two bakeries in Bristol.</p>
+    </div>
+    <div><h4>Shop</h4><ul><li><a href="order.html">Order ahead</a></li><li><a href="cakes.html">Celebration cakes</a></li><li><a href="visit.html#wholesale">Wholesale</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li>14 Market Street</li><li>Canal Wharf</li><li><a href="tel:+441179555012">0117 955 5012</a></li></ul></div>
+    <div>
+      <h4>The Friday loaf letter</h4>
+      <p style="margin-top:0">This week’s specials and the occasional recipe.</p>
+      <form class="signup" data-signup><input class="input" type="email" placeholder="Your email" aria-label="Your email" required><button class="btn btn--butter btn--sm" type="submit">Join</button></form>
+    </div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Panetto Bakery Ltd</span><a href="credits.html">Photo credits</a></div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

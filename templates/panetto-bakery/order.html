@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order ahead — Panetto bakery, Bristol</title>
+<meta name="description" content="Order bread, pastries and coffee for collection tomorrow from either Panetto bakery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<p class="notice">Order by 8pm, collect warm from 7.30am. <strong>Free coffee with every order over £15.</strong></p>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 18c0-6 5-11 11-11s11 5 11 11c0 2.2-1.8 4-4 4H8c-2.2 0-4-1.8-4-4Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 12c1.5 1.6 1.5 4.4 0 6M15 10.5c1.6 2 1.6 5.5 0 7.5M20 12c1.5 1.6 1.5 4.4 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Panetto
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="order.html" aria-current="page">Order ahead</a>
+      <a href="cakes.html">Celebration cakes</a>
+      <a href="visit.html">Our bakeries</a>
+      <a class="basket-link btn btn--primary btn--sm" href="order.html">Basket <span class="count" data-basket-count>0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="tag-line"><i></i>Order by 8pm for tomorrow</span>
+      <h1>Order ahead</h1>
+      <p class="lede">Choose what you’d like, pick a bakery and a time, and we’ll have it bagged and waiting. You pay when you collect, so there’s nothing to set up.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="container order">
+      <div>
+        <div class="cats" role="group" aria-label="Categories">
+          <button class="cat" type="button" data-cat="all" aria-pressed="true">Everything</button>
+          <button class="cat" type="button" data-cat="bread" aria-pressed="false">Bread</button>
+          <button class="cat" type="button" data-cat="pastry" aria-pressed="false">Pastry</button>
+          <button class="cat" type="button" data-cat="sweet" aria-pressed="false">Buns &amp; tarts</button>
+          <button class="cat" type="button" data-cat="coffee" aria-pressed="false">Coffee</button>
+        </div>
+        <div class="products">
+        <article class="product" data-product="country-sourdough" data-type="bread" data-name="Country sourdough" data-price="480">
+          <img src="assets/img/loaves.jpg" alt="Country sourdough" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Country sourdough</h3>
+            <p>White and wholemeal, 36-hour ferment. 800g.</p>
+            <div class="product__foot"><span class="product__price">£4.80</span><button class="btn btn--primary btn--sm" type="button" data-add="country-sourdough">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="seeded-sourdough" data-type="bread" data-name="Seeded sourdough" data-price="540">
+          <img src="assets/img/seeded.jpg" alt="Seeded sourdough" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Seeded sourdough <span class="badge">Bestseller</span></h3>
+            <p>Four seeds through a slow dough. Keeps four days.</p>
+            <div class="product__foot"><span class="product__price">£5.40</span><button class="btn btn--primary btn--sm" type="button" data-add="seeded-sourdough">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="focaccia" data-type="bread" data-name="Rosemary focaccia" data-price="420">
+          <img src="assets/img/focaccia.jpg" alt="Rosemary focaccia" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Rosemary focaccia</h3>
+            <p>Olive oil, rosemary and flaky salt. Half tray.</p>
+            <div class="product__foot"><span class="product__price">£4.20</span><button class="btn btn--primary btn--sm" type="button" data-add="focaccia">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="soft-rolls" data-type="bread" data-name="Soft milk rolls, six" data-price="360">
+          <img src="assets/img/rolls.jpg" alt="Soft milk rolls, six" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Soft milk rolls, six</h3>
+            <p>Pull-apart rolls for lunches and burgers.</p>
+            <div class="product__foot"><span class="product__price">£3.60</span><button class="btn btn--primary btn--sm" type="button" data-add="soft-rolls">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="butter-croissant" data-type="pastry" data-name="Butter croissant" data-price="280">
+          <img src="assets/img/croissants.jpg" alt="Butter croissant" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Butter croissant</h3>
+            <p>Laminated by hand with French butter.</p>
+            <div class="product__foot"><span class="product__price">£2.80</span><button class="btn btn--primary btn--sm" type="button" data-add="butter-croissant">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="pain-au-chocolat" data-type="pastry" data-name="Pain au chocolat" data-price="320">
+          <img src="assets/img/pain-au-chocolat.jpg" alt="Pain au chocolat" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Pain au chocolat</h3>
+            <p>Two batons of 70% dark chocolate.</p>
+            <div class="product__foot"><span class="product__price">£3.20</span><button class="btn btn--primary btn--sm" type="button" data-add="pain-au-chocolat">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="almond-croissant" data-type="pastry" data-name="Almond croissant" data-price="360">
+          <img src="assets/img/almond.jpg" alt="Almond croissant" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Almond croissant <span class="badge">Saturday favourite</span></h3>
+            <p>Twice-baked with frangipane and flaked almonds.</p>
+            <div class="product__foot"><span class="product__price">£3.60</span><button class="btn btn--primary btn--sm" type="button" data-add="almond-croissant">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="pastry-box" data-type="pastry" data-name="Weekend pastry box" data-price="1600">
+          <img src="assets/img/box.jpg" alt="Weekend pastry box" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Weekend pastry box</h3>
+            <p>Six of the day’s pastries, chosen by the bakers.</p>
+            <div class="product__foot"><span class="product__price">£16</span><button class="btn btn--primary btn--sm" type="button" data-add="pastry-box">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="cardamom-bun" data-type="sweet" data-name="Cardamom bun" data-price="340">
+          <img src="assets/img/buns.jpg" alt="Cardamom bun" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Cardamom bun</h3>
+            <p>Knotted, sticky and fragrant.</p>
+            <div class="product__foot"><span class="product__price">£3.40</span><button class="btn btn--primary btn--sm" type="button" data-add="cardamom-bun">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="pecan-bun" data-type="sweet" data-name="Pecan sticky bun" data-price="360">
+          <img src="assets/img/sticky-bun.jpg" alt="Pecan sticky bun" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Pecan sticky bun</h3>
+            <p>Brown-butter caramel and toasted pecans.</p>
+            <div class="product__foot"><span class="product__price">£3.60</span><button class="btn btn--primary btn--sm" type="button" data-add="pecan-bun">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="fruit-tart" data-type="sweet" data-name="Seasonal fruit tart" data-price="450">
+          <img src="assets/img/tarts.jpg" alt="Seasonal fruit tart" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Seasonal fruit tart</h3>
+            <p>Vanilla custard and whatever’s ripe this week.</p>
+            <div class="product__foot"><span class="product__price">£4.50</span><button class="btn btn--primary btn--sm" type="button" data-add="fruit-tart">Add</button></div>
+          </div>
+        </article>
+        <article class="product" data-product="flat-white" data-type="coffee" data-name="Flat white, to collect" data-price="320">
+          <img src="assets/img/coffee.jpg" alt="Flat white, to collect" width="260" height="260" loading="lazy">
+          <div>
+            <h3>Flat white, to collect</h3>
+            <p>Made fresh when you arrive. Oat milk at no extra cost.</p>
+            <div class="product__foot"><span class="product__price">£3.20</span><button class="btn btn--primary btn--sm" type="button" data-add="flat-white">Add</button></div>
+          </div>
+        </article>
+        </div>
+      </div>
+      <aside class="basket" aria-label="Your order">
+        <form id="order-form" novalidate>
+          <h2>Your order</h2>
+          <ul class="basket__lines" data-basket-lines></ul>
+          <p class="basket__empty" data-basket-empty>Nothing yet. Add something warm.</p>
+          <div class="basket__total"><span>Total</span><span data-basket-total>£0</span></div>
+          <div class="pickup">
+            <div class="field"><label for="pickup-shop">Collect from</label><select class="input" id="pickup-shop" name="shop"><option>Market Street</option><option>Canal Wharf</option></select></div>
+            <div class="row" style="margin-top:0">
+              <div class="field"><label for="pickup-day">Day</label><select class="input" id="pickup-day" name="day"></select></div>
+              <div class="field"><label for="pickup-time">Time</label><select class="input" id="pickup-time" name="time"></select></div>
+            </div>
+            <div class="field"><label for="o-name">Name</label><input class="input" id="o-name" name="name" autocomplete="name" required data-message="Who’s collecting?"><span class="error" data-error="name"></span></div>
+            <div class="field"><label for="o-phone">Mobile</label><input class="input" id="o-phone" name="phone" type="tel" autocomplete="tel" required data-message="We’ll text when it’s ready."><span class="error" data-error="phone"></span></div>
+            <button class="btn btn--primary btn--block" type="submit" data-checkout disabled>Place order</button>
+            <p class="hint">Pay in the shop by card or cash. Change or cancel until 8pm the night before.</p>
+          </div>
+        </form>
+        <div class="done" id="order-done" hidden>
+          <div class="done__icon" aria-hidden="true">✓</div>
+          <h2>Order placed.</h2>
+          <p data-done-detail>We’ll text you when it’s ready.</p>
+          <p><a class="btn btn--line btn--sm" href="order.html">Start another order</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="brand" href="index.html">Panetto</a>
+      <p>Slow-fermented bread, pastry and coffee from two bakeries in Bristol.</p>
+    </div>
+    <div><h4>Shop</h4><ul><li><a href="order.html">Order ahead</a></li><li><a href="cakes.html">Celebration cakes</a></li><li><a href="visit.html#wholesale">Wholesale</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li>14 Market Street</li><li>Canal Wharf</li><li><a href="tel:+441179555012">0117 955 5012</a></li></ul></div>
+    <div>
+      <h4>The Friday loaf letter</h4>
+      <p style="margin-top:0">This week’s specials and the occasional recipe.</p>
+      <form class="signup" data-signup><input class="input" type="email" placeholder="Your email" aria-label="Your email" required><button class="btn btn--butter btn--sm" type="submit">Join</button></form>
+    </div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Panetto Bakery Ltd</span><a href="credits.html">Photo credits</a></div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

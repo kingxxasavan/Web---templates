@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panetto — bakery &amp; café, Bristol</title>
+<meta name="description" content="Slow-fermented bread, croissants and good coffee from two Bristol bakeries. Order tonight, collect warm tomorrow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<p class="notice">Order by 8pm, collect warm from 7.30am. <strong>Free coffee with every order over £15.</strong></p>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 18c0-6 5-11 11-11s11 5 11 11c0 2.2-1.8 4-4 4H8c-2.2 0-4-1.8-4-4Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 12c1.5 1.6 1.5 4.4 0 6M15 10.5c1.6 2 1.6 5.5 0 7.5M20 12c1.5 1.6 1.5 4.4 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Panetto
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="order.html">Order ahead</a>
+      <a href="cakes.html">Celebration cakes</a>
+      <a href="visit.html">Our bakeries</a>
+      <a class="basket-link btn btn--primary btn--sm" href="order.html">Basket <span class="count" data-basket-count>0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <span class="tag-line"><i></i>Baking since 2016 · Bristol</span>
+        <h1>Bread worth <span class="it">getting up</span> for.</h1>
+        <p class="lede">Sourdough fermented for thirty-six hours, croissants laminated by hand, and coffee roasted across town. Order tonight and it’s waiting for you, still warm, in the morning.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="order.html">Order for tomorrow</a>
+          <a class="btn btn--line" href="visit.html">Find a bakery</a>
+        </div>
+        <div class="hero__note"><span class="stars" aria-hidden="true">★★★★★</span><span>4.9 from 1,240 reviews · “The best croissant west of Paris”</span></div>
+      </div>
+      <div class="collage">
+        <img src="assets/img/croissants.jpg" alt="Two glossy croissants on a white plate" width="720" height="900">
+        <img src="assets/img/latte.jpg" alt="A flat white with latte art" width="560" height="430">
+        <img src="assets/img/loaves.jpg" alt="Rustic sourdough loaves" width="560" height="430">
+        <div class="collage__badge"><span class="dot" aria-hidden="true">☀</span><span><b>Out of the oven</b>Croissants at 7.30am</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="times reveal">
+        <div><strong>6.30am</strong><span>Sourdough and rye come out first</span></div>
+        <div><strong>7.30am</strong><span>Croissants and pains au chocolat</span></div>
+        <div><strong>11am</strong><span>Focaccia and filled rolls for lunch</span></div>
+        <div><strong>2pm</strong><span>Cakes and buns for the afternoon</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="head-row reveal">
+        <div>
+          <span class="tag-line"><i></i>From the counter</span>
+          <h2>What people queue for.</h2>
+        </div>
+        <a class="btn btn--line" href="order.html">See everything</a>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <img src="assets/img/pain-au-chocolat.jpg" alt="A pain au chocolat cut open to show its layers" width="900" height="675" loading="lazy">
+          <div class="card__body">
+            <div class="card__top"><h3>Pain au chocolat</h3><span class="card__price">£3.20</span></div>
+            <p>Eighty-one layers of French butter and two batons of dark chocolate. Made over three days.</p>
+            <button class="btn btn--primary btn--sm" type="button" data-add="pain-au-chocolat" data-name="Pain au chocolat" data-price="320">Add to order</button>
+          </div>
+        </article>
+        <article class="card reveal">
+          <img src="assets/img/seeded.jpg" alt="A crusty seeded sourdough loaf" width="900" height="675" loading="lazy">
+          <div class="card__body">
+            <div class="card__top"><h3>Seeded sourdough <span class="badge">Bestseller</span></h3><span class="card__price">£5.40</span></div>
+            <p>Sunflower, pumpkin, linseed and sesame through a 36-hour dough. Keeps for four days.</p>
+            <button class="btn btn--primary btn--sm" type="button" data-add="seeded-sourdough" data-name="Seeded sourdough" data-price="540">Add to order</button>
+          </div>
+        </article>
+        <article class="card reveal">
+          <img src="assets/img/buns.jpg" alt="A tray of cinnamon buns" width="900" height="675" loading="lazy">
+          <div class="card__body">
+            <div class="card__top"><h3>Cardamom buns</h3><span class="card__price">£3.40</span></div>
+            <p>Knotted, sticky and fragrant. Saturday’s are gone by eleven, so order ahead.</p>
+            <button class="btn btn--primary btn--sm" type="button" data-add="cardamom-bun" data-name="Cardamom bun" data-price="340">Add to order</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <img class="reveal" src="assets/img/counter.jpg" alt="A marble counter lined with croissants and scones" width="900" height="900" loading="lazy">
+      <div class="split__body reveal">
+        <span class="tag-line"><i></i>How we bake</span>
+        <h2>Slow dough, short ingredient lists.</h2>
+        <p class="lede">We bake the way bread used to be made: wild yeast, organic flour from a mill in Wiltshire, water, salt and a lot of time. No improvers, no shortcuts, nothing you can’t pronounce.</p>
+        <ul class="ticks">
+          <li>Organic flour, milled thirty miles away</li>
+          <li>Thirty-six hours of fermentation for every sourdough</li>
+          <li>Unsold bread goes to the Bristol food bank at close</li>
+          <li>Compostable bags, and 20p off if you bring your own</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--green">
+    <div class="container split">
+      <div class="split__body reveal">
+        <span class="tag-line" style="background:transparent;color:#e9f2ec;border-color:rgba(255,255,255,.25)"><i></i>Celebration cakes</span>
+        <h2>Birthdays, weddings and Tuesdays that need a cake.</h2>
+        <p class="lede">Choose a size and a flavour, add a message, and we’ll have it boxed and ready with three days’ notice. From £32 for a six-inch cake that serves eight.</p>
+        <p><a class="btn btn--butter" href="cakes.html">Order a cake</a></p>
+      </div>
+      <img class="reveal" src="assets/img/tarts.jpg" alt="Fruit tarts in a bakery display" width="900" height="900" loading="lazy">
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center reveal" style="margin-bottom:44px">
+        <span class="tag-line"><i></i>Kind words</span>
+        <h2 style="margin-top:14px">Regulars, mostly.</h2>
+      </div>
+      <div class="reviews">
+        <figure class="review reveal" style="margin:0"><span class="stars" aria-label="5 stars">★★★★★</span><blockquote>“I moved house and still drive across town for the seeded loaf. Ordering ahead means I never miss out.”</blockquote><cite>Hannah R.<span>Customer since 2018</span></cite></figure>
+        <figure class="review reveal" style="margin:0"><span class="stars" aria-label="5 stars">★★★★★</span><blockquote>“They made our wedding cake and somehow it was even better than the tasting. Everyone asked where it was from.”</blockquote><cite>Sam &amp; Jo<span>Wedding, June</span></cite></figure>
+        <figure class="review reveal" style="margin:0"><span class="stars" aria-label="5 stars">★★★★★</span><blockquote>“The almond croissant is the only reason I get out of bed on a Saturday. Friendly team, great coffee.”</blockquote><cite>Marcus T.<span>Canal Wharf regular</span></cite></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="head-row reveal">
+        <div>
+          <span class="tag-line"><i></i>Visit</span>
+          <h2>Two bakeries, one starter.</h2>
+        </div>
+        <a class="btn btn--line" href="visit.html">Directions &amp; wholesale</a>
+      </div>
+      <div class="shops">
+        <div class="shop reveal" data-shop="Market Street">
+          <h3>Market Street</h3>
+          <p class="muted">14 Market Street, Bristol BS1 1JQ</p>
+          <span class="open-pill">Checking…</span>
+          <ul class="hours"></ul>
+        </div>
+        <div class="shop reveal" data-shop="Canal Wharf">
+          <h3>Canal Wharf</h3>
+          <p class="muted">Unit 3, Canal Wharf, Bristol BS1 6XN</p>
+          <span class="open-pill">Checking…</span>
+          <ul class="hours"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="brand" href="index.html">Panetto</a>
+      <p>Slow-fermented bread, pastry and coffee from two bakeries in Bristol.</p>
+    </div>
+    <div><h4>Shop</h4><ul><li><a href="order.html">Order ahead</a></li><li><a href="cakes.html">Celebration cakes</a></li><li><a href="visit.html#wholesale">Wholesale</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li>14 Market Street</li><li>Canal Wharf</li><li><a href="tel:+441179555012">0117 955 5012</a></li></ul></div>
+    <div>
+      <h4>The Friday loaf letter</h4>
+      <p style="margin-top:0">This week’s specials and the occasional recipe.</p>
+      <form class="signup" data-signup><input class="input" type="email" placeholder="Your email" aria-label="Your email" required><button class="btn btn--butter btn--sm" type="submit">Join</button></form>
+    </div>
+  </div>
+  <div class="container footer__base"><span>© 2026 Panetto Bakery Ltd</span><a href="credits.html">Photo credits</a></div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
